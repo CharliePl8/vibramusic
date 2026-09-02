@@ -1,0 +1,99 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $color-foreground;
+  background-color: $color-background;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-heading;
+  line-height: 1.2;
+  font-weight: $font-weight-medium;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  @include button-reset;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Utilidades globales */
+.container {
+  @include container;
+}
+
+.sr-only {
+  @include visually-hidden;
+}
+
+.section {
+  padding-block: $space-9;
+
+  @media (min-width: $breakpoint-md) {
+    padding-block: $space-11;
+  }
+}
+
+.section-eyebrow {
+  @include section-eyebrow;
+  display: block;
+  margin-bottom: $space-2;
+}
+
+.section-title {
+  @include section-title;
+  margin-bottom: $space-6;
+}

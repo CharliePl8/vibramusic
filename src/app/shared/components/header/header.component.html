@@ -1,0 +1,19 @@
+<nav
+  class="sticky-nav"
+  [class.sticky-nav--visible]="showNav()"
+  aria-label="Navegación principal"
+>
+  <div class="sticky-nav__inner container">
+    <button class="sticky-nav__logo" (click)="scrollToTop()">VIBRA</button>
+
+    <div class="sticky-nav__links">
+      <button
+        *ngFor="let item of navItems"
+        class="sticky-nav__link"
+        (click)="scrollTo(item.key)"
+      >
+        {{ item.label }}
+      </button>
+    </div>
+  </div>
+</nav>

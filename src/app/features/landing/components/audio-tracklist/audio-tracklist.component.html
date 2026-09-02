@@ -1,0 +1,43 @@
+<div class="tracklist">
+  <h3 class="tracklist__title">Grabaciones de ejemplo</h3>
+  <div class="tracklist__items">
+    <div
+      *ngFor="let demo of demos; let idx = index"
+      class="track"
+      [class.track--playing]="playingIdx() === idx"
+      (click)="toggle(idx)"
+    >
+      <div class="track__play">
+        <span *ngIf="playingIdx() !== idx" class="track__play-btn">▶</span>
+        <span *ngIf="playingIdx() === idx" class="track__play-btn">❚❚</span>
+      </div>
+
+      <div class="track__info">
+        <div class="track__head">
+          <p class="track__title-text">{{ demo.title }}</p>
+          <span class="track__artist">— {{ demo.artist }}</span>
+        </div>
+        <div class="track__meta">
+          <span class="track__genre">{{ demo.genre }}</span>
+          <p class="track__desc">{{ demo.desc }}</p>
+        </div>
+        <div class="track__progress">
+          <div class="track__progress-bar" [style.width.%]="progress()[idx] || 0"></div>
+        </div>
+      </div>
+
+      <div class="track__waveform">
+        <span
+          *ngFor="let h of demo.bars; let bIdx = index"
+          class="track__bar"
+          [class.track__bar--active]="playingIdx() === idx"
+          [style.height.px]="barHeight(playingIdx() === idx, h)"
+          [style.transition-duration]="150 + bIdx * 30 + 'ms'"
+          [style.transition-delay]="playingIdx() === idx ? bIdx * 18 + 'ms' : '0ms'"
+        ></span>
+      </div>
+
+      <span class="track__dur">{{ demo.dur }}</span>
+    </div>
+  </div>
+</div>

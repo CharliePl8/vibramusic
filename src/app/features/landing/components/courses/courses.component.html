@@ -1,0 +1,79 @@
+<section id="courses" class="courses">
+  <div class="courses__inner">
+    <p class="courses__eyebrow">Aprende con los mejores profesores</p>
+    <h2 class="courses__title">Cursos</h2>
+
+    <div class="courses__filters">
+      <div class="courses__filter-group">
+        <p class="courses__filter-label">Instrumento</p>
+        <div class="courses__filter-chips">
+          <button
+            class="courses__chip"
+            [class.courses__chip--active]="instrFilter() === 'all'"
+            (click)="setInstr('all')"
+          >
+            Todos
+          </button>
+          <button
+            *ngFor="let instr of instruments"
+            class="courses__chip"
+            [class.courses__chip--active]="instrFilter() === instr"
+            (click)="setInstr(instr)"
+          >
+            <span>{{ instrumentEmoji[instr] }}</span> {{ instrumentName(instr) }}
+          </button>
+        </div>
+      </div>
+
+      <div class="courses__filter-group">
+        <p class="courses__filter-label">Modalidad</p>
+        <div class="courses__filter-chips">
+          <button
+            class="courses__chip"
+            [class.courses__chip--active]="modalityFilter() === 'all'"
+            (click)="setModality('all')"
+          >
+            Todos
+          </button>
+          <button
+            *ngFor="let mod of modalities"
+            class="courses__chip"
+            [class.courses__chip--active]="modalityFilter() === mod"
+            (click)="setModality(mod)"
+          >
+            <span>{{ modalityIcons[mod] }}</span> {{ modalityName(mod) }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="filteredCourses.length === 0" class="courses__empty">
+      No hay cursos con el filtro seleccionado.
+    </p>
+
+    <div *ngIf="filteredCourses.length > 0" class="courses__list">
+      <div *ngFor="let course of filteredCourses" class="course-card">
+        <button class="course-card__header" (click)="toggleCourse(course.id)">
+          <span class="course-card__emoji">
+            {{ instrumentEmoji[course.instrument] }}
+          </span>
+          <div class="course-card__info">
+            <h3 class="course-card__name">{{ course.name }}</h3>
+            <div class="course-card__meta">
+              <span>{{ course.teacher }}</span>
+              <span>{{ course.level }}</span>
+              <span class="course-card__price">{{ course.price }}€/mes</span>
+              <span>{{ modalityIcons[course.modality] }} {{ modalityName(course.modality) }}</span>
+            </div>
+          </div>
+          <span class="course-card__chevron" [class.course-card__chevron--open]="expandedCourse() === course.id">
+            ⌄
+          </span>
+        </button>
+        <div class="course-card__body" *ngIf="expandedCourse() === course.id">
+          <p class="course-card__desc">{{ course.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
