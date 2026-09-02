@@ -17,6 +17,7 @@
 
   &__inner {
     background-color: rgba(0, 0, 0, 0.9);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid $color-border;
     display: flex;

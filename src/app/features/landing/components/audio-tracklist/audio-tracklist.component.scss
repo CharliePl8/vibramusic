@@ -25,6 +25,7 @@
   border: 1px solid $color-border;
   background-color: $color-card;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   transition: border-color $transition-base, background-color $transition-base;
 

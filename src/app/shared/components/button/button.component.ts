@@ -10,6 +10,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
   styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
+  readonly title = input<string>('');
   readonly variant = input<ButtonVariant>('primary');
   readonly size = input<ButtonSize>('md');
   readonly type = input<'button' | 'submit' | 'reset'>('button');
