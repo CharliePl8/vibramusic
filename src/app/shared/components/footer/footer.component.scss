@@ -1,0 +1,38 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.footer {
+  background-color: $color-black;
+  border-top: 1px solid $color-border;
+  padding-block: $space-8;
+  padding-inline: $space-4;
+
+  &__inner {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    @include flex(space-between, center, $space-4);
+    flex-wrap: wrap;
+  }
+
+  &__brand {
+    @include flex(flex-start, baseline, $space-2);
+  }
+
+  &__logo {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-black;
+    color: $color-primary;
+  }
+
+  &__suffix {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+  }
+
+  &__copy {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+  }
+}

@@ -1,0 +1,27 @@
+<section id="about" class="about">
+  <div class="about__inner">
+    <div class="about__text">
+      <p class="about__eyebrow">Más que una escuela</p>
+      <h2 class="about__title">Sobre Vibra</h2>
+      <p class="about__desc">
+        Vibra Music Studio nació en 2015 con una misión clara: crear un espacio donde
+        la música sea el idioma universal. Con más de 200 alumnos activos y un equipo
+        de profesores apasionados, somos el lugar donde los músicos encuentran su voz.
+      </p>
+      <div class="about__stats">
+        <div *ngFor="let stat of stats" class="about__stat">
+          <p class="about__stat-value">{{ stat.value }}</p>
+          <p class="about__stat-label">{{ stat.label }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about__media">
+      <div class="about__image" [ngStyle]="imageStyle"></div>
+      <div class="about__badge">
+        <p class="about__badge-year">2015</p>
+        <p class="about__badge-label">Fundación</p>
+      </div>
+    </div>
+  </div>
+</section>

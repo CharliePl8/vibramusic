@@ -1,0 +1,73 @@
+@use './variables' as *;
+
+// Container
+@mixin container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding-inline: $container-padding;
+
+  @media (min-width: $breakpoint-md) {
+    padding-inline: $space-6;
+  }
+}
+
+// Flex
+@mixin flex($justify: flex-start, $align: stretch, $gap: 0, $direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+// Grid
+@mixin grid($columns: 1, $gap: $space-4) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Typography helpers
+@mixin section-eyebrow($color: $color-primary) {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-thin;
+  color: $color;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+@mixin section-title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-black;
+  color: $color-foreground;
+  line-height: 1.2;
+}
+
+// Buttons
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+// Focus visibility
+@mixin focus-ring($color: $color-primary) {
+  outline: 2px solid $color;
+  outline-offset: 2px;
+}
+
+// Visually hidden
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

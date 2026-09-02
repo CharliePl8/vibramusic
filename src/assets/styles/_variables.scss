@@ -1,0 +1,100 @@
+// Color palette (según prototipo Figma)
+$color-primary: #e73938;
+$color-primary-dark: #c02e2d;
+$color-primary-darker: #b02828;
+$color-primary-hover: #c82d2c;
+$color-primary-soft: rgba(231, 57, 56, 0.1);
+
+// Neutrals (tema claro)
+$color-background: #f6f5f2;
+$color-foreground: #1c1c1c;
+$color-card: #f6f5f2;
+$color-secondary: #ececea;
+$color-muted: #edecea;
+$color-muted-foreground: #888888;
+$color-border: rgba(231, 57, 56, 0.15);
+$color-input-background: #edecea;
+$color-dark: #111111;
+$color-white: #ffffff;
+$color-black: #000000;
+
+// Semantic
+$color-success: #2ecc71;
+$color-warning: #f1c40f;
+$color-danger: #c0392b;
+$color-emerald: #10b981;
+
+// Typography
+$font-family-base: 'Afacad Flux', ui-sans-serif, system-ui, sans-serif;
+$font-family-heading: 'Afacad Flux', ui-sans-serif, system-ui, sans-serif;
+
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 0.9rem; // ~14.5px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+$font-size-6xl: 4.5rem; // 72px
+
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Spacing
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.5rem;
+$space-6: 2rem;
+$space-7: 2.5rem;
+$space-8: 3rem;
+$space-9: 4rem;
+$space-10: 5rem;
+$space-11: 6rem;
+$space-12: 8rem;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Layout
+$container-max-width: 1024px;
+$container-padding: $space-4;
+$header-height: 3.5rem;
+
+// Border radius
+$radius-sm: 0.25rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.25rem;
+$radius-full: 9999px;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal: 2000;
+$z-index-toast: 3000;

@@ -1,0 +1,105 @@
+@use '../../../../../assets/styles/variables' as *;
+@use '../../../../../assets/styles/mixins' as *;
+
+.about {
+  background-color: $color-secondary;
+  padding-block: $space-10;
+  padding-inline: $space-4;
+
+  &__inner {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-8;
+    align-items: center;
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__eyebrow {
+    @include section-eyebrow;
+    margin-bottom: $space-3;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-black;
+    color: $color-foreground;
+    line-height: 1.2;
+    margin-bottom: $space-5;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $color-muted-foreground;
+    line-height: 1.7;
+    margin-bottom: $space-8;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+  }
+
+  &__stat {
+    padding: $space-4;
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-xl;
+
+    &-value {
+      font-size: $font-size-3xl;
+      font-weight: $font-weight-black;
+      color: $color-primary;
+      line-height: 1;
+    }
+
+    &-label {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-thin;
+      color: $color-muted-foreground;
+      margin-top: $space-1;
+    }
+  }
+
+  &__media {
+    position: relative;
+  }
+
+  &__image {
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    background-color: #18181b;
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.85;
+  }
+
+  &__badge {
+    position: absolute;
+    bottom: -$space-4;
+    left: -$space-4;
+    background-color: $color-primary;
+    color: $color-white;
+    border-radius: $radius-xl;
+    padding: $space-3;
+    box-shadow: $shadow-lg;
+
+    &-year {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-black;
+      line-height: 1;
+    }
+
+    &-label {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-thin;
+      opacity: 0.8;
+    }
+  }
+}
