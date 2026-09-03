@@ -1,0 +1,55 @@
+<div class="auth">
+  <div class="auth__card">
+    <p class="auth__eyebrow">Empieza tu camino</p>
+    <h1 class="auth__title">Crear cuenta</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth__form">
+      <div class="auth__field">
+        <label class="auth__label" for="reg-name">Nombre</label>
+        <input
+          id="reg-name"
+          type="text"
+          formControlName="name"
+          class="auth__input"
+          [class.auth__input--error]="hasError('name')"
+        />
+        <p *ngIf="hasError('name')" class="auth__error">Introduce tu nombre.</p>
+      </div>
+
+      <div class="auth__field">
+        <label class="auth__label" for="reg-email">Email</label>
+        <input
+          id="reg-email"
+          type="email"
+          formControlName="email"
+          class="auth__input"
+          [class.auth__input--error]="hasError('email')"
+        />
+        <p *ngIf="hasError('email')" class="auth__error">Introduce un email válido.</p>
+      </div>
+
+      <div class="auth__field">
+        <label class="auth__label" for="reg-password">Contraseña</label>
+        <input
+          id="reg-password"
+          type="password"
+          formControlName="password"
+          class="auth__input"
+          [class.auth__input--error]="hasError('password')"
+        />
+        <p *ngIf="hasError('password')" class="auth__error">
+          La contraseña debe tener al menos 6 caracteres.
+        </p>
+      </div>
+
+      <p *ngIf="errorMsg()" class="auth__error auth__error--server">{{ errorMsg() }}</p>
+
+      <button type="submit" class="auth__submit">Crear cuenta</button>
+    </form>
+
+    <p class="auth__alt">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="auth__link">Inicia sesión</a>
+    </p>
+  </div>
+</div>

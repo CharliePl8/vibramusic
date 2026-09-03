@@ -17,13 +17,13 @@
 
   &__inner {
     background-color: rgba(0, 0, 0, 0.9);
-    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid $color-border;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-block: $space-3;
+    gap: $space-4;
   }
 
   &__logo {
@@ -32,6 +32,7 @@
     color: $color-primary;
     letter-spacing: -0.02em;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   &__links {
@@ -52,5 +53,125 @@
       color: $color-white;
       background-color: rgba(255, 255, 255, 0.05);
     }
+  }
+
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-shrink: 0;
+  }
+
+  &__auth-link {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-muted-foreground;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-white;
+    }
+  }
+
+  &__auth-btn {
+    padding: $space-2 $space-3;
+    border-radius: $radius-full;
+    border: 1px solid $color-primary;
+    color: $color-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition: background-color $transition-base, color $transition-base;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-2 $space-1 $space-1;
+    border-radius: $radius-full;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &-avatar {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: $radius-full;
+      background-color: $color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-black;
+      color: $color-white;
+    }
+
+    &-name {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      color: $color-white;
+    }
+  }
+}
+
+.floating-auth {
+  position: fixed;
+  top: $space-4;
+  right: $space-4;
+  z-index: $z-index-fixed;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid $color-border;
+  border-radius: $radius-2xl;
+  backdrop-filter: blur(8px);
+  box-shadow: $shadow-lg;
+
+  &__btn {
+    padding: $space-2 $space-4;
+    border-radius: $radius-full;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &--accent {
+      background-color: $color-primary;
+      color: $color-white;
+
+      &:hover {
+        background-color: $color-primary-hover;
+      }
+    }
+  }
+
+  &__avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: $radius-full;
+    background-color: $color-primary;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-base;
+    font-weight: $font-weight-black;
+  }
+
+  &--logged {
+    padding: $space-2;
   }
 }

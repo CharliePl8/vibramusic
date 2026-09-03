@@ -1,0 +1,41 @@
+<div class="auth">
+  <div class="auth__card">
+    <p class="auth__eyebrow">Bienvenido de nuevo</p>
+    <h1 class="auth__title">Iniciar sesión</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth__form">
+      <div class="auth__field">
+        <label class="auth__label" for="login-email">Email</label>
+        <input
+          id="login-email"
+          type="email"
+          formControlName="email"
+          class="auth__input"
+          [class.auth__input--error]="hasError('email')"
+        />
+        <p *ngIf="hasError('email')" class="auth__error">Introduce un email válido.</p>
+      </div>
+
+      <div class="auth__field">
+        <label class="auth__label" for="login-password">Contraseña</label>
+        <input
+          id="login-password"
+          type="password"
+          formControlName="password"
+          class="auth__input"
+          [class.auth__input--error]="hasError('password')"
+        />
+        <p *ngIf="hasError('password')" class="auth__error">Introduce tu contraseña.</p>
+      </div>
+
+      <p *ngIf="errorMsg()" class="auth__error auth__error--server">{{ errorMsg() }}</p>
+
+      <button type="submit" class="auth__submit">Iniciar sesión</button>
+    </form>
+
+    <p class="auth__alt">
+      ¿No tienes cuenta?
+      <a routerLink="/registro" class="auth__link">Regístrate</a>
+    </p>
+  </div>
+</div>

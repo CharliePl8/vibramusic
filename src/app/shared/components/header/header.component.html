@@ -15,5 +15,34 @@
         {{ item.label }}
       </button>
     </div>
+
+    <div class="sticky-nav__auth">
+      <ng-container *ngIf="!currentUser(); else logged">
+        <a routerLink="/login" class="sticky-nav__auth-link">Iniciar sesión</a>
+        <a routerLink="/registro" class="sticky-nav__auth-btn">Registrarse</a>
+      </ng-container>
+      <ng-template #logged>
+        <a routerLink="/perfil" class="sticky-nav__user">
+          <span class="sticky-nav__user-avatar">{{ currentUser()?.name?.charAt(0) }}</span>
+          <span class="sticky-nav__user-name">{{ firstName() }}</span>
+        </a>
+        <button class="sticky-nav__auth-link" (click)="logout()">Salir</button>
+      </ng-template>
+    </div>
   </div>
 </nav>
+
+<!-- Floating auth (visible when scroll nav is hidden) -->
+<div
+  *ngIf="!showNav()"
+  class="floating-auth"
+  [class.floating-auth--logged]="!!currentUser()"
+>
+  <ng-container *ngIf="!currentUser()">
+    <a routerLink="/login" class="floating-auth__btn" title="Iniciar sesión">Iniciar sesión</a>
+    <a routerLink="/registro" class="floating-auth__btn floating-auth__btn--accent" title="Registrarse">Registrarse</a>
+  </ng-container>
+  <ng-container *ngIf="currentUser()">
+    <a routerLink="/perfil" class="floating-auth__avatar" title="Mi perfil">{{ currentUser()?.name?.charAt(0) }}</a>
+  </ng-container>
+</div>
