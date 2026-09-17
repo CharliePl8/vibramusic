@@ -12,13 +12,33 @@
     </div>
 
     <div class="profile__section">
-      <h2 class="profile__section-title">Próximamente</h2>
-      <ul class="profile__features">
-        <li>Gestión de cursos inscritos</li>
-        <li>Historial de pagos</li>
-        <li>Mis masterclasses compradas</li>
-        <li>Configuración de cuenta</li>
-      </ul>
+      <h2 class="profile__section-title">Mis reservas</h2>
+
+      <div class="profile__bookings">
+        <div *ngFor="let b of bookings()" class="profile__booking">
+          <div class="profile__booking-info">
+            <p class="profile__booking-main">
+              <span class="profile__booking-date">{{ formatDate(b.date) }}</span>
+              · {{ b.slot }}
+            </p>
+            <p class="profile__booking-sub">
+              {{ b.service }}<span *ngIf="b.notes"> · {{ b.notes }}</span>
+            </p>
+          </div>
+          <button
+            class="profile__booking-cancel"
+            (click)="cancelBooking(b.id)"
+            aria-label="Cancelar reserva"
+          >
+            Cancelar
+          </button>
+        </div>
+
+        <ng-container *ngIf="bookings().length === 0">
+          <p class="profile__empty">Aún no tienes reservas del estudio.</p>
+          <a routerLink="/" class="profile__goto">Reservar ahora →</a>
+        </ng-container>
+      </div>
     </div>
 
     <button class="profile__logout" (click)="logout()">Cerrar sesión</button>

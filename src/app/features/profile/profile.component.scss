@@ -80,17 +80,74 @@
     margin-bottom: $space-3;
   }
 
-  &__features {
+  &__bookings {
     display: flex;
     flex-direction: column;
     gap: $space-3;
+  }
 
-    li {
-      padding: $space-3 $space-4;
-      background-color: $color-muted;
-      border-radius: $radius-xl;
-      font-size: $font-size-sm;
-      color: $color-muted-foreground;
+  &__booking {
+    @include flex(space-between, center, $space-3);
+    padding: $space-4;
+    background-color: $color-muted;
+    border-radius: $radius-xl;
+  }
+
+  &__booking-info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__booking-main {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+  }
+
+  &__booking-date {
+    color: $color-primary;
+  }
+
+  &__booking-sub {
+    font-size: $font-size-xs;
+    color: $color-muted-foreground;
+  }
+
+  &__booking-cancel {
+    @include button-reset;
+    flex-shrink: 0;
+    padding: $space-2 $space-3;
+    border: 1px solid $color-danger;
+    border-radius: $radius-lg;
+    color: $color-danger;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: $color-danger;
+      color: $color-white;
+    }
+  }
+
+  &__empty {
+    font-size: $font-size-sm;
+    color: $color-muted-foreground;
+    padding: $space-4;
+    background-color: $color-muted;
+    border-radius: $radius-xl;
+  }
+
+  &__goto {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+
+    &:hover {
+      color: $color-primary-hover;
     }
   }
 
@@ -103,7 +160,9 @@
     border: 1px solid $color-danger;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition: background-color $transition-base, color $transition-base;
+    transition:
+      background-color $transition-base,
+      color $transition-base;
 
     &:hover {
       background-color: $color-danger;
