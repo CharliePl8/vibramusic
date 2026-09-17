@@ -1,6 +1,7 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -12,6 +13,9 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class HeaderComponent {
   readonly showNav = signal(false);
+  readonly menuOpen = signal(false);
+  readonly currentUrl = signal('');
+
   private auth = inject(AuthService);
   private router = inject(Router);
 
@@ -25,12 +29,25 @@ export class HeaderComponent {
     { key: 'contact', label: 'Contacto' },
   ];
 
+  constructor() {
+    this.currentUrl.set(this.router.url);
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => this.currentUrl.set(event.urlAfterRedirects || event.url));
+  }
+
   @HostListener('window:scroll', [])
   onScroll() {
     this.showNav.set(window.scrollY > window.innerHeight * 0.6);
+    this.menuOpen.set(false);
+  }
+
+  toggleMenu() {
+    this.menuOpen.set(!this.menuOpen());
   }
 
   scrollTo(sectionId: string) {
+    this.menuOpen.set(false);
     if (this.router.url !== '/') {
       this.router.navigate(['/']).then(() => {
         setTimeout(() => {
@@ -47,10 +64,12 @@ export class HeaderComponent {
   }
 
   scrollToTop() {
+    this.menuOpen.set(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   logout() {
+    this.menuOpen.set(false);
     this.auth.logout();
     this.router.navigate(['/']);
   }

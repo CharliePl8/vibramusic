@@ -1,6 +1,7 @@
 <nav
   class="sticky-nav"
   [class.sticky-nav--visible]="showNav()"
+  [class.sticky-nav--menu-open]="menuOpen()"
   aria-label="Navegación principal"
 >
   <div class="sticky-nav__inner container">
@@ -18,8 +19,18 @@
 
     <div class="sticky-nav__auth">
       <ng-container *ngIf="!currentUser(); else logged">
-        <a routerLink="/login" class="sticky-nav__auth-link">Iniciar sesión</a>
-        <a routerLink="/registro" class="sticky-nav__auth-btn">Registrarse</a>
+        <a
+          routerLink="/login"
+          class="sticky-nav__auth-link"
+          [class.sticky-nav__auth-link--active]="currentUrl() === '/login'"
+          >Iniciar sesión</a
+        >
+        <a
+          routerLink="/registro"
+          class="sticky-nav__auth-btn"
+          [class.sticky-nav__auth-btn--active]="currentUrl() === '/registro'"
+          >Registrarse</a
+        >
       </ng-container>
       <ng-template #logged>
         <a routerLink="/perfil" class="sticky-nav__user">
@@ -27,6 +38,50 @@
           <span class="sticky-nav__user-name">{{ firstName() }}</span>
         </a>
         <button class="sticky-nav__auth-link" (click)="logout()">Salir</button>
+      </ng-template>
+    </div>
+
+    <button
+      class="sticky-nav__toggle"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Abrir menú"
+    >
+      <span class="sticky-nav__toggle-bar"></span>
+      <span class="sticky-nav__toggle-bar"></span>
+      <span class="sticky-nav__toggle-bar"></span>
+    </button>
+  </div>
+
+  <div *ngIf="menuOpen()" class="sticky-nav__mobile container">
+    <button
+      *ngFor="let item of navItems"
+      class="sticky-nav__mobile-link"
+      (click)="scrollTo(item.key)"
+    >
+      {{ item.label }}
+    </button>
+    <div class="sticky-nav__mobile-auth">
+      <ng-container *ngIf="!currentUser(); else mobileLogged">
+        <a
+          routerLink="/login"
+          class="sticky-nav__mobile-btn"
+          [class.sticky-nav__mobile-btn--active]="currentUrl() === '/login'"
+          (click)="menuOpen.set(false)"
+          >Iniciar sesión</a
+        >
+        <a
+          routerLink="/registro"
+          class="sticky-nav__mobile-btn"
+          [class.sticky-nav__mobile-btn--accent]="currentUrl() !== '/login' && currentUrl() !== '/registro'"
+          [class.sticky-nav__mobile-btn--active]="currentUrl() === '/registro'"
+          (click)="menuOpen.set(false)"
+          >Registrarse</a
+        >
+      </ng-container>
+      <ng-template #mobileLogged>
+        <a routerLink="/perfil" class="sticky-nav__mobile-btn" (click)="menuOpen.set(false)">Mi perfil</a>
+        <button class="sticky-nav__mobile-btn sticky-nav__mobile-btn--ghost" (click)="logout()">Salir</button>
       </ng-template>
     </div>
   </div>
@@ -39,8 +94,21 @@
   [class.floating-auth--logged]="!!currentUser()"
 >
   <ng-container *ngIf="!currentUser()">
-    <a routerLink="/login" class="floating-auth__btn" title="Iniciar sesión">Iniciar sesión</a>
-    <a routerLink="/registro" class="floating-auth__btn floating-auth__btn--accent" title="Registrarse">Registrarse</a>
+    <a
+      routerLink="/login"
+      class="floating-auth__btn"
+      [class.floating-auth__btn--active]="currentUrl() === '/login'"
+      title="Iniciar sesión"
+      >Iniciar sesión</a
+    >
+    <a
+      routerLink="/registro"
+      class="floating-auth__btn"
+      [class.floating-auth__btn--accent]="currentUrl() !== '/login' && currentUrl() !== '/registro'"
+      [class.floating-auth__btn--active]="currentUrl() === '/registro'"
+      title="Registrarse"
+      >Registrarse</a
+    >
   </ng-container>
   <ng-container *ngIf="currentUser()">
     <a routerLink="/perfil" class="floating-auth__avatar" title="Mi perfil">{{ currentUser()?.name?.charAt(0) }}</a>
