@@ -151,6 +151,31 @@
     }
   }
 
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__message {
+    padding: $space-4;
+    background-color: $color-muted;
+    border-radius: $radius-xl;
+    border-left: 4px solid $color-primary;
+  }
+
+  &__message-text {
+    font-size: $font-size-sm;
+    color: $color-foreground;
+    line-height: 1.6;
+    margin-bottom: $space-2;
+  }
+
+  &__message-meta {
+    font-size: $font-size-xs;
+    color: $color-muted-foreground;
+  }
+
   &__logout {
     width: 100%;
     padding: $space-3;

@@ -10,10 +10,22 @@
           <p class="contact__info-value">{{ item.value }}</p>
         </div>
         <div class="contact__social">
-          <a href="https://instagram.com" target="_blank" rel="noopener" class="contact__social-btn" aria-label="Instagram">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener"
+            class="contact__social-btn"
+            aria-label="Instagram"
+          >
             <span class="contact__social-icon">📷</span>
           </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener" class="contact__social-btn" aria-label="YouTube">
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener"
+            class="contact__social-btn"
+            aria-label="YouTube"
+          >
             <span class="contact__social-icon">▶️</span>
           </a>
         </div>
@@ -41,9 +53,7 @@
             class="contact__input"
             [class.contact__input--error]="hasError('email')"
           />
-          <p *ngIf="hasError('email')" class="contact__error">
-            Introduce un email válido.
-          </p>
+          <p *ngIf="hasError('email')" class="contact__error">Introduce un email válido.</p>
         </div>
 
         <div class="contact__field">
@@ -55,9 +65,7 @@
             class="contact__input contact__input--textarea"
             [class.contact__input--error]="hasError('message')"
           ></textarea>
-          <p *ngIf="hasError('message')" class="contact__error">
-            Escribe tu mensaje.
-          </p>
+          <p *ngIf="hasError('message')" class="contact__error">Escribe tu mensaje.</p>
         </div>
 
         <div *ngIf="sent()" class="contact__sent">
@@ -65,9 +73,7 @@
           ¡Mensaje enviado! Te contactamos pronto.
         </div>
 
-        <button *ngIf="!sent()" type="submit" class="contact__submit">
-          Enviar mensaje →
-        </button>
+        <button *ngIf="!sent()" type="submit" class="contact__submit">Enviar mensaje →</button>
       </form>
     </div>
   </div>
