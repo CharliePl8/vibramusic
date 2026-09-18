@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +19,10 @@ export class HeaderComponent {
 
   private auth = inject(AuthService);
   private router = inject(Router);
+  private themeService = inject(ThemeService);
 
   readonly currentUser = this.auth.currentUser;
+  readonly theme = this.themeService.theme;
 
   readonly navItems = [
     { key: 'about', label: 'Nosotros' },
@@ -77,5 +80,9 @@ export class HeaderComponent {
   firstName(): string {
     const name = this.currentUser()?.name;
     return name?.split(' ')[0] ?? '';
+  }
+
+  toggleTheme() {
+    this.themeService.toggle();
   }
 }

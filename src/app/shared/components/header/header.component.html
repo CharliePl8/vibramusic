@@ -8,16 +8,19 @@
     <button class="sticky-nav__logo" (click)="scrollToTop()">VIBRA</button>
 
     <div class="sticky-nav__links">
-      <button
-        *ngFor="let item of navItems"
-        class="sticky-nav__link"
-        (click)="scrollTo(item.key)"
-      >
+      <button *ngFor="let item of navItems" class="sticky-nav__link" (click)="scrollTo(item.key)">
         {{ item.label }}
       </button>
     </div>
 
     <div class="sticky-nav__auth">
+      <button
+        class="sticky-nav__auth-link"
+        (click)="toggleTheme()"
+        [attr.aria-label]="theme() === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'"
+      >
+        {{ theme() === 'dark' ? '☀️' : '🌙' }}
+      </button>
       <ng-container *ngIf="!currentUser(); else logged">
         <a
           routerLink="/login"
@@ -62,6 +65,9 @@
       {{ item.label }}
     </button>
     <div class="sticky-nav__mobile-auth">
+      <button class="sticky-nav__mobile-btn sticky-nav__mobile-btn--ghost" (click)="toggleTheme()">
+        {{ theme() === 'dark' ? '☀️ Modo claro' : '🌙 Modo oscuro' }}
+      </button>
       <ng-container *ngIf="!currentUser(); else mobileLogged">
         <a
           routerLink="/login"
@@ -73,26 +79,31 @@
         <a
           routerLink="/registro"
           class="sticky-nav__mobile-btn"
-          [class.sticky-nav__mobile-btn--accent]="currentUrl() !== '/login' && currentUrl() !== '/registro'"
+          [class.sticky-nav__mobile-btn--accent]="
+            currentUrl() !== '/login' && currentUrl() !== '/registro'
+          "
           [class.sticky-nav__mobile-btn--active]="currentUrl() === '/registro'"
           (click)="menuOpen.set(false)"
           >Registrarse</a
         >
       </ng-container>
       <ng-template #mobileLogged>
-        <a routerLink="/perfil" class="sticky-nav__mobile-btn" (click)="menuOpen.set(false)">Mi perfil</a>
-        <button class="sticky-nav__mobile-btn sticky-nav__mobile-btn--ghost" (click)="logout()">Salir</button>
+        <a routerLink="/perfil" class="sticky-nav__mobile-btn" (click)="menuOpen.set(false)"
+          >Mi perfil</a
+        >
+        <button class="sticky-nav__mobile-btn sticky-nav__mobile-btn--ghost" (click)="logout()">
+          Salir
+        </button>
       </ng-template>
     </div>
   </div>
 </nav>
 
 <!-- Floating auth (visible when scroll nav is hidden) -->
-<div
-  *ngIf="!showNav()"
-  class="floating-auth"
-  [class.floating-auth--logged]="!!currentUser()"
->
+<div *ngIf="!showNav()" class="floating-auth" [class.floating-auth--logged]="!!currentUser()">
+  <button class="floating-auth__btn" (click)="toggleTheme()" [attr.aria-label]="'Cambiar tema'">
+    {{ theme() === 'dark' ? '☀️' : '🌙' }}
+  </button>
   <ng-container *ngIf="!currentUser()">
     <a
       routerLink="/login"
@@ -111,6 +122,8 @@
     >
   </ng-container>
   <ng-container *ngIf="currentUser()">
-    <a routerLink="/perfil" class="floating-auth__avatar" title="Mi perfil">{{ currentUser()?.name?.charAt(0) }}</a>
+    <a routerLink="/perfil" class="floating-auth__avatar" title="Mi perfil">{{
+      currentUser()?.name?.charAt(0)
+    }}</a>
   </ng-container>
 </div>

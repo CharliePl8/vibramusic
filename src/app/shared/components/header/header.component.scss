@@ -8,7 +8,9 @@
   z-index: $z-index-sticky;
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform $transition-base, opacity $transition-base;
+  transition:
+    transform $transition-base,
+    opacity $transition-base;
 
   &--visible {
     transform: translateY(0);
@@ -51,7 +53,9 @@
     font-weight: $font-weight-semibold;
     color: $color-muted-foreground;
     border-radius: $radius-lg;
-    transition: color $transition-base, background-color $transition-base;
+    transition:
+      color $transition-base,
+      background-color $transition-base;
 
     &:hover {
       color: $color-white;
@@ -76,7 +80,9 @@
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     color: $color-muted-foreground;
-    transition: color $transition-base, background-color $transition-base;
+    transition:
+      color $transition-base,
+      background-color $transition-base;
 
     &:hover {
       color: $color-white;
@@ -100,7 +106,9 @@
     color: $color-primary;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    transition: background-color $transition-base, color $transition-base,
+    transition:
+      background-color $transition-base,
+      color $transition-base,
       border-color $transition-base;
 
     &:hover {
@@ -175,7 +183,9 @@
   height: 2px;
   background-color: $color-white;
   border-radius: 2px;
-  transition: transform $transition-base, opacity $transition-base;
+  transition:
+    transform $transition-base,
+    opacity $transition-base;
 }
 
 .sticky-nav--menu-open .sticky-nav__toggle-bar {
@@ -211,7 +221,9 @@
   color: $color-muted-foreground;
   border-radius: $radius-lg;
   text-align: left;
-  transition: color $transition-base, background-color $transition-base;
+  transition:
+    color $transition-base,
+    background-color $transition-base;
 
   &:hover {
     color: $color-white;
@@ -242,24 +254,24 @@
     background-color: rgba(255, 255, 255, 0.08);
   }
 
-    &--accent {
-      background-color: $color-primary;
+  &--accent {
+    background-color: $color-primary;
 
-      &:hover {
-        background-color: $color-primary-hover;
-      }
+    &:hover {
+      background-color: $color-primary-hover;
     }
+  }
 
-    &--active {
-      background-color: $color-primary;
-      color: $color-white;
+  &--active {
+    background-color: $color-primary;
+    color: $color-white;
 
-      &:hover {
-        background-color: $color-primary-hover;
-      }
+    &:hover {
+      background-color: $color-primary-hover;
     }
+  }
 
-    &--ghost {
+  &--ghost {
     color: $color-muted-foreground;
     background: none;
 
