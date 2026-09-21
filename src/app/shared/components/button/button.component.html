@@ -1,0 +1,9 @@
+<button
+  title="{{ title() }}"
+  class="btn btn--{{ variant() }} btn--{{ size() }}"
+  [class.btn--full-width]="fullWidth()"
+  [type]="type()"
+  [disabled]="disabled()"
+>
+  <ng-content />
+</button>

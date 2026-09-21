@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vibra Music | Academia de música en Carmona</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Vibra Music: academia de música en Carmona (Sevilla). Clases particulares, masterclasses para distintos instrumentos y estudio de grabación."
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="theme-color" content="#e73938" />
+    <link rel="canonical" href="https://vibramusic.es/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Vibra Music" />
+    <meta property="og:title" content="Vibra Music | Academia de música en Carmona" />
+    <meta
+      property="og:description"
+      content="Vibra Music: academia de música en Carmona (Sevilla). Clases particulares, masterclasses para distintos instrumentos y estudio de grabación."
+    />
+    <meta property="og:url" content="https://vibramusic.es/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Vibra Music | Academia de música en Carmona" />
+    <meta
+      name="twitter:description"
+      content="Vibra Music: academia de música en Carmona (Sevilla). Clases particulares, masterclasses para distintos instrumentos y estudio de grabación."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad+Flux:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('vibra_theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

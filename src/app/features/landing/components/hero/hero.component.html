@@ -1,0 +1,28 @@
+<section class="hero">
+  <div class="hero__bg" [ngStyle]="bgStyle">
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__badge">
+      <span class="hero__badge-dot"></span>
+      Carmona · Desde 2015
+    </div>
+    <h1 class="hero__title">
+      Vibra <span class="hero__title-accent">Music</span> Studio
+    </h1>
+    <p class="hero__subtitle">
+      Más que clases de música, una experiencia para crear, compartir y crecer como
+      músico toda la vida
+    </p>
+    <button class="hero__cta" (click)="onExplore()">
+      Explorar
+      <span class="hero__cta-arrow">→</span>
+    </button>
+  </div>
+
+  <button class="hero__scroll" (click)="onExplore()">
+    <span class="hero__scroll-label">Scroll</span>
+    <span class="hero__scroll-icon">⌄</span>
+  </button>
+</section>

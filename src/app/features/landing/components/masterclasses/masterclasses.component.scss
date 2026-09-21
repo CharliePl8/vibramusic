@@ -1,0 +1,299 @@
+@use '../../../../../assets/styles/variables' as *;
+@use '../../../../../assets/styles/mixins' as *;
+
+.masterclasses {
+  background-color: $color-secondary;
+  padding-block: $space-10;
+  padding-inline: $space-4;
+
+  &__inner {
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+
+  &__eyebrow {
+    @include section-eyebrow;
+    margin-bottom: $space-2;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-black;
+    color: $color-foreground;
+    margin-bottom: $space-6;
+  }
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+    margin-bottom: $space-8;
+  }
+
+  &__search {
+    position: relative;
+    flex: 1;
+    min-width: 180px;
+    max-width: 24rem;
+  }
+
+  &__search-input {
+    width: 100%;
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-xl;
+    padding: $space-2 $space-6 $space-2 $space-4;
+    font-size: $font-size-sm;
+    color: $color-foreground;
+    outline: none;
+    transition: border-color $transition-base;
+
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    right: $space-2;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-muted-foreground;
+
+    &:hover {
+      color: $color-foreground;
+    }
+  }
+
+  &__select {
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-xl;
+    padding: $space-2 $space-3;
+    font-size: $font-size-sm;
+    color: $color-foreground;
+    outline: none;
+    transition: border-color $transition-base;
+
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+
+  &__clear-filters {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    padding: $space-1;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__count {
+    margin-left: auto;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+  }
+
+  &__empty {
+    text-align: center;
+    padding-block: $space-9;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-5;
+
+    @media (min-width: $breakpoint-sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.mc-card {
+  background-color: $color-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-2xl;
+  overflow: hidden;
+  transition:
+    border-color $transition-base,
+    transform $transition-base;
+
+  &:hover {
+    border-color: rgba(231, 57, 56, 0.4);
+    transform: scale(1.02);
+  }
+
+  &__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: #18181b;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: opacity $transition-base;
+
+    .mc-card:hover & {
+      opacity: 0.9;
+    }
+  }
+
+  &__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  }
+
+  &__level {
+    position: absolute;
+    top: $space-3;
+    left: $space-3;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    padding: $space-1 $space-2;
+    border-radius: $radius-full;
+    color: $color-white;
+  }
+
+  .level--beginner {
+    background-color: $color-emerald;
+  }
+
+  .level--intermediate {
+    background-color: #f59e0b;
+  }
+
+  .level--advanced {
+    background-color: $color-primary;
+  }
+
+  .level--all {
+    background-color: #8b5cf6;
+  }
+
+  &__lock {
+    position: absolute;
+    top: $space-3;
+    right: $space-3;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid $color-border;
+    border-radius: $radius-full;
+    padding: $space-1;
+    font-size: $font-size-sm;
+  }
+
+  &__bottom {
+    position: absolute;
+    bottom: $space-3;
+    left: $space-3;
+    right: $space-3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $space-1;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1;
+  }
+
+  &__tag {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    padding: $space-1 $space-2;
+    border-radius: $radius-full;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &__price {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-black;
+    color: $color-white;
+  }
+
+  &__body {
+    padding: $space-4;
+  }
+
+  &__title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+    margin-bottom: $space-1;
+    line-height: 1.2;
+  }
+
+  &__instructor {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+    margin-bottom: $space-3;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
+
+  &__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    padding: $space-1 $space-2;
+    border-radius: $radius-full;
+
+    &--instrument {
+      background-color: color-mix(in srgb, var(--color-foreground) 8%, transparent);
+      color: $color-foreground;
+      border: 1px solid color-mix(in srgb, var(--color-foreground) 12%, transparent);
+    }
+
+    &--style {
+      background-color: rgba(231, 57, 56, 0.08);
+      color: #c42928;
+      border: 1px solid rgba(231, 57, 56, 0.2);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__duration {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+  }
+
+  &__buy {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+}

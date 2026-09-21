@@ -1,0 +1,99 @@
+// Tokens de color emitidos globalmente en _global.scss (una sola vez).
+// Aquí solo se mapean como alias SCSS -> CSS custom properties.
+$color-primary: var(--color-primary);
+$color-primary-dark: var(--color-primary-dark);
+$color-primary-darker: var(--color-primary-darker);
+$color-primary-hover: var(--color-primary-hover);
+$color-primary-soft: var(--color-primary-soft);
+
+$color-background: var(--color-background);
+$color-foreground: var(--color-foreground);
+$color-card: var(--color-card);
+$color-secondary: var(--color-secondary);
+$color-muted: var(--color-muted);
+$color-muted-foreground: var(--color-muted-foreground);
+$color-border: var(--color-border);
+$color-input-background: var(--color-input-background);
+$color-dark: var(--color-dark);
+$color-white: var(--color-white);
+$color-black: var(--color-black);
+
+$color-success: var(--color-success);
+$color-warning: var(--color-warning);
+$color-danger: var(--color-danger);
+$color-emerald: var(--color-emerald);
+
+// Typography
+$font-family-base: 'Afacad Flux', ui-sans-serif, system-ui, sans-serif;
+$font-family-heading: 'Afacad Flux', ui-sans-serif, system-ui, sans-serif;
+
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 0.9rem; // ~14.5px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+$font-size-6xl: 4.5rem; // 72px
+
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Spacing
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.5rem;
+$space-6: 2rem;
+$space-7: 2.5rem;
+$space-8: 3rem;
+$space-9: 4rem;
+$space-10: 5rem;
+$space-11: 6rem;
+$space-12: 8rem;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Layout
+$container-max-width: 1024px;
+$container-padding: $space-4;
+$header-height: 3.5rem;
+
+// Border radius
+$radius-sm: 0.25rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.25rem;
+$radius-full: 9999px;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal: 2000;
+$z-index-toast: 3000;

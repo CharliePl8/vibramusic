@@ -1,0 +1,103 @@
+<section id="masterclasses" class="masterclasses">
+  <div class="masterclasses__inner">
+    <p class="masterclasses__eyebrow">Aprende de los mejores del sector</p>
+    <h2 class="masterclasses__title">Masterclasses</h2>
+
+    <div class="masterclasses__filters">
+      <div class="masterclasses__search">
+        <input
+          type="text"
+          [value]="search()"
+          (input)="onSearch($event)"
+          placeholder="Buscar masterclass…"
+          class="masterclasses__search-input"
+        />
+        @if (search()) {
+          <button type="button" (click)="clearSearch()" class="masterclasses__clear">✕</button>
+        }
+        <!-- <button *ngIf="search()" (click)="clearSearch()" class="masterclasses__clear">✕</button> -->
+      </div>
+      <label for="masterclasses__label">Filtrar por:</label>
+      <select
+        id="masterclasses__label"
+        class="masterclasses__select"
+        [value]="levelFilter()"
+        (change)="setLevel(($any($event.target)).value)"
+      >
+        <option value="all">Todos los niveles</option>
+        @for (l of levels; track $index) {
+          <option [value]="l">{{ l }}</option>
+        }
+        <!-- <option *ngFor="let l of levels" [value]="l">{{ l }}</option> -->
+      </select>
+      <select
+        id="masterclasses__label"
+        class="masterclasses__select"
+        [value]="tagFilter()"
+        (change)="setTag(($any($event.target)).value)"
+      >
+        <option value="all">Todas las categorías</option>
+        @for (t of tags; track $index) {
+          <option [value]="t">#{{ t }}</option>
+        }
+        <!-- <option *ngFor="let t of tags" [value]="t">#{{ t }}</option> -->
+      </select>
+
+      @if (hasFilters) {
+        <button type="button" (click)="clearFilters()" class="masterclasses__clear-filters">Limpiar</button>
+      }
+      <span class="masterclasses__count">{{ filtered.length }} / {{ masterclasses.length }}</span>
+    </div>
+
+    @if (filtered.length === 0) {
+      <p class="masterclasses__empty">
+        No hay masterclasses que coincidan con los filtros.
+      </p>
+    } @else if (filtered.length > 0) {
+      <div class="masterclasses__grid">
+      <article *ngFor="let mc of filtered" class="mc-card">
+        <div class="mc-card__media">
+          <img [src]="mc.image" [alt]="mc.title" class="mc-card__image" loading="lazy" alt="" />
+          <div class="mc-card__shade"></div>
+          <span class="mc-card__level" [class]="levelClass(mc.level)">{{ mc.level }}</span>
+          <span class="mc-card__lock">🔒</span>
+          <div class="mc-card__bottom">
+            <div class="mc-card__tags">
+              <span *ngFor="let tag of mc.tags.slice(0, 2)" class="mc-card__tag">
+                #{{ tag }}
+              </span>
+            </div>
+            <span class="mc-card__price">{{ mc.price }}€</span>
+          </div>
+        </div>
+        <div class="mc-card__body">
+          <h3 class="mc-card__title">{{ mc.title }}</h3>
+          <p class="mc-card__instructor">{{ mc.instructor }}</p>
+          <div class="mc-card__chips">
+            @if (mc.instrument && mc.style) {
+              <span class="mc-card__chip mc-card__chip--instrument">
+                {{ instrumentIcon(mc.instrument) }} {{ mc.instrument }}
+              </span>
+              <span class="mc-card__chip mc-card__chip--style">
+                {{ styleIcon(mc.style) }} {{ mc.style }}
+              </span>
+            } @else if (mc.instrument) {
+              <span class="mc-card__chip mc-card__chip--instrument">
+                {{ instrumentIcon(mc.instrument) }} {{ mc.instrument }}
+              </span>
+            } @else if (mc.style) {
+              <span class="mc-card__chip mc-card__chip--style">
+                {{ styleIcon(mc.style) }} {{ mc.style }}
+              </span>
+            }
+          </div>
+          <div class="mc-card__footer">
+            <span class="mc-card__duration">🕒 {{ mc.duration }}</span>
+            <span class="mc-card__buy">Comprar ›</span>
+          </div>
+        </div>
+      </article>
+    </div>
+    }
+  </div>
+</section>

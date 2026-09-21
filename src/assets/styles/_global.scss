@@ -1,0 +1,169 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+// Design tokens de color (tema claro/oscuro). Se emiten una sola vez aquí.
+$colors-light: (
+  'color-primary': #e73938,
+  'color-primary-dark': #c02e2d,
+  'color-primary-darker': #b02828,
+  'color-primary-hover': #c82d2c,
+  'color-primary-soft': rgba(231, 57, 56, 0.1),
+  'color-background': #f6f5f2,
+  'color-foreground': #1c1c1c,
+  'color-card': #f6f5f2,
+  'color-secondary': #ececea,
+  'color-muted': #edecea,
+  'color-muted-foreground': #888888,
+  'color-border': rgba(231, 57, 56, 0.15),
+  'color-input-background': #edecea,
+  'color-dark': #111111,
+  'color-white': #ffffff,
+  'color-black': #000000,
+  'color-success': #2ecc71,
+  'color-warning': #f1c40f,
+  'color-danger': #c0392b,
+  'color-emerald': #10b981,
+);
+
+$colors-dark: (
+  'color-primary': #e73938,
+  'color-primary-dark': #c02e2d,
+  'color-primary-darker': #b02828,
+  'color-primary-hover': #c82d2c,
+  'color-primary-soft': rgba(231, 57, 56, 0.16),
+  'color-background': #161412,
+  'color-foreground': #f5f0eb,
+  'color-card': #221f1d,
+  'color-secondary': #2b2825,
+  'color-muted': #2b2825,
+  'color-muted-foreground': #9c948a,
+  'color-border': rgba(231, 57, 56, 0.3),
+  'color-input-background': #2b2825,
+  'color-dark': #2e2a27,
+  'color-white': #ffffff,
+  'color-black': #000000,
+  'color-success': #34d77b,
+  'color-warning': #f5c518,
+  'color-danger': #e0564a,
+  'color-emerald': #2fcf96,
+);
+
+@mixin emit-color-tokens($tokens) {
+  @each $name, $value in $tokens {
+    --#{$name}: #{$value};
+  }
+}
+
+:root {
+  color-scheme: light;
+  @include emit-color-tokens($colors-light);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  @include emit-color-tokens($colors-dark);
+}
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $color-foreground;
+  background-color: $color-background;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      background-color $transition-base,
+      color $transition-base;
+  }
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-heading;
+  line-height: 1.2;
+  font-weight: $font-weight-medium;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  @include button-reset;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Utilidades globales */
+.container {
+  @include container;
+}
+
+.sr-only {
+  @include visually-hidden;
+}
+
+.section {
+  padding-block: $space-9;
+
+  @media (min-width: $breakpoint-md) {
+    padding-block: $space-11;
+  }
+}
+
+.section-eyebrow {
+  @include section-eyebrow;
+  display: block;
+  margin-bottom: $space-2;
+}
+
+.section-title {
+  @include section-title;
+  margin-bottom: $space-6;
+}

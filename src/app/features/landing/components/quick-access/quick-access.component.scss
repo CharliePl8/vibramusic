@@ -1,0 +1,105 @@
+@use '../../../../../assets/styles/variables' as *;
+@use '../../../../../assets/styles/mixins' as *;
+
+.quick {
+  background-color: $color-background;
+  padding-block: $space-9;
+  padding-inline: $space-4;
+
+  &__inner {
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+
+  &__eyebrow {
+    @include section-eyebrow;
+    color: $color-muted-foreground;
+    margin-bottom: $space-5;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-4;
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__card {
+    text-align: left;
+    padding: $space-6;
+    border-radius: $radius-2xl;
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    transition: border-color $transition-base, transform $transition-base,
+      box-shadow $transition-base;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      border-color: rgba(231, 57, 56, 0.4);
+      transform: scale(1.02);
+      box-shadow: $shadow-sm;
+    }
+
+    &--red {
+      background: linear-gradient(135deg, rgba(231, 57, 56, 0.08), transparent);
+    }
+
+    &--violet {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), transparent);
+    }
+
+    &--amber {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), transparent);
+    }
+
+    &--lime {
+      background: linear-gradient(135deg, rgba(204, 251, 36, 0.12), transparent);
+    }
+  }
+
+  &__card-icon {
+    font-size: $font-size-3xl;
+    display: block;
+    margin-bottom: $space-3;
+  }
+
+  &__card-title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+    margin-bottom: $space-2;
+  }
+
+  &__card-desc {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+    margin-bottom: $space-4;
+  }
+
+  &__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    color: $color-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+
+    .quick__card-arrow {
+      transition: transform $transition-fast;
+    }
+  }
+
+  &__card:hover &__card-arrow {
+    transform: translateX(4px);
+  }
+}

@@ -1,0 +1,52 @@
+.not-found {
+  min-height: 100svh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+
+  &__code {
+    margin: 0;
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-primary);
+  }
+
+  &__eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-muted-foreground);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--color-foreground);
+  }
+
+  &__text {
+    margin: 0 auto;
+    max-width: 34rem;
+    color: var(--color-muted-foreground);
+  }
+
+  &__button {
+    justify-self: center;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--color-primary-dark);
+    }
+  }
+}

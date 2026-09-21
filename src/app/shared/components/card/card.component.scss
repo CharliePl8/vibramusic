@@ -1,0 +1,19 @@
+@use '../../../../assets/styles/variables' as *;
+
+.card {
+  background-color: $color-card;
+  border-radius: $radius-xl;
+  color: $color-foreground;
+
+  &--elevated {
+    box-shadow: $shadow-lg;
+  }
+
+  &--outlined {
+    border: 1px solid $color-border;
+  }
+
+  &--default {
+    border: 1px solid $color-border;
+  }
+}

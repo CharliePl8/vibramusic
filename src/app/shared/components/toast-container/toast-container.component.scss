@@ -1,0 +1,89 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.toast-container {
+  position: fixed;
+  z-index: $z-index-toast;
+  top: $space-5;
+  right: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  max-width: min(22rem, calc(100vw - 2 * $space-5));
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: no-preference) {
+    .toast {
+      animation: toast-in 0.25s ease;
+    }
+  }
+}
+
+.toast {
+  @include flex(flex-start, center, $space-3);
+  pointer-events: auto;
+  padding: $space-4;
+  background-color: $color-dark;
+  color: $color-white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-xl;
+
+  &--success {
+    border-left: 4px solid $color-success;
+  }
+
+  &--error {
+    border-left: 4px solid $color-danger;
+  }
+
+  &--info {
+    border-left: 4px solid $color-primary;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include flex(center, center, 0);
+    border-radius: $radius-full;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &__message {
+    flex: 1;
+    font-size: $font-size-sm;
+    line-height: 1.4;
+  }
+
+  &__close {
+    @include button-reset;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include flex(center, center, 0);
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.7);
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: $color-white;
+    }
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
