@@ -127,7 +127,9 @@
   border: 1px solid $color-border;
   border-radius: $radius-2xl;
   overflow: hidden;
-  transition: border-color $transition-base, transform $transition-base;
+  transition:
+    border-color $transition-base,
+    transform $transition-base;
 
   &:hover {
     border-color: rgba(231, 57, 56, 0.4);
@@ -265,9 +267,9 @@
     border-radius: $radius-full;
 
     &--instrument {
-      background-color: rgba(28, 28, 28, 0.08);
+      background-color: color-mix(in srgb, var(--color-foreground) 8%, transparent);
       color: $color-foreground;
-      border: 1px solid rgba(28, 28, 28, 0.12);
+      border: 1px solid color-mix(in srgb, var(--color-foreground) 12%, transparent);
     }
 
     &--style {

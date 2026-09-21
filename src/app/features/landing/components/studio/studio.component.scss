@@ -111,4 +111,123 @@
   &__image-icon {
     color: $color-primary;
   }
+
+  &__booking {
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-2xl;
+    padding: $space-6;
+    margin-top: $space-6;
+  }
+
+  &__booking-head {
+    @include flex(space-between, center, $space-4);
+    flex-wrap: wrap;
+  }
+
+  &__booking-title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+    margin-bottom: $space-1;
+  }
+
+  &__booking-desc {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-thin;
+    color: $color-muted-foreground;
+    line-height: 1.6;
+  }
+
+  &__booking-toggle {
+    @include button-reset;
+    padding: $space-2 $space-4;
+    border: 1px solid $color-primary;
+    border-radius: $radius-xl;
+    color: $color-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition:
+      background-color $transition-base,
+      color $transition-base;
+
+    &:hover,
+    &--active {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  &__form {
+    margin-top: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-4;
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+  }
+
+  &__input {
+    padding: $space-3;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    background-color: $color-input-background;
+    color: $color-foreground;
+    font-size: $font-size-sm;
+    transition: border-color $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+
+    &--error {
+      border-color: $color-danger;
+    }
+
+    &--textarea {
+      resize: vertical;
+    }
+  }
+
+  &__error {
+    font-size: $font-size-xs;
+    color: $color-danger;
+  }
+
+  &__submit {
+    @include button-reset;
+    align-self: flex-start;
+    padding: $space-3 $space-6;
+    border-radius: $radius-xl;
+    background-color: $color-primary;
+    color: $color-white;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: $color-primary-hover;
+    }
+  }
 }

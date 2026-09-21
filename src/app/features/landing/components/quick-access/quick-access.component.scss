@@ -23,7 +23,11 @@
     gap: $space-4;
 
     @media (min-width: $breakpoint-md) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 
@@ -55,6 +59,10 @@
 
     &--amber {
       background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), transparent);
+    }
+
+    &--lime {
+      background: linear-gradient(135deg, rgba(204, 251, 36, 0.12), transparent);
     }
   }
 

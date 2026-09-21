@@ -7,9 +7,8 @@
       <div class="studio__gear-card">
         <h3 class="studio__gear-title">Equipamiento</h3>
         <p class="studio__gear-desc">
-          Nuestro estudio cuenta con Neve 8078, SSL 4000, más de 100 micrófonos
-          vintage y acústica diseñada por Rafael Toral. Disponible 24/7 para artistas
-          y bandas.
+          Nuestro estudio cuenta con Neve 8078, SSL 4000, más de 100 micrófonos vintage y acústica
+          diseñada por Rafael Toral. Disponible 24/7 para artistas y bandas.
         </p>
         <div class="studio__gear-list">
           <span *ngFor="let g of gear" class="studio__gear-item">
@@ -29,5 +28,86 @@
     </div>
 
     <app-audio-tracklist></app-audio-tracklist>
+
+    <div class="studio__booking">
+      <div class="studio__booking-head">
+        <div>
+          <h3 class="studio__booking-title">Reserva el estudio</h3>
+          <p class="studio__booking-desc">
+            Elige fecha y franja. Si la franja está ocupada la marcamos como no disponible.
+          </p>
+        </div>
+        <button
+          class="studio__booking-toggle"
+          [class.studio__booking-toggle--active]="bookingOpen()"
+          (click)="toggleBooking()"
+          [attr.aria-expanded]="bookingOpen()"
+        >
+          {{ bookingOpen() ? 'Cerrar' : 'Reservar' }}
+        </button>
+      </div>
+
+      <form *ngIf="bookingOpen()" [formGroup]="form" (ngSubmit)="onSubmit()" class="studio__form">
+        <div class="studio__form-row">
+          <div class="studio__field">
+            <label class="studio__label" for="booking-date">Fecha</label>
+            <input
+              id="booking-date"
+              type="date"
+              formControlName="date"
+              [min]="minDate"
+              class="studio__input"
+              [class.studio__input--error]="hasError('date')"
+            />
+            <p *ngIf="hasError('date')" class="studio__error">Elige una fecha.</p>
+          </div>
+
+          <div class="studio__field">
+            <label class="studio__label" for="booking-slot">Franja horaria</label>
+            <select
+              id="booking-slot"
+              formControlName="slot"
+              class="studio__input"
+              [class.studio__input--error]="hasError('slot')"
+            >
+              <option value="" disabled selected>Elige una franja</option>
+              <option *ngFor="let slot of slots" [value]="slot" [disabled]="!isSlotAvailable(slot)">
+                {{ slot }}{{ isSlotAvailable(slot) ? '' : ' · ocupada' }}
+              </option>
+            </select>
+            <p *ngIf="hasError('slot')" class="studio__error">Elige una franja.</p>
+          </div>
+
+          <div class="studio__field">
+            <label class="studio__label" for="booking-service">Servicio</label>
+            <select
+              id="booking-service"
+              formControlName="service"
+              class="studio__input"
+              [class.studio__input--error]="hasError('service')"
+            >
+              <option value="" disabled selected>Elige un servicio</option>
+              <option *ngFor="let svc of services" [value]="svc">{{ svc }}</option>
+            </select>
+            <p *ngIf="hasError('service')" class="studio__error">Elige un servicio.</p>
+          </div>
+        </div>
+
+        <div class="studio__field">
+          <label class="studio__label" for="booking-notes">Notas (opcional)</label>
+          <textarea
+            id="booking-notes"
+            rows="3"
+            formControlName="notes"
+            class="studio__input studio__input--textarea"
+            placeholder="Ej.: batería, pista de voz, etc."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="studio__submit" [disabled]="submitting()">
+          {{ submitting() ? 'Reservando…' : 'Confirmar reserva →' }}
+        </button>
+      </form>
+    </div>
   </div>
 </section>

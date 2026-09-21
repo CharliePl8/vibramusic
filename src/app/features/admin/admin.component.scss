@@ -1,0 +1,198 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.admin {
+  min-height: 80vh;
+  padding: $space-7 $space-4;
+
+  &__inner {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding-inline: $container-padding;
+
+    @media (min-width: $breakpoint-md) {
+      padding-inline: $space-6;
+    }
+  }
+
+  &__eyebrow {
+    @include section-eyebrow;
+    margin-bottom: $space-2;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-black;
+    color: $color-foreground;
+    margin-bottom: $space-6;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: $space-2;
+    margin-bottom: $space-5;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__tab {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-3 $space-4;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-muted-foreground;
+    border-bottom: 2px solid transparent;
+    transition:
+      color $transition-fast,
+      border-color $transition-fast;
+
+    &:hover {
+      color: $color-foreground;
+    }
+
+    &--active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 $space-1;
+    border-radius: $radius-full;
+    background-color: $color-muted;
+    color: $color-muted-foreground;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+
+    &--accent {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  &__loading {
+    font-size: $font-size-sm;
+    color: $color-muted-foreground;
+    padding: $space-5 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin-bottom: $space-6;
+  }
+
+  &__item {
+    @include flex(space-between, center, $space-3);
+    padding: $space-4;
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-xl;
+
+    &--unread {
+      border-left: 4px solid $color-primary;
+    }
+  }
+
+  &__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    min-width: 0;
+  }
+
+  &__item-main {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-foreground;
+    word-break: break-word;
+  }
+
+  &__item-date {
+    color: $color-primary;
+  }
+
+  &__item-email {
+    font-weight: $font-weight-normal;
+    color: $color-muted-foreground;
+  }
+
+  &__item-sub {
+    font-size: $font-size-sm;
+    color: $color-foreground;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  &__item-student {
+    font-size: $font-size-xs;
+    color: $color-muted-foreground;
+  }
+
+  &__cancel,
+  &__toggle {
+    @include button-reset;
+    flex-shrink: 0;
+    padding: $space-2 $space-3;
+    border-radius: $radius-lg;
+    border: 1px solid $color-primary;
+    color: $color-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  &__cancel {
+    border-color: $color-danger;
+    color: $color-danger;
+
+    &:hover {
+      background-color: $color-danger;
+      color: $color-white;
+    }
+  }
+
+  &__toggle--read {
+    border-color: $color-border;
+    color: $color-muted-foreground;
+
+    &:hover {
+      background-color: $color-muted;
+      color: $color-foreground;
+    }
+  }
+
+  &__empty {
+    font-size: $font-size-sm;
+    color: $color-muted-foreground;
+    padding: $space-4;
+    background-color: $color-muted;
+    border-radius: $radius-xl;
+  }
+
+  &__back {
+    display: inline-block;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+
+    &:hover {
+      color: $color-primary-hover;
+    }
+  }
+}

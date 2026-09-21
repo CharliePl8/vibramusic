@@ -6,7 +6,7 @@ export interface QuickAccessCard {
   icon: string;
   label: string;
   desc: string;
-  accent: 'red' | 'violet' | 'amber' | 'green';
+  accent: 'red' | 'violet' | 'amber' | 'lime';
 }
 
 @Component({
@@ -44,7 +44,7 @@ export class QuickAccessComponent {
       icon: '📞',
       label: 'Contacto',
       desc: '¿Tienes alguna pregunta? Estamos aquí para ayudarte.',
-      accent: 'green',
+      accent: 'lime',
     },
   ]);
 
