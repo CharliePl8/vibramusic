@@ -22,6 +22,7 @@ export class HeaderComponent {
   private themeService = inject(ThemeService);
 
   readonly currentUser = this.auth.currentUser;
+  readonly isAdmin = this.auth.isAdmin;
   readonly theme = this.themeService.theme;
 
   readonly navItems = [
@@ -71,9 +72,9 @@ export class HeaderComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  logout() {
+  async logout() {
     this.menuOpen.set(false);
-    this.auth.logout();
+    await this.auth.logout();
     this.router.navigate(['/']);
   }
 

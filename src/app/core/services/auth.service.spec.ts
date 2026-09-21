@@ -1,64 +1,173 @@
+import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
+import { SupabaseService } from './supabase.service';
 
-const SESSION_KEY = 'vibra_session';
-const USERS_KEY = 'vibra_users';
+interface ProfileRow {
+  name: string;
+  email: string;
+  role: 'student' | 'admin';
+}
+
+function createMockClient() {
+  return {
+    auth: {
+      onAuthStateChange: vi
+        .fn()
+        .mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } }),
+      getSession: vi.fn(),
+      signUp: vi.fn(),
+      signInWithPassword: vi.fn(),
+      signOut: vi.fn(),
+    },
+    from: vi.fn(),
+  };
+}
+
+function mockProfileQuery(profile: ProfileRow | null) {
+  return {
+    select: () => ({
+      eq: () => ({
+        maybeSingle: async () => ({ data: profile, error: null }),
+      }),
+    }),
+  };
+}
+
+function authUser(id: string, email: string, name?: string) {
+  return { id, email, user_metadata: name ? { name } : {}, identities: [{}] };
+}
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let client: ReturnType<typeof createMockClient>;
 
   beforeEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-    service = new AuthService();
+    client = createMockClient();
+    client.auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
+    client.from.mockReturnValue(mockProfileQuery(null));
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: SupabaseService, useValue: { client } }],
+    });
   });
 
-  it('registra un usuario y abre sesión', () => {
-    const ok = service.register('Ana', 'ana@test.com', 'secreto123');
-    expect(ok).toBe(true);
-    expect(service.isAuthenticated()).toBe(true);
-    expect(service.currentUser()?.name).toBe('Ana');
+  async function createService(): Promise<AuthService> {
+    const service = TestBed.inject(AuthService);
+    await service.ensureReady();
+    return service;
+  }
+
+  it('restaura la sesión existente al arrancar', async () => {
+    client.auth.getSession.mockResolvedValue({
+      data: { session: { user: authUser('u9', 'bea@test.com') } },
+      error: null,
+    });
+    client.from.mockReturnValue(
+      mockProfileQuery({ name: 'Bea', email: 'bea@test.com', role: 'admin' }),
+    );
+
+    const service = await createService();
+
+    expect(service.currentUser()?.name).toBe('Bea');
+    expect(service.isAdmin()).toBe(true);
+  });
+
+  it('registra y pide confirmar el correo cuando no hay sesión', async () => {
+    client.auth.signUp.mockResolvedValue({
+      data: { user: authUser('u1', 'ana@test.com', 'Ana'), session: null },
+      error: null,
+    });
+
+    const service = await createService();
+    const result = await service.register('Ana', 'ana@test.com', 'secreto123');
+
+    expect(result).toEqual({ status: 'confirm-email' });
+    expect(service.currentUser()).toBeNull();
+  });
+
+  it('detecta un email ya registrado', async () => {
+    client.auth.signUp.mockResolvedValue({
+      data: {
+        user: { id: 'u1', email: 'ana@test.com', user_metadata: {}, identities: [] },
+        session: null,
+      },
+      error: null,
+    });
+
+    const service = await createService();
+    const result = await service.register('Ana', 'ana@test.com', 'secreto123');
+
+    expect(result).toEqual({ status: 'email-in-use' });
+  });
+
+  it('registra con sesión activa cuando no hace falta confirmar', async () => {
+    const user = authUser('u1', 'ana@test.com', 'Ana');
+    client.auth.signUp.mockResolvedValue({ data: { user, session: { user } }, error: null });
+    client.from.mockReturnValue(
+      mockProfileQuery({ name: 'Ana', email: 'ana@test.com', role: 'student' }),
+    );
+
+    const service = await createService();
+    const result = await service.register('Ana', 'ana@test.com', 'secreto123');
+
+    expect(result).toEqual({ status: 'ok' });
     expect(service.currentUser()?.email).toBe('ana@test.com');
   });
 
-  it('no permite registrar un email ya existente', () => {
-    service.register('Ana', 'ana@test.com', 'secreto123');
-    service.logout();
-    const ok = service.register('Otra', 'ana@test.com', 'otraclave1');
-    expect(ok).toBe(false);
-    expect(service.isAuthenticated()).toBe(false);
+  it('rechaza credenciales inválidas', async () => {
+    client.auth.signInWithPassword.mockResolvedValue({
+      data: { user: null, session: null },
+      error: { message: 'Invalid login credentials' },
+    });
+
+    const service = await createService();
+    const result = await service.login('ana@test.com', 'malaclave1');
+
+    expect(result).toEqual({ status: 'invalid-credentials' });
   });
 
-  it('inicia sesión con credenciales correctas', () => {
-    service.register('Ana', 'ana@test.com', 'secreto123');
-    service.logout();
-    expect(service.login('ana@test.com', 'secreto123')).toBe(true);
+  it('avisa si el correo no está confirmado', async () => {
+    client.auth.signInWithPassword.mockResolvedValue({
+      data: { user: null, session: null },
+      error: { message: 'Email not confirmed' },
+    });
+
+    const service = await createService();
+    const result = await service.login('ana@test.com', 'secreto123');
+
+    expect(result).toEqual({ status: 'email-not-confirmed' });
+  });
+
+  it('inicia sesión y carga el perfil', async () => {
+    const user = authUser('u1', 'ana@test.com', 'Ana');
+    client.auth.signInWithPassword.mockResolvedValue({
+      data: { user, session: { user } },
+      error: null,
+    });
+    client.from.mockReturnValue(
+      mockProfileQuery({ name: 'Ana', email: 'ana@test.com', role: 'admin' }),
+    );
+
+    const service = await createService();
+    const result = await service.login('ana@test.com', 'secreto123');
+
+    expect(result).toEqual({ status: 'ok' });
     expect(service.currentUser()?.name).toBe('Ana');
+    expect(service.isAdmin()).toBe(true);
   });
 
-  it('rechaza una contraseña incorrecta', () => {
-    service.register('Ana', 'ana@test.com', 'secreto123');
-    service.logout();
-    expect(service.login('ana@test.com', 'malaclave1')).toBe(false);
-    expect(service.isAuthenticated()).toBe(false);
-  });
+  it('cierra la sesión', async () => {
+    const user = authUser('u1', 'ana@test.com', 'Ana');
+    client.auth.signInWithPassword.mockResolvedValue({
+      data: { user, session: { user } },
+      error: null,
+    });
+    client.auth.signOut.mockResolvedValue({ error: null });
 
-  it('cierra la sesión', () => {
-    service.register('Ana', 'ana@test.com', 'secreto123');
-    service.logout();
-    expect(service.isAuthenticated()).toBe(false);
+    const service = await createService();
+    await service.login('ana@test.com', 'secreto123');
+    await service.logout();
+
     expect(service.currentUser()).toBeNull();
-  });
-
-  it('expira la sesión pasados los 10 minutos', () => {
-    service.register('Ana', 'ana@test.com', 'secreto123');
-    const raw = sessionStorage.getItem(SESSION_KEY);
-    expect(raw).toBeTruthy();
-    const session = JSON.parse(raw!) as { user: User; expiresAt: number };
-    session.expiresAt = Date.now() - 1000;
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
     expect(service.isAuthenticated()).toBe(false);
-    expect(service.currentUser()).toBeNull();
-    expect(sessionStorage.getItem(SESSION_KEY)).toBeNull();
   });
 });

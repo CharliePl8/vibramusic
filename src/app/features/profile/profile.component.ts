@@ -32,8 +32,8 @@ export class ProfileComponent {
     return email ? this.messages.userMessages(email) : [];
   });
 
-  logout() {
-    this.auth.logout();
+  async logout() {
+    await this.auth.logout();
     this.router.navigate(['/']);
   }
 
