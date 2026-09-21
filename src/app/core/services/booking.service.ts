@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Booking, StudioService, StudioSlot } from '../models/booking.model';
 
-interface BookingRow {
+export interface BookingRow {
   id: string;
   user_id: string;
   date: string;
@@ -10,6 +10,18 @@ interface BookingRow {
   service: string;
   notes: string;
   created_at: string;
+}
+
+export function mapBookingRow(row: BookingRow): Booking {
+  return {
+    id: row.id,
+    userId: row.user_id,
+    date: row.date,
+    slot: row.slot as StudioSlot,
+    service: row.service as StudioService,
+    notes: row.notes,
+    createdAt: new Date(row.created_at).getTime(),
+  };
 }
 
 export type CreateBookingResult = 'created' | 'conflict' | 'error';
@@ -27,7 +39,7 @@ export class BookingService {
       .order('slot', { ascending: true });
 
     if (error || !data) return [];
-    return (data as BookingRow[]).map((row) => this.toBooking(row));
+    return (data as BookingRow[]).map((row) => mapBookingRow(row));
   }
 
   async takenSlots(date: string): Promise<StudioSlot[]> {
@@ -58,17 +70,5 @@ export class BookingService {
   async cancel(id: string): Promise<boolean> {
     const { error } = await this.client.from('bookings').delete().eq('id', id);
     return !error;
-  }
-
-  private toBooking(row: BookingRow): Booking {
-    return {
-      id: row.id,
-      userId: row.user_id,
-      date: row.date,
-      slot: row.slot as StudioSlot,
-      service: row.service as StudioService,
-      notes: row.notes,
-      createdAt: new Date(row.created_at).getTime(),
-    };
   }
 }

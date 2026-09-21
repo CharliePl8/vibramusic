@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { ContactMessage } from '../models/message.model';
 
-interface MessageRow {
+export interface MessageRow {
   id: string;
   user_id: string | null;
   name: string;
@@ -10,6 +10,18 @@ interface MessageRow {
   message: string;
   read: boolean;
   created_at: string;
+}
+
+export function mapMessageRow(row: MessageRow): ContactMessage {
+  return {
+    id: row.id,
+    userId: row.user_id,
+    name: row.name,
+    email: row.email,
+    message: row.message,
+    read: row.read,
+    createdAt: new Date(row.created_at).getTime(),
+  };
 }
 
 export interface NewContactMessage {
@@ -34,7 +46,29 @@ export class MessagesService {
       console.error('No se pudieron cargar los mensajes:', error.message);
       return [];
     }
-    return (data as MessageRow[]).map((row) => this.toMessage(row));
+    return (data as MessageRow[]).map((row) => mapMessageRow(row));
+  }
+
+  async allMessages(): Promise<ContactMessage[]> {
+    const { data, error } = await this.client
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('No se pudieron cargar los mensajes:', error.message);
+      return [];
+    }
+    return (data as MessageRow[]).map((row) => mapMessageRow(row));
+  }
+
+  async setRead(id: string, read: boolean): Promise<boolean> {
+    const { error } = await this.client.from('messages').update({ read }).eq('id', id);
+    if (error) {
+      console.error('No se pudo actualizar el mensaje:', error.message);
+      return false;
+    }
+    return true;
   }
 
   async create(input: NewContactMessage): Promise<boolean> {
@@ -50,17 +84,5 @@ export class MessagesService {
       return false;
     }
     return true;
-  }
-
-  private toMessage(row: MessageRow): ContactMessage {
-    return {
-      id: row.id,
-      userId: row.user_id,
-      name: row.name,
-      email: row.email,
-      message: row.message,
-      read: row.read,
-      createdAt: new Date(row.created_at).getTime(),
-    };
   }
 }

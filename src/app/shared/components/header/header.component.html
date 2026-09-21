@@ -36,6 +36,13 @@
         >
       </ng-container>
       <ng-template #logged>
+        <a
+          *ngIf="isAdmin()"
+          routerLink="/admin"
+          class="sticky-nav__auth-link"
+          [class.sticky-nav__auth-link--active]="currentUrl() === '/admin'"
+          >Admin</a
+        >
         <a routerLink="/perfil" class="sticky-nav__user">
           <span class="sticky-nav__user-avatar">{{ currentUser()?.name?.charAt(0) }}</span>
           <span class="sticky-nav__user-name">{{ firstName() }}</span>
@@ -88,6 +95,14 @@
         >
       </ng-container>
       <ng-template #mobileLogged>
+        <a
+          *ngIf="isAdmin()"
+          routerLink="/admin"
+          class="sticky-nav__mobile-btn"
+          [class.sticky-nav__mobile-btn--active]="currentUrl() === '/admin'"
+          (click)="menuOpen.set(false)"
+          >Admin</a
+        >
         <a routerLink="/perfil" class="sticky-nav__mobile-btn" (click)="menuOpen.set(false)"
           >Mi perfil</a
         >
