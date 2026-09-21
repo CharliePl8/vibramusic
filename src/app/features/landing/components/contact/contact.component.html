@@ -73,7 +73,9 @@
           ¡Mensaje enviado! Te contactamos pronto.
         </div>
 
-        <button *ngIf="!sent()" type="submit" class="contact__submit">Enviar mensaje →</button>
+        <button *ngIf="!sent()" type="submit" class="contact__submit" [disabled]="sending()">
+          {{ sending() ? 'Enviando…' : 'Enviar mensaje →' }}
+        </button>
       </form>
     </div>
   </div>

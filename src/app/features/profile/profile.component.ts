@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -6,6 +6,7 @@ import { BookingService } from '../../core/services/booking.service';
 import { MessagesService } from '../../core/services/messages.service';
 import { ToastService } from '../../core/services/toast.service';
 import { Booking } from '../../core/models/booking.model';
+import { ContactMessage } from '../../core/models/message.model';
 
 @Component({
   selector: 'app-profile',
@@ -23,19 +24,21 @@ export class ProfileComponent implements OnInit {
 
   readonly user = this.auth.currentUser;
   readonly bookings = signal<Booking[]>([]);
-
-  readonly contactMessages = computed(() => {
-    const email = this.user()?.email;
-    return email ? this.messages.userMessages(email) : [];
-  });
+  readonly contactMessages = signal<ContactMessage[]>([]);
 
   async ngOnInit() {
     await this.loadBookings();
+    await this.loadMessages();
   }
 
   private async loadBookings() {
     const user = this.user();
     this.bookings.set(user ? await this.booking.userBookings(user.id) : []);
+  }
+
+  private async loadMessages() {
+    const user = this.user();
+    this.contactMessages.set(user ? await this.messages.userMessages(user.email, user.id) : []);
   }
 
   async logout() {

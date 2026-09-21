@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessagesService } from '../../../../core/services/messages.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { ToastService } from '../../../../core/services/toast.service';
 
 export interface ContactInfo {
@@ -18,8 +19,10 @@ export interface ContactInfo {
 })
 export class ContactComponent {
   readonly sent = signal(false);
+  readonly sending = signal(false);
 
   private messages = inject(MessagesService);
+  private auth = inject(AuthService);
   private toast = inject(ToastService);
 
   readonly contactInfo: ContactInfo[] = [
@@ -35,15 +38,28 @@ export class ContactComponent {
     message: new FormControl('', [Validators.required]),
   });
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.toast.error('Revisa los campos del formulario.');
       return;
     }
+
     const { name, email, message } = this.form.value;
-    // PMV: se guarda en localStorage. Cuando haya backend se enviará.
-    this.messages.add({ name: name!, email: email!, message: message! });
+    this.sending.set(true);
+    const ok = await this.messages.create({
+      name: name!,
+      email: email!,
+      message: message!,
+      userId: this.auth.currentUser()?.id ?? null,
+    });
+    this.sending.set(false);
+
+    if (!ok) {
+      this.toast.error('No se pudo enviar el mensaje. Inténtalo de nuevo.');
+      return;
+    }
+
     this.form.reset();
     this.sent.set(true);
     this.toast.success('Mensaje enviado. Te contactaremos pronto.');

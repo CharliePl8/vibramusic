@@ -1,44 +1,66 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 import { ContactMessage } from '../models/message.model';
 
-const MESSAGES_KEY = 'vibra_messages';
+interface MessageRow {
+  id: string;
+  user_id: string | null;
+  name: string;
+  email: string;
+  message: string;
+  read: boolean;
+  created_at: string;
+}
+
+export interface NewContactMessage {
+  name: string;
+  email: string;
+  message: string;
+  userId?: string | null;
+}
 
 @Injectable({ providedIn: 'root' })
 export class MessagesService {
-  private readonly allMessages = signal<ContactMessage[]>([]);
+  private readonly client = inject(SupabaseService).client;
 
-  constructor() {
-    this.load();
-  }
+  async userMessages(email: string, userId?: string | null): Promise<ContactMessage[]> {
+    const select = this.client.from('messages').select('*');
+    const filtered = userId
+      ? select.or(`user_id.eq.${userId},email.ilike.${email}`)
+      : select.ilike('email', email);
+    const { data, error } = await filtered.order('created_at', { ascending: false });
 
-  userMessages(email: string): ContactMessage[] {
-    return this.allMessages()
-      .filter((m) => m.email.toLowerCase() === email.toLowerCase())
-      .sort((a, b) => b.createdAt - a.createdAt);
-  }
-
-  add(input: { name: string; email: string; message: string }): void {
-    const message: ContactMessage = {
-      ...input,
-      id: crypto.randomUUID(),
-      createdAt: Date.now(),
-    };
-    const next = [...this.allMessages(), message];
-    this.allMessages.set(next);
-    this.persist(next);
-  }
-
-  private load(): void {
-    const raw = localStorage.getItem(MESSAGES_KEY);
-    if (!raw) return;
-    try {
-      this.allMessages.set(JSON.parse(raw) as ContactMessage[]);
-    } catch {
-      // datos corruptos: se ignoran
+    if (error) {
+      console.error('No se pudieron cargar los mensajes:', error.message);
+      return [];
     }
+    return (data as MessageRow[]).map((row) => this.toMessage(row));
   }
 
-  private persist(messages: ContactMessage[]): void {
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
+  async create(input: NewContactMessage): Promise<boolean> {
+    const { error } = await this.client.from('messages').insert({
+      user_id: input.userId ?? null,
+      name: input.name,
+      email: input.email,
+      message: input.message,
+    });
+
+    if (error) {
+      console.error('No se pudo enviar el mensaje:', error.message);
+      return false;
+    }
+    return true;
+  }
+
+  private toMessage(row: MessageRow): ContactMessage {
+    return {
+      id: row.id,
+      userId: row.user_id,
+      name: row.name,
+      email: row.email,
+      message: row.message,
+      read: row.read,
+      createdAt: new Date(row.created_at).getTime(),
+    };
   }
 }
