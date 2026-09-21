@@ -154,7 +154,25 @@ grant select, insert, delete on public.bookings to authenticated;
 grant select, insert, update on public.messages to anon, authenticated;
 
 -- ----------------------------------------------------------------------------
--- 6) HACERTE ADMINISTRADOR
+-- 6) DISPONIBILIDAD DEL ESTUDIO
+--    Los alumnos no pueden leer las reservas de otros (RLS), así que esta
+--    función "security definer" devuelve SOLO qué franjas están ocupadas en
+--    una fecha, sin ningún dato personal.
+-- ----------------------------------------------------------------------------
+create or replace function public.get_booked_slots(p_date date)
+returns table (slot text)
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select slot from public.bookings where date = p_date;
+$$;
+
+grant execute on function public.get_booked_slots(date) to anon, authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 7) HACERTE ADMINISTRADOR
 --    Después de registrarte en la web, descomenta la línea, pon tu email
 --    y vuelve a ejecutar SOLO ese update.
 -- ----------------------------------------------------------------------------

@@ -1,10 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { BookingService } from '../../core/services/booking.service';
 import { MessagesService } from '../../core/services/messages.service';
 import { ToastService } from '../../core/services/toast.service';
+import { Booking } from '../../core/models/booking.model';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ import { ToastService } from '../../core/services/toast.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   private auth = inject(AuthService);
   private booking = inject(BookingService);
   private messages = inject(MessagesService);
@@ -21,24 +22,34 @@ export class ProfileComponent {
   private router = inject(Router);
 
   readonly user = this.auth.currentUser;
-
-  readonly bookings = computed(() => {
-    const user = this.user();
-    return user ? this.booking.userBookings(user.id) : [];
-  });
+  readonly bookings = signal<Booking[]>([]);
 
   readonly contactMessages = computed(() => {
     const email = this.user()?.email;
     return email ? this.messages.userMessages(email) : [];
   });
 
+  async ngOnInit() {
+    await this.loadBookings();
+  }
+
+  private async loadBookings() {
+    const user = this.user();
+    this.bookings.set(user ? await this.booking.userBookings(user.id) : []);
+  }
+
   async logout() {
     await this.auth.logout();
     this.router.navigate(['/']);
   }
 
-  cancelBooking(id: string) {
-    this.booking.cancel(id);
+  async cancelBooking(id: string) {
+    const ok = await this.booking.cancel(id);
+    if (!ok) {
+      this.toast.error('No se pudo cancelar la reserva.');
+      return;
+    }
+    await this.loadBookings();
     this.toast.success('Reserva cancelada.');
   }
 

@@ -104,7 +104,9 @@
           ></textarea>
         </div>
 
-        <button type="submit" class="studio__submit">Confirmar reserva →</button>
+        <button type="submit" class="studio__submit" [disabled]="submitting()">
+          {{ submitting() ? 'Reservando…' : 'Confirmar reserva →' }}
+        </button>
       </form>
     </div>
   </div>

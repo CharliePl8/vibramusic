@@ -1,58 +1,74 @@
-import { Injectable, signal } from '@angular/core';
-import { Booking, StudioSlot } from '../models/booking.model';
+import { Injectable, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+import { Booking, StudioService, StudioSlot } from '../models/booking.model';
 
-const BOOKINGS_KEY = 'vibra_bookings';
+interface BookingRow {
+  id: string;
+  user_id: string;
+  date: string;
+  slot: string;
+  service: string;
+  notes: string;
+  created_at: string;
+}
+
+export type CreateBookingResult = 'created' | 'conflict' | 'error';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-  private readonly allBookings = signal<Booking[]>([]);
+  private readonly client = inject(SupabaseService).client;
 
-  constructor() {
-    this.load();
+  async userBookings(userId: string): Promise<Booking[]> {
+    const { data, error } = await this.client
+      .from('bookings')
+      .select('*')
+      .eq('user_id', userId)
+      .order('date', { ascending: true })
+      .order('slot', { ascending: true });
+
+    if (error || !data) return [];
+    return (data as BookingRow[]).map((row) => this.toBooking(row));
   }
 
-  userBookings(userId: string): Booking[] {
-    return this.allBookings()
-      .filter((b) => b.userId === userId)
-      .sort((a, b) => a.date.localeCompare(b.date) || a.slot.localeCompare(b.slot));
-  }
-
-  isAvailable(date: string, slot: StudioSlot): boolean {
-    return !this.allBookings().some((b) => b.date === date && b.slot === slot);
-  }
-
-  create(input: Omit<Booking, 'id' | 'createdAt'>): 'created' | 'conflict' {
-    if (!this.isAvailable(input.date, input.slot)) {
-      return 'conflict';
+  async takenSlots(date: string): Promise<StudioSlot[]> {
+    const { data, error } = await this.client.rpc('get_booked_slots', { p_date: date });
+    if (error) {
+      console.error('No se pudieron cargar las franjas ocupadas:', error.message);
+      return [];
     }
-    const booking: Booking = {
-      ...input,
-      id: crypto.randomUUID(),
-      createdAt: Date.now(),
-    };
-    const next = [...this.allBookings(), booking];
-    this.allBookings.set(next);
-    this.persist(next);
+    return (data ?? []).map((row: { slot: string }) => row.slot as StudioSlot);
+  }
+
+  async create(input: Omit<Booking, 'id' | 'createdAt'>): Promise<CreateBookingResult> {
+    const { error } = await this.client.from('bookings').insert({
+      user_id: input.userId,
+      date: input.date,
+      slot: input.slot,
+      service: input.service,
+      notes: input.notes,
+    });
+
+    if (error) {
+      // 23505 = violación de la restricción única (date, slot)
+      return error.code === '23505' ? 'conflict' : 'error';
+    }
     return 'created';
   }
 
-  cancel(id: string): void {
-    const next = this.allBookings().filter((b) => b.id !== id);
-    this.allBookings.set(next);
-    this.persist(next);
+  async cancel(id: string): Promise<boolean> {
+    const { error } = await this.client.from('bookings').delete().eq('id', id);
+    return !error;
   }
 
-  private load(): void {
-    const raw = localStorage.getItem(BOOKINGS_KEY);
-    if (!raw) return;
-    try {
-      this.allBookings.set(JSON.parse(raw) as Booking[]);
-    } catch {
-      // datos corruptos: se ignoran
-    }
-  }
-
-  private persist(bookings: Booking[]): void {
-    localStorage.setItem(BOOKINGS_KEY, JSON.stringify(bookings));
+  private toBooking(row: BookingRow): Booking {
+    return {
+      id: row.id,
+      userId: row.user_id,
+      date: row.date,
+      slot: row.slot as StudioSlot,
+      service: row.service as StudioService,
+      notes: row.notes,
+      createdAt: new Date(row.created_at).getTime(),
+    };
   }
 }
