@@ -1,28 +1,27 @@
-// Color palette (según prototipo Figma)
-$color-primary: #e73938;
-$color-primary-dark: #c02e2d;
-$color-primary-darker: #b02828;
-$color-primary-hover: #c82d2c;
-$color-primary-soft: rgba(231, 57, 56, 0.1);
+// Tokens de color emitidos globalmente en _global.scss (una sola vez).
+// Aquí solo se mapean como alias SCSS -> CSS custom properties.
+$color-primary: var(--color-primary);
+$color-primary-dark: var(--color-primary-dark);
+$color-primary-darker: var(--color-primary-darker);
+$color-primary-hover: var(--color-primary-hover);
+$color-primary-soft: var(--color-primary-soft);
 
-// Neutrals (tema claro)
-$color-background: #f6f5f2;
-$color-foreground: #1c1c1c;
-$color-card: #f6f5f2;
-$color-secondary: #ececea;
-$color-muted: #edecea;
-$color-muted-foreground: #888888;
-$color-border: rgba(231, 57, 56, 0.15);
-$color-input-background: #edecea;
-$color-dark: #111111;
-$color-white: #ffffff;
-$color-black: #000000;
+$color-background: var(--color-background);
+$color-foreground: var(--color-foreground);
+$color-card: var(--color-card);
+$color-secondary: var(--color-secondary);
+$color-muted: var(--color-muted);
+$color-muted-foreground: var(--color-muted-foreground);
+$color-border: var(--color-border);
+$color-input-background: var(--color-input-background);
+$color-dark: var(--color-dark);
+$color-white: var(--color-white);
+$color-black: var(--color-black);
 
-// Semantic
-$color-success: #2ecc71;
-$color-warning: #f1c40f;
-$color-danger: #c0392b;
-$color-emerald: #10b981;
+$color-success: var(--color-success);
+$color-warning: var(--color-warning);
+$color-danger: var(--color-danger);
+$color-emerald: var(--color-emerald);
 
 // Typography
 $font-family-base: 'Afacad Flux', ui-sans-serif, system-ui, sans-serif;

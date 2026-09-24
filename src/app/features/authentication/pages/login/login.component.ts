@@ -1,12 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
@@ -23,23 +18,36 @@ export class LoginComponent {
   });
 
   readonly errorMsg = signal('');
+  readonly loading = signal(false);
 
   constructor(
     private auth: AuthService,
     private router: Router,
   ) {}
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     const { email, password } = this.form.value;
-    const ok = this.auth.login(email!, password!);
-    if (ok) {
-      this.router.navigate(['/perfil']);
-    } else {
-      this.errorMsg.set('Email o contraseña incorrectos.');
+    this.errorMsg.set('');
+    this.loading.set(true);
+    const result = await this.auth.login(email!, password!);
+    this.loading.set(false);
+
+    switch (result.status) {
+      case 'ok':
+        this.router.navigate(['/perfil']);
+        break;
+      case 'email-not-confirmed':
+        this.errorMsg.set('Confirma tu correo antes de iniciar sesión.');
+        break;
+      case 'invalid-credentials':
+        this.errorMsg.set('Email o contraseña incorrectos.');
+        break;
+      default:
+        this.errorMsg.set('No se pudo iniciar sesión. Inténtalo de nuevo.');
     }
   }
 

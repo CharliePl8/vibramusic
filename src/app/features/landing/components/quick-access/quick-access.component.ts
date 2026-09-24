@@ -39,13 +39,13 @@ export class QuickAccessComponent {
       desc: 'Reserva tu sesión en nuestro estudio profesional.',
       accent: 'amber',
     },
-    // {
-    //   key: 'contact',
-    //   icon: '📞',
-    //   label: 'Contacto',
-    //   desc: '¿Tienes alguna pregunta? Estamos aquí para ayudarte.',
-    //   accent: 'lime',
-    // },
+    {
+      key: 'contact',
+      icon: '📞',
+      label: 'Contacto',
+      desc: '¿Tienes alguna pregunta? Estamos aquí para ayudarte.',
+      accent: 'lime',
+    },
   ]);
 
   onNavigate(sectionId: string) {

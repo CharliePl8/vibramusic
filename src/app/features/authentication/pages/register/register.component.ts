@@ -1,12 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
@@ -24,23 +19,37 @@ export class RegisterComponent {
   });
 
   readonly errorMsg = signal('');
+  readonly loading = signal(false);
+  readonly sent = signal(false);
 
   constructor(
     private auth: AuthService,
     private router: Router,
   ) {}
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     const { name, email, password } = this.form.value;
-    const ok = this.auth.register(name!, email!, password!);
-    if (ok) {
-      this.router.navigate(['/perfil']);
-    } else {
-      this.errorMsg.set('Este email ya está registrado.');
+    this.errorMsg.set('');
+    this.loading.set(true);
+    const result = await this.auth.register(name!, email!, password!);
+    this.loading.set(false);
+
+    switch (result.status) {
+      case 'ok':
+        this.router.navigate(['/perfil']);
+        break;
+      case 'confirm-email':
+        this.sent.set(true);
+        break;
+      case 'email-in-use':
+        this.errorMsg.set('Este email ya está registrado.');
+        break;
+      default:
+        this.errorMsg.set('No se pudo crear la cuenta. Inténtalo de nuevo.');
     }
   }
 

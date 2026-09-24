@@ -1,0 +1,75 @@
+<div class="admin">
+  <div class="admin__inner">
+    <p class="admin__eyebrow">Zona de administración</p>
+    <h1 class="admin__title">Panel de administración</h1>
+
+    <div class="admin__tabs">
+      <button
+        type="button"
+        class="admin__tab"
+        [class.admin__tab--active]="tab() === 'bookings'"
+        (click)="tab.set('bookings')"
+      >
+        Reservas <span class="admin__badge">{{ bookings().length }}</span>
+      </button>
+      <button
+        type="button"
+        class="admin__tab"
+        [class.admin__tab--active]="tab() === 'messages'"
+        (click)="tab.set('messages')"
+      >
+        Mensajes
+        <span *ngIf="unreadCount() > 0" class="admin__badge admin__badge--accent">
+          {{ unreadCount() }}
+        </span>
+      </button>
+    </div>
+
+    <p *ngIf="loading()" class="admin__loading">Cargando…</p>
+
+    <ng-container *ngIf="!loading()">
+      <div *ngIf="tab() === 'bookings'" class="admin__list">
+        <div *ngFor="let b of bookings()" class="admin__item">
+          <div class="admin__item-info">
+            <p class="admin__item-main">
+              <span class="admin__item-date">{{ formatDate(b.date) }}</span> · {{ b.slot }}
+            </p>
+            <p class="admin__item-sub">
+              {{ b.service }}<span *ngIf="b.notes"> · {{ b.notes }}</span>
+            </p>
+            <p class="admin__item-student">{{ b.studentName }} · {{ b.studentEmail }}</p>
+          </div>
+          <button type="button" class="admin__cancel" (click)="cancelBooking(b.id)">
+            Cancelar
+          </button>
+        </div>
+
+        <p *ngIf="bookings().length === 0" class="admin__empty">Todavía no hay reservas.</p>
+      </div>
+
+      <div *ngIf="tab() === 'messages'" class="admin__list">
+        <div *ngFor="let m of messages()" class="admin__item" [class.admin__item--unread]="!m.read">
+          <div class="admin__item-info">
+            <p class="admin__item-main">
+              {{ m.name }} · <span class="admin__item-email">{{ m.email }}</span>
+            </p>
+            <p class="admin__item-sub">{{ m.message }}</p>
+            <p class="admin__item-student">{{ formatTimestamp(m.createdAt) }}</p>
+          </div>
+          <button
+            type="button"
+            class="admin__toggle"
+            [class.admin__toggle--read]="m.read"
+            (click)="toggleRead(m)"
+          >
+            {{ m.read ? 'Marcar no leído' : 'Marcar leído' }}
+          </button>
+        </div>
+
+        <p *ngIf="messages().length === 0" class="admin__empty">Todavía no hay mensajes.</p>
+      </div>
+    </ng-container>
+
+    <a routerLink="/" class="admin__back">← Volver al inicio</a>
+  </div>
+</div>

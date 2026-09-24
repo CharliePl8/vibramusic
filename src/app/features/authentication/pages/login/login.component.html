@@ -30,7 +30,9 @@
 
       <p *ngIf="errorMsg()" class="auth__error auth__error--server">{{ errorMsg() }}</p>
 
-      <button type="submit" class="auth__submit">Iniciar sesión</button>
+      <button type="submit" class="auth__submit" [disabled]="loading()">
+        {{ loading() ? 'Entrando…' : 'Iniciar sesión' }}
+      </button>
     </form>
 
     <p class="auth__alt">

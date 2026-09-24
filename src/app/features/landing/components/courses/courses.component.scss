@@ -106,7 +106,7 @@
     transition: background-color $transition-base;
 
     &:hover {
-      background-color: rgba(236, 236, 234, 0.4);
+      background-color: color-mix(in srgb, var(--color-secondary) 40%, transparent);
     }
   }
 
