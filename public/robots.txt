@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vibramusic.es/sitemap.xml
+Sitemap: https://vibramusicstudio.es/sitemap.xml
