@@ -105,6 +105,26 @@ svg {
   height: auto;
 }
 
+app-root,
+router-outlet,
+app-home,
+app-profile,
+app-login,
+app-register,
+app-admin,
+app-not-found,
+app-footer,
+app-hero,
+app-quick-access,
+app-about,
+app-courses,
+app-masterclasses,
+app-studio,
+app-contact,
+app-audio-tracklist {
+  display: block;
+}
+
 h1,
 h2,
 h3,

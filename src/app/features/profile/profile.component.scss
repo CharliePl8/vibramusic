@@ -2,30 +2,44 @@
 @use '../../../assets/styles/mixins' as *;
 
 .profile {
+  width: 100%;
   min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: $space-4;
+  background-color: $color-background;
 
   &__card {
+    --profile-card-background: #{$color-primary-dark};
+    --profile-card-text: #{$color-white};
+    --profile-card-border: rgba(255, 255, 255, 0.28);
+    --profile-card-surface: rgba(0, 0, 0, 0.16);
+
     width: 100%;
     max-width: 32rem;
-    background-color: $color-card;
-    border: 1px solid $color-border;
+    background-color: var(--profile-card-background);
+    border: 1px solid var(--profile-card-border);
     border-radius: $radius-2xl;
+    color: var(--profile-card-text);
     padding: $space-7;
+
+    [data-theme='dark'] & {
+      --profile-card-background: #{$color-card};
+      --profile-card-border: rgba(255, 255, 255, 0.16);
+      --profile-card-surface: rgba(255, 255, 255, 0.06);
+    }
   }
 
   &__eyebrow {
-    @include section-eyebrow;
+    @include section-eyebrow($color-white);
     margin-bottom: $space-2;
   }
 
   &__title {
     font-size: $font-size-3xl;
     font-weight: $font-weight-black;
-    color: $color-foreground;
+    color: inherit;
     margin-bottom: $space-6;
   }
 
@@ -34,23 +48,9 @@
     align-items: center;
     gap: $space-4;
     padding: $space-5;
-    background-color: $color-muted;
+    background-color: var(--profile-card-surface);
     border-radius: $radius-2xl;
     margin-bottom: $space-6;
-  }
-
-  &__avatar {
-    width: 4rem;
-    height: 4rem;
-    border-radius: $radius-full;
-    background-color: $color-primary;
-    color: $color-white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-black;
-    flex-shrink: 0;
   }
 
   &__details {
@@ -61,12 +61,12 @@
   &__name {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-foreground;
+    color: inherit;
   }
 
   &__email {
     font-size: $font-size-sm;
-    color: $color-muted-foreground;
+    color: inherit;
   }
 
   &__section {
@@ -76,7 +76,7 @@
   &__section-title {
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
     margin-bottom: $space-3;
   }
 
@@ -89,7 +89,7 @@
   &__booking {
     @include flex(space-between, center, $space-3);
     padding: $space-4;
-    background-color: $color-muted;
+    background-color: var(--profile-card-surface);
     border-radius: $radius-xl;
   }
 
@@ -102,25 +102,26 @@
   &__booking-main {
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
   }
 
   &__booking-date {
-    color: $color-primary;
+    color: inherit;
+    font-weight: $font-weight-bold;
   }
 
   &__booking-sub {
     font-size: $font-size-xs;
-    color: $color-muted-foreground;
+    color: inherit;
   }
 
   &__booking-cancel {
     @include button-reset;
     flex-shrink: 0;
     padding: $space-2 $space-3;
-    border: 1px solid $color-danger;
+    border: 1px solid $color-white;
     border-radius: $radius-lg;
-    color: $color-danger;
+    color: $color-white;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     transition:
@@ -128,26 +129,29 @@
       color $transition-fast;
 
     &:hover {
-      background-color: $color-danger;
-      color: $color-white;
+      background-color: $color-white;
+      color: $color-danger;
     }
   }
 
   &__empty {
     font-size: $font-size-sm;
-    color: $color-muted-foreground;
+    color: inherit;
     padding: $space-4;
-    background-color: $color-muted;
+    background-color: var(--profile-card-surface);
     border-radius: $radius-xl;
   }
 
   &__goto {
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-primary;
+    color: $color-white;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 
     &:hover {
-      color: $color-primary-hover;
+      color: $color-white;
+      text-decoration-thickness: 2px;
     }
   }
 
@@ -159,21 +163,21 @@
 
   &__message {
     padding: $space-4;
-    background-color: $color-muted;
+    background-color: var(--profile-card-surface);
     border-radius: $radius-xl;
-    border-left: 4px solid $color-primary;
+    border-left: 4px solid $color-white;
   }
 
   &__message-text {
     font-size: $font-size-sm;
-    color: $color-foreground;
+    color: inherit;
     line-height: 1.6;
     margin-bottom: $space-2;
   }
 
   &__message-meta {
     font-size: $font-size-xs;
-    color: $color-muted-foreground;
+    color: inherit;
   }
 
   &__logout {
@@ -181,8 +185,8 @@
     padding: $space-3;
     border-radius: $radius-xl;
     background-color: transparent;
-    color: $color-danger;
-    border: 1px solid $color-danger;
+    color: $color-white;
+    border: 1px solid $color-white;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     transition:
@@ -190,8 +194,8 @@
       color $transition-base;
 
     &:hover {
-      background-color: $color-danger;
-      color: $color-white;
+      background-color: $color-white;
+      color: $color-danger;
     }
   }
 }

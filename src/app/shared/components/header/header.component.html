@@ -44,7 +44,7 @@
           >Admin</a
         >
         <a routerLink="/perfil" class="sticky-nav__user">
-          <span class="sticky-nav__user-avatar">{{ currentUser()?.name?.charAt(0) }}</span>
+          <app-user-avatar size="sm" [name]="currentUser()?.name" />
           <span class="sticky-nav__user-name">{{ firstName() }}</span>
         </a>
         <button class="sticky-nav__auth-link" (click)="logout()">Salir</button>
@@ -137,8 +137,8 @@
     >
   </ng-container>
   <ng-container *ngIf="currentUser()">
-    <a routerLink="/perfil" class="floating-auth__avatar" title="Mi perfil">{{
-      currentUser()?.name?.charAt(0)
-    }}</a>
+    <a routerLink="/perfil" class="floating-auth__profile" aria-label="Mi perfil">
+      <app-user-avatar size="md" [name]="currentUser()?.name" />
+    </a>
   </ng-container>
 </div>
