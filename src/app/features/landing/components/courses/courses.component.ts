@@ -2,12 +2,13 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   COURSES,
-  INSTRUMENT_EMOJI,
-  INSTRUMENT_ES,
+  COURSE_CATEGORY_NAMES,
+  COURSE_FILTER_LOGOS,
+  COURSE_LOGOS,
   MODALITY_ES,
   MODALITY_ICON,
 } from '../../../../core/data/courses.data';
-import { Course, Instrument, Modality } from '../../../../core/models/course.model';
+import { Course, CourseCategory, Modality } from '../../../../core/models/course.model';
 
 @Component({
   selector: 'app-courses',
@@ -18,44 +19,45 @@ import { Course, Instrument, Modality } from '../../../../core/models/course.mod
 })
 export class CoursesComponent {
   readonly courses = COURSES;
-  readonly instrumentEmoji = INSTRUMENT_EMOJI;
-  readonly instrumentNames = INSTRUMENT_ES;
+  readonly categoryNames = COURSE_CATEGORY_NAMES;
+  readonly filterLogos = COURSE_FILTER_LOGOS;
+  readonly courseLogos = COURSE_LOGOS;
   readonly modalityNames = MODALITY_ES;
   readonly modalityIcons = MODALITY_ICON;
 
-  readonly instruments: Instrument[] = Array.from(
-    new Set(this.courses.map((c) => c.instrument)),
+  readonly categories: CourseCategory[] = Array.from(
+    new Set(this.courses.map((course) => course.category)),
   );
   readonly modalities: Modality[] = Array.from(
-    new Set(this.courses.map((c) => c.modality)),
+    new Set(this.courses.map((course) => course.modality)),
   );
 
-  readonly instrFilter = signal<string>('all');
+  readonly categoryFilter = signal<string>('all');
   readonly modalityFilter = signal<string>('all');
   readonly expandedCourse = signal<string | null>(null);
 
   get filteredCourses(): Course[] {
     return this.courses.filter(
-      (c) =>
-        (this.instrFilter() === 'all' || c.instrument === this.instrFilter()) &&
-        (this.modalityFilter() === 'all' || c.modality === this.modalityFilter()),
+      (course) =>
+        (this.categoryFilter() === 'all' || course.category === this.categoryFilter()) &&
+        (this.modalityFilter() === 'all' || course.modality === this.modalityFilter()),
     );
   }
 
-  setInstr(instr: string) {
-    this.instrFilter.set(instr);
+  setCategory(category: string) {
+    this.categoryFilter.set(category);
   }
 
-  setModality(mod: string) {
-    this.modalityFilter.set(mod);
+  setModality(modality: string) {
+    this.modalityFilter.set(modality);
   }
 
   toggleCourse(id: string) {
     this.expandedCourse.set(this.expandedCourse() === id ? null : id);
   }
 
-  instrumentName(key: Instrument): string {
-    return this.instrumentNames[key];
+  categoryName(key: CourseCategory): string {
+    return this.categoryNames[key];
   }
 
   modalityName(key: Modality): string {

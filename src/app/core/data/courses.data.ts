@@ -1,23 +1,36 @@
-import { Course, Instrument, Modality } from '../models/course.model';
+import { Course, CourseCategory, Modality } from '../models/course.model';
 
-export const INSTRUMENT_EMOJI: Record<Instrument, string> = {
-  guitar: '🎸',
-  piano: '🎹',
-  voice: '🎤',
-  drums: '🥁',
-  bass: '🎸',
-  violin: '🎻',
-  saxophone: '🎷',
-};
-
-export const INSTRUMENT_ES: Record<Instrument, string> = {
+export const COURSE_CATEGORY_NAMES: Record<CourseCategory, string> = {
   guitar: 'Guitarra',
   piano: 'Piano',
   voice: 'Canto',
   drums: 'Batería',
   bass: 'Bajo',
   violin: 'Violín',
-  saxophone: 'Saxofón',
+  theory: 'Teoría Musical',
+  recording: 'Grabación',
+};
+
+export const COURSE_FILTER_LOGOS: Record<CourseCategory, string> = {
+  guitar: '/assets/images/cursos/guitarra-rojo.png',
+  piano: '/assets/images/cursos/piano-rojo.png',
+  voice: '/assets/images/cursos/canto-rojo.png',
+  drums: '/assets/images/cursos/bateria-rojo.png',
+  bass: '/assets/images/cursos/guitarra-rojo.png',
+  violin: '/assets/images/cursos/violin-rojo.png',
+  theory: '/assets/images/cursos/teoriamusical-rojo.png',
+  recording: '/assets/images/cursos/grabacion-rojo.png',
+};
+
+export const COURSE_LOGOS: Record<CourseCategory, string> = {
+  guitar: '/assets/images/cursos/guitarra.png',
+  piano: '/assets/images/cursos/piano.png',
+  voice: '/assets/images/cursos/canto.png',
+  drums: '/assets/images/cursos/bateria.png',
+  bass: '/assets/images/cursos/guitarra.png',
+  violin: '/assets/images/cursos/violin.png',
+  theory: '/assets/images/cursos/teoriamusical.png',
+  recording: '/assets/images/cursos/grabacion.png',
 };
 
 export const MODALITY_ES: Record<Modality, string> = {
@@ -36,7 +49,7 @@ export const COURSES: Course[] = [
   {
     id: 'c1',
     name: 'Guitarra Clásica',
-    instrument: 'guitar',
+    category: 'guitar',
     modality: 'individual',
     teacher: 'Carlos Romero',
     level: 'Todos los niveles',
@@ -47,7 +60,7 @@ export const COURSES: Course[] = [
   {
     id: 'c2',
     name: 'Piano Jazz',
-    instrument: 'piano',
+    category: 'piano',
     modality: 'individual',
     teacher: 'María Fernández',
     level: 'Intermedio · Avanzado',
@@ -58,7 +71,7 @@ export const COURSES: Course[] = [
   {
     id: 'c3',
     name: 'Canto Pop / Rock',
-    instrument: 'voice',
+    category: 'voice',
     modality: 'individual',
     teacher: 'Laura Santos',
     level: 'Todos los niveles',
@@ -69,7 +82,7 @@ export const COURSES: Course[] = [
   {
     id: 'c4',
     name: 'Batería',
-    instrument: 'drums',
+    category: 'drums',
     modality: 'group',
     teacher: 'Diego Martínez',
     level: 'Iniciación · Intermedio',
@@ -80,7 +93,7 @@ export const COURSES: Course[] = [
   {
     id: 'c5',
     name: 'Bajo Eléctrico',
-    instrument: 'bass',
+    category: 'bass',
     modality: 'online',
     teacher: 'Andrés López',
     level: 'Todos los niveles',
@@ -91,12 +104,34 @@ export const COURSES: Course[] = [
   {
     id: 'c6',
     name: 'Violín Clásico',
-    instrument: 'violin',
+    category: 'violin',
     modality: 'individual',
     teacher: 'Elena Castillo',
     level: 'Iniciación · Intermedio',
     description:
       'Postura, arco, afinación y repertorio orquestal. Pedagoga formada en el Real Conservatorio Superior de Música de Madrid.',
     price: 125,
+  },
+  {
+    id: 'c7',
+    name: 'Teoría Musical',
+    category: 'theory',
+    modality: 'group',
+    teacher: 'Lucía Álvarez',
+    level: 'Iniciación · Intermedio',
+    description:
+      'Lectura, armonía, ritmo y análisis de piezas para comprender la música con una base sólida y aplicada.',
+    price: 85,
+  },
+  {
+    id: 'c8',
+    name: 'Grabación Musical',
+    category: 'recording',
+    modality: 'online',
+    teacher: 'Javier Núñez',
+    level: 'Iniciación · Avanzado',
+    description:
+      'Técnica de grabación, microfonía y mezcla para aprender a producir una sesión profesional desde tu propio equipo.',
+    price: 105,
   },
 ];

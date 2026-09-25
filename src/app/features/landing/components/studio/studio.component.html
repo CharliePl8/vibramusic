@@ -38,16 +38,24 @@
           </p>
         </div>
         <button
+          type="button"
           class="studio__booking-toggle"
           [class.studio__booking-toggle--active]="bookingOpen()"
           (click)="toggleBooking()"
           [attr.aria-expanded]="bookingOpen()"
+          aria-controls="studio-booking-form"
         >
           {{ bookingOpen() ? 'Cerrar' : 'Reservar' }}
         </button>
       </div>
 
-      <form *ngIf="bookingOpen()" [formGroup]="form" (ngSubmit)="onSubmit()" class="studio__form">
+      <form
+        *ngIf="bookingOpen()"
+        id="studio-booking-form"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        class="studio__form"
+      >
         <div class="studio__form-row">
           <div class="studio__field">
             <label class="studio__label" for="booking-date">Fecha</label>
