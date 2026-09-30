@@ -21,6 +21,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'recuperar',
+    loadComponent: () =>
+      import('./features/authentication/pages/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent,
+      ),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./features/authentication/pages/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
+  },
+  {
     path: 'perfil',
     loadComponent: () =>
       import('./features/profile/profile.component').then((m) => m.ProfileComponent),

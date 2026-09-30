@@ -49,7 +49,15 @@ describe('AdminComponent', () => {
       providers: [
         { provide: AdminService, useValue: { bookings, messages, cancelBooking, setMessageRead } },
         { provide: ToastService, useValue: { success, error } },
-        { provide: Router, useValue: { events: EMPTY, navigate: vi.fn() } },
+        {
+          provide: Router,
+          useValue: {
+            events: EMPTY,
+            navigate: vi.fn(),
+            createUrlTree: vi.fn(() => []),
+            serializeUrl: vi.fn(() => '/'),
+          },
+        },
         { provide: ActivatedRoute, useValue: {} },
       ],
     }).compileComponents();
@@ -88,5 +96,29 @@ describe('AdminComponent', () => {
     expect(setMessageRead).toHaveBeenCalledWith('m1', true);
     expect(component.messages()[0].read).toBe(true);
     expect(component.unreadCount()).toBe(0);
+  });
+
+  it('distingue visualmente los mensajes leídos de los no leídos', async () => {
+    const read = { ...message, read: true };
+    const unread = { ...message, id: 'm2', read: false };
+    bookings.mockResolvedValue([]);
+    messages.mockResolvedValue([read, unread]);
+    component.tab.set('messages');
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    component.loading.set(false);
+    component.messages.set([read, unread]);
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('.admin__item') as NodeListOf<HTMLElement>;
+    expect(items).toHaveLength(2);
+
+    const [first, second] = Array.from(items);
+    expect(first.classList).toContain('admin__item--read');
+    expect(second.classList).toContain('admin__item--unread');
+    expect(first.querySelector('.admin__status')?.textContent?.trim()).toBe('Leído');
+    expect(second.querySelector('.admin__status')?.textContent?.trim()).toBe('Nuevo');
   });
 });

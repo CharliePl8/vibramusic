@@ -1,18 +1,12 @@
-export type Instrument =
-  | 'guitar'
-  | 'piano'
-  | 'voice'
-  | 'drums'
-  | 'bass'
-  | 'violin'
-  | 'saxophone';
+export type CourseCategory =
+  'guitar' | 'piano' | 'voice' | 'drums' | 'bass' | 'violin' | 'theory' | 'recording';
 
 export type Modality = 'individual' | 'group' | 'online';
 
 export interface Course {
   id: string;
   name: string;
-  instrument: Instrument;
+  category: CourseCategory;
   modality: Modality;
   teacher: string;
   level: string;

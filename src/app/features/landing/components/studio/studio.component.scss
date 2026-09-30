@@ -113,11 +113,21 @@
   }
 
   &__booking {
-    background-color: $color-card;
-    border: 1px solid $color-border;
+    --studio-booking-background: #{$color-primary};
+    --studio-booking-text: #{$color-white};
+    --studio-booking-border: rgba(255, 255, 255, 0.28);
+
+    background-color: var(--studio-booking-background);
+    border: 1px solid var(--studio-booking-border);
     border-radius: $radius-2xl;
+    color: var(--studio-booking-text);
     padding: $space-6;
     margin-top: $space-6;
+
+    [data-theme='dark'] & {
+      --studio-booking-background: #{$color-card};
+      --studio-booking-border: rgba(255, 255, 255, 0.16);
+    }
   }
 
   &__booking-head {
@@ -128,33 +138,45 @@
   &__booking-title {
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
     margin-bottom: $space-1;
   }
 
   &__booking-desc {
     font-size: $font-size-xs;
-    font-weight: $font-weight-thin;
-    color: $color-muted-foreground;
+    font-weight: $font-weight-normal;
+    color: inherit;
     line-height: 1.6;
   }
 
   &__booking-toggle {
     @include button-reset;
+    min-height: 2.75rem;
     padding: $space-2 $space-4;
-    border: 1px solid $color-primary;
+    border: 1px solid $color-white;
     border-radius: $radius-xl;
+    background-color: $color-white;
     color: $color-primary;
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     transition:
-      background-color $transition-base,
-      color $transition-base;
+      color $transition-base,
+      box-shadow $transition-base,
+      transform $transition-fast;
 
-    &:hover,
+    &:hover {
+      color: $color-primary;
+      box-shadow: 0 0 0 3px $color-primary-soft;
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      @include focus-ring($color-white);
+    }
+
     &--active {
-      background-color: $color-primary;
-      color: $color-white;
+      color: $color-primary;
+      box-shadow: inset 0 0 0 2px $color-primary;
     }
   }
 
@@ -184,7 +206,7 @@
   &__label {
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
   }
 
   &__input {
@@ -212,22 +234,36 @@
 
   &__error {
     font-size: $font-size-xs;
-    color: $color-danger;
+    font-weight: $font-weight-semibold;
+    color: inherit;
   }
 
   &__submit {
     @include button-reset;
     align-self: flex-start;
+    min-height: 2.75rem;
     padding: $space-3 $space-6;
     border-radius: $radius-xl;
     background-color: $color-primary;
     color: $color-white;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition: background-color $transition-base;
+    transition:
+      box-shadow $transition-base,
+      transform $transition-fast;
 
-    &:hover {
-      background-color: $color-primary-hover;
+    &:hover:not(:disabled) {
+      box-shadow: 0 0 0 3px $color-primary-soft;
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      @include focus-ring($color-white);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
     }
   }
 }
