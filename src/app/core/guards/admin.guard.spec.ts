@@ -41,4 +41,13 @@ describe('adminGuard', () => {
     expect(createUrlTree).toHaveBeenCalledWith(['/']);
     expect(result).toEqual({ commands: ['/'] });
   });
+
+  it('no cancela la navegación si ensureReady falla', async () => {
+    ensureReady.mockRejectedValue(new Error('boom'));
+    isAdmin.mockReturnValue(true);
+
+    const result = await TestBed.runInInjectionContext(() => adminGuard(route, state));
+
+    expect(result).toBe(true);
+  });
 });

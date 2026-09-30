@@ -177,3 +177,26 @@ grant execute on function public.get_booked_slots(date) to anon, authenticated;
 --    y vuelve a ejecutar SOLO ese update.
 -- ----------------------------------------------------------------------------
 -- update public.profiles set role = 'admin' where email = 'TU_EMAIL@EJEMPLO.COM';
+
+-- ----------------------------------------------------------------------------
+-- 8) RELLENAR LOS NOMBRES QUE SE QUEDARON VACÍOS
+--    El trigger de la sección 1 solo copia el nombre si la cuenta se creó desde
+--    el registro de la web. Las cuentas creadas directamente desde el panel de
+--    Supabase (o anteriores a ese campo) se quedaron con profiles.name = ''.
+--    Con el nombre vacío, el avatar de la cabecera muestra "?" en lugar de la
+--    inicial, y el enlace de usuario se queda sin nombre accesible.
+--    Es idempotente: solo toca filas cuyo nombre está en blanco.
+--    Prioridad: nombre del registro -> parte del email anterior a "@".
+-- ----------------------------------------------------------------------------
+update public.profiles p
+set name = coalesce(
+  nullif(btrim(u.raw_user_meta_data ->> 'name'), ''),
+  initcap(regexp_replace(split_part(p.email, '@', 1), '[._-]+', ' ', 'g'))
+)
+from auth.users u
+where u.id = p.id
+  and btrim(coalesce(p.name, '')) = ''
+  and coalesce(
+    nullif(btrim(u.raw_user_meta_data ->> 'name'), ''),
+    initcap(regexp_replace(split_part(p.email, '@', 1), '[._-]+', ' ', 'g'))
+  ) is not null;

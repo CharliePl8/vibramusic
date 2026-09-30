@@ -48,9 +48,17 @@
       </div>
 
       <div *ngIf="tab() === 'messages'" class="admin__list">
-        <div *ngFor="let m of messages()" class="admin__item" [class.admin__item--unread]="!m.read">
+        <div
+          *ngFor="let m of messages()"
+          class="admin__item"
+          [class.admin__item--unread]="!m.read"
+          [class.admin__item--read]="m.read"
+        >
           <div class="admin__item-info">
             <p class="admin__item-main">
+              <span class="admin__status" [class.admin__status--read]="m.read">{{
+                m.read ? 'Leído' : 'Nuevo'
+              }}</span>
               {{ m.name }} · <span class="admin__item-email">{{ m.email }}</span>
             </p>
             <p class="admin__item-sub">{{ m.message }}</p>

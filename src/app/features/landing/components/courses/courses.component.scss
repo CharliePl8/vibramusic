@@ -2,9 +2,20 @@
 @use '../../../../../assets/styles/mixins' as *;
 
 .courses {
+  --course-card-background: #{$color-primary-dark};
+  --course-card-hover: #{$color-primary-darker};
+  --course-card-text: #{$color-white};
+  --course-card-border: rgba(255, 255, 255, 0.28);
+
   background-color: $color-background;
   padding-block: $space-10;
   padding-inline: $space-4;
+
+  [data-theme='dark'] & {
+    --course-card-background: #{$color-card};
+    --course-card-hover: #{$color-secondary};
+    --course-card-border: rgba(255, 255, 255, 0.16);
+  }
 
   &__inner {
     max-width: $container-max-width;
@@ -12,7 +23,7 @@
   }
 
   &__eyebrow {
-    @include section-eyebrow;
+    @include section-eyebrow($color-primary-dark);
     margin-bottom: $space-2;
   }
 
@@ -38,8 +49,8 @@
 
   &__filter-label {
     font-size: $font-size-xs;
-    font-weight: $font-weight-thin;
-    color: $color-muted-foreground;
+    font-weight: $font-weight-semibold;
+    color: $color-primary-dark;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
@@ -53,33 +64,50 @@
   &__chip {
     display: inline-flex;
     align-items: center;
-    gap: $space-1;
-    padding: $space-2 $space-3;
+    gap: $space-2;
+    min-height: 2.25rem;
+    padding: $space-1 $space-3;
     border-radius: $radius-full;
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     border: 1px solid $color-border;
-    background-color: $color-muted;
-    color: $color-muted-foreground;
-    transition: all $transition-base;
+    background-color: $color-background;
+    color: $color-foreground;
+    transition:
+      color $transition-base,
+      background-color $transition-base,
+      border-color $transition-base;
 
     &:hover {
-      color: $color-foreground;
-    }
-
-    &--active {
-      background-color: $color-primary;
-      color: $color-white;
+      color: $color-primary-dark;
       border-color: $color-primary;
     }
+
+    &:focus-visible {
+      @include focus-ring($color-primary-dark);
+    }
+
+    &--active,
+    &--active:hover {
+      background-color: $color-white;
+      color: $color-primary-dark;
+      border-color: $color-primary;
+    }
+  }
+
+  &__chip-logo {
+    width: 1.35rem;
+    height: 1.35rem;
+    flex-shrink: 0;
+    object-fit: contain;
   }
 
   &__empty {
     text-align: center;
     padding-block: $space-9;
     font-size: $font-size-sm;
-    font-weight: $font-weight-thin;
-    color: $color-muted-foreground;
+    font-weight: $font-weight-normal;
+    color: $color-foreground;
   }
 
   &__list {
@@ -90,9 +118,10 @@
 }
 
 .course-card {
-  border: 1px solid $color-border;
+  border: 1px solid var(--course-card-border);
   border-radius: $radius-2xl;
-  background-color: $color-card;
+  background-color: var(--course-card-background);
+  color: var(--course-card-text);
   overflow: hidden;
 
   &__header {
@@ -101,18 +130,26 @@
     align-items: center;
     gap: $space-4;
     padding: $space-5;
+    color: inherit;
     text-align: left;
     cursor: pointer;
     transition: background-color $transition-base;
 
     &:hover {
-      background-color: color-mix(in srgb, var(--color-secondary) 40%, transparent);
+      background-color: var(--course-card-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--course-card-text);
+      outline-offset: -4px;
     }
   }
 
-  &__emoji {
-    font-size: $font-size-2xl;
+  &__logo {
+    width: 2.75rem;
+    height: 2.75rem;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   &__info {
@@ -123,7 +160,7 @@
   &__name {
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
   }
 
   &__meta {
@@ -131,24 +168,24 @@
     align-items: center;
     gap: $space-3;
     flex-wrap: wrap;
-    margin-top: $space-1;
+    margin-top: $space-2;
+    color: inherit;
 
     span {
       font-size: $font-size-xs;
-      font-weight: $font-weight-thin;
-      color: $color-muted-foreground;
+      font-weight: $font-weight-normal;
+      color: inherit;
     }
 
     .course-card__price {
-      font-weight: $font-weight-semibold;
-      color: $color-primary;
+      font-weight: $font-weight-bold;
     }
   }
 
   &__chevron {
     flex-shrink: 0;
-    font-size: $font-size-lg;
-    color: $color-muted-foreground;
+    font-size: $font-size-xl;
+    color: inherit;
     transition: transform $transition-base;
 
     &--open {
@@ -158,13 +195,32 @@
 
   &__body {
     padding: $space-5;
-    border-top: 1px solid $color-border;
+    border-top: 1px solid var(--course-card-border);
   }
 
   &__desc {
-    font-size: $font-size-xs;
-    font-weight: $font-weight-thin;
-    color: $color-muted-foreground;
+    max-width: 70ch;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: inherit;
     line-height: 1.7;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .courses {
+    padding-inline: $space-3;
+  }
+
+  .course-card {
+    &__header {
+      gap: $space-3;
+      padding: $space-4;
+    }
+
+    &__logo {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
   }
 }

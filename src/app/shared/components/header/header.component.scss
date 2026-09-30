@@ -1,4 +1,5 @@
 @use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
 
 .sticky-nav {
   position: fixed;
@@ -131,25 +132,14 @@
     display: flex;
     align-items: center;
     gap: $space-2;
-    padding: $space-1 $space-2 $space-1 $space-1;
+    min-height: 2.75rem;
+    padding: $space-1 $space-3 $space-1 $space-1;
     border-radius: $radius-full;
+    cursor: pointer;
     transition: background-color $transition-base;
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    &-avatar {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: $radius-full;
-      background-color: $color-primary;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-black;
-      color: $color-white;
     }
 
     &-name {
@@ -328,17 +318,17 @@
     }
   }
 
-  &__avatar {
-    width: 2.25rem;
-    height: 2.25rem;
+  &__profile {
+    @include flex(center, center);
+    min-width: 2.75rem;
+    min-height: 2.75rem;
     border-radius: $radius-full;
-    background-color: $color-primary;
-    color: $color-white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $font-size-base;
-    font-weight: $font-weight-black;
+    cursor: pointer;
+    transition: transform $transition-fast;
+
+    &:hover {
+      transform: scale(1.06);
+    }
   }
 
   &--logged {

@@ -11,7 +11,7 @@
     <h1 class="profile__title">Mi perfil</h1>
 
     <div class="profile__info">
-      <div class="profile__avatar">{{ user()?.name?.charAt(0)?.toUpperCase() }}</div>
+      <app-user-avatar size="lg" [name]="user()?.name" />
       <div class="profile__details">
         <p class="profile__name">{{ user()?.name }}</p>
         <p class="profile__email">{{ user()?.email }}</p>

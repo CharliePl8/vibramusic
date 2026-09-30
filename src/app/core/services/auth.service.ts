@@ -17,6 +17,34 @@ interface ProfileRow {
   role: UserRole;
 }
 
+function firstNonEmpty(...values: (string | null | undefined)[]): string {
+  for (const value of values) {
+    const trimmed = value?.trim();
+    if (trimmed) return trimmed;
+  }
+  return '';
+}
+
+function titleCase(value: string): string {
+  return value
+    .replace(/[._-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b[a-z]/g, (char) => char.toUpperCase());
+}
+
+export function displayName(
+  profileName?: string | null,
+  metadataName?: string | null,
+  email?: string | null,
+): string {
+  return (
+    firstNonEmpty(profileName, metadataName) ||
+    titleCase(firstNonEmpty(email).split('@')[0]) ||
+    'Usuario'
+  );
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly client = inject(SupabaseService).client;
@@ -120,9 +148,17 @@ export class AuthService {
   }
 
   private async init(): Promise<void> {
-    const { data } = await this.client.auth.getSession();
-    await this.applySession(data.session?.user ?? null);
-    this.ready.set(true);
+    try {
+      const { data } = await this.client.auth.getSession();
+      await this.applySession(data.session?.user ?? null);
+    } catch (error) {
+      // Si la sesión no se puede restaurar, no dejamos la promesa pendiente ni
+      // rechazada: el guard espera a ensureReady() y una promesa rota convertiría
+      // cada navegación autenticada en un "no pasa nada" silencioso.
+      console.error('No se pudo restaurar la sesión:', error);
+    } finally {
+      this.ready.set(true);
+    }
   }
 
   private async applySession(authUser: SupabaseUser | null): Promise<void> {
@@ -132,22 +168,31 @@ export class AuthService {
     }
 
     const profile = await this.fetchProfile(authUser.id);
+    const email = profile?.email ?? authUser.email ?? '';
     this.currentUser.set({
       id: authUser.id,
-      email: profile?.email ?? authUser.email ?? '',
-      name: profile?.name || (authUser.user_metadata?.['name'] as string) || '',
+      email,
+      name: displayName(profile?.name, authUser.user_metadata?.['name'] as string, email),
       role: profile?.role ?? 'student',
     });
   }
 
   private async fetchProfile(id: string): Promise<ProfileRow | null> {
-    const { data, error } = await this.client
-      .from('profiles')
-      .select('name,email,role')
-      .eq('id', id)
-      .maybeSingle();
+    try {
+      const { data, error } = await this.client
+        .from('profiles')
+        .select('name,email,role')
+        .eq('id', id)
+        .maybeSingle();
 
-    if (error || !data) return null;
-    return data as ProfileRow;
+      if (error) {
+        console.error('No se pudo cargar el perfil:', error.message);
+        return null;
+      }
+      return (data as ProfileRow | null) ?? null;
+    } catch (error) {
+      console.error('No se pudo cargar el perfil:', error);
+      return null;
+    }
   }
 }

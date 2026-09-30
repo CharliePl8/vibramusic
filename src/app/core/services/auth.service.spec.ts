@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
+import { AuthService, displayName } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
 interface ProfileRow {
@@ -221,5 +221,51 @@ describe('AuthService', () => {
     callbackRef.fn?.('PASSWORD_RECOVERY', { user });
 
     expect(service.passwordRecovery()).toBe(true);
+  });
+
+  it('usa el email como nombre cuando el perfil no trae ninguno', async () => {
+    client.auth.getSession.mockResolvedValue({
+      data: { session: { user: authUser('u1', 'juan.perez_23@test.com') }, error: null },
+    });
+    client.from.mockReturnValue(
+      mockProfileQuery({ name: '', email: 'juan.perez_23@test.com', role: 'student' }),
+    );
+
+    const service = await createService();
+
+    expect(service.currentUser()?.name).toBe('Juan Perez 23');
+  });
+
+  it('sigue restorative la sesión aunque getSession falle', async () => {
+    client.auth.getSession.mockRejectedValue(new Error('Failed to fetch'));
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    const service = TestBed.inject(AuthService);
+
+    await expect(service.ensureReady()).resolves.toBeUndefined();
+    expect(service.ready()).toBe(true);
+    expect(consoleError).toHaveBeenCalled();
+  });
+});
+
+describe('displayName', () => {
+  it('prioriza el nombre del perfil', () => {
+    expect(displayName('Ana Ruiz', 'Otro', 'ana@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('usa la metadata si el perfil está vacío', () => {
+    expect(displayName('', 'Ana Ruiz', 'ana@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('ignora nombres que solo son espacios', () => {
+    expect(displayName('   ', '   ', 'ana.ruiz@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('deriva el nombre del email cuando no hay ninguno', () => {
+    expect(displayName(null, null, 'juan.perez_23@test.com')).toBe('Juan Perez 23');
+  });
+
+  it('cae a Usuario si no hay nada', () => {
+    expect(displayName(null, null, null)).toBe('Usuario');
   });
 });
