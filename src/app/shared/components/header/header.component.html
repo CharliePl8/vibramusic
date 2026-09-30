@@ -43,7 +43,7 @@
           [class.sticky-nav__auth-link--active]="currentUrl() === '/admin'"
           >Admin</a
         >
-        <a routerLink="/perfil" class="sticky-nav__user">
+        <a routerLink="/perfil" class="sticky-nav__user" aria-label="Mi perfil">
           <app-user-avatar size="sm" [name]="currentUser()?.name" />
           <span class="sticky-nav__user-name">{{ firstName() }}</span>
         </a>

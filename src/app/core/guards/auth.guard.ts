@@ -6,7 +6,12 @@ export const authGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  await auth.ensureReady();
+  try {
+    await auth.ensureReady();
+  } catch {
+    // Un guard que lanza cancela la navegación en silencio. Si la sesión no está
+    // lista decidimos igualmente con el estado actual.
+  }
 
   if (auth.isAuthenticated()) {
     return true;

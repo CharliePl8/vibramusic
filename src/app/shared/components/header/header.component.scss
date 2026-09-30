@@ -132,8 +132,10 @@
     display: flex;
     align-items: center;
     gap: $space-2;
-    padding: $space-1 $space-2 $space-1 $space-1;
+    min-height: 2.75rem;
+    padding: $space-1 $space-3 $space-1 $space-1;
     border-radius: $radius-full;
+    cursor: pointer;
     transition: background-color $transition-base;
 
     &:hover {
@@ -318,7 +320,10 @@
 
   &__profile {
     @include flex(center, center);
+    min-width: 2.75rem;
+    min-height: 2.75rem;
     border-radius: $radius-full;
+    cursor: pointer;
     transition: transform $transition-fast;
 
     &:hover {
