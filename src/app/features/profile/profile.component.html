@@ -1,5 +1,12 @@
 <div class="profile">
   <div class="profile__card">
+    <div class="profile__nav">
+      <a routerLink="/" class="profile__nav-link">← Volver al inicio</a>
+      <a *ngIf="isAdmin()" routerLink="/admin" class="profile__nav-link profile__nav-link--admin"
+        >Panel de administración →</a
+      >
+    </div>
+
     <p class="profile__eyebrow">Tu espacio</p>
     <h1 class="profile__title">Mi perfil</h1>
 
@@ -36,7 +43,7 @@
 
         <ng-container *ngIf="bookings().length === 0">
           <p class="profile__empty">Aún no tienes reservas del estudio.</p>
-          <a routerLink="/" class="profile__goto">Reservar ahora →</a>
+          <a [routerLink]="['/']" fragment="booking" class="profile__goto">Reservar ahora →</a>
         </ng-container>
       </div>
     </div>
@@ -52,7 +59,7 @@
 
         <ng-container *ngIf="contactMessages().length === 0">
           <p class="profile__empty">Todavía no has enviado ningún mensaje de contacto.</p>
-          <a routerLink="/" class="profile__goto">Ir al contacto →</a>
+          <a [routerLink]="['/']" fragment="contact" class="profile__goto">Ir al contacto →</a>
         </ng-container>
       </div>
     </div>

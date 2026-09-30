@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { STUDIO_GEAR, STUDIO_IMAGE } from '../../../../core/data/studio.data';
 import { AudioTracklistComponent } from '../audio-tracklist/audio-tracklist.component';
@@ -21,7 +22,7 @@ import { AuthService } from '../../../../core/services/auth.service';
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.scss',
 })
-export class StudioComponent {
+export class StudioComponent implements OnInit {
   readonly gear = STUDIO_GEAR;
   readonly services = STUDIO_SERVICES;
   readonly slots = STUDIO_SLOTS;
@@ -43,6 +44,21 @@ export class StudioComponent {
   private booking = inject(BookingService);
   private toast = inject(ToastService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+
+  ngOnInit() {
+    const handler = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'booking' && !this.bookingOpen()) {
+        this.openBooking();
+      }
+    };
+    handler();
+    const sub = this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(handler);
+    this.destroyRef.onDestroy(() => sub.unsubscribe());
+  }
 
   constructor() {
     this.form.controls.date.valueChanges.subscribe((date) => {
@@ -59,10 +75,16 @@ export class StudioComponent {
   }
 
   toggleBooking() {
-    this.bookingOpen.update((open) => !open);
     if (this.bookingOpen()) {
-      void this.loadTakenSlots(this.form.controls.date.value);
+      this.bookingOpen.set(false);
+    } else {
+      this.openBooking();
     }
+  }
+
+  private openBooking() {
+    this.bookingOpen.set(true);
+    void this.loadTakenSlots(this.form.controls.date.value);
   }
 
   async onSubmit() {

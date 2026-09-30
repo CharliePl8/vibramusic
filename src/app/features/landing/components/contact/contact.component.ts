@@ -28,7 +28,7 @@ export class ContactComponent {
   readonly contactInfo: ContactInfo[] = [
     { icon: '📍', value: 'Calle de la Música, 12 — Carmona (Sevilla)' },
     { icon: '📞', value: '+34 910 123 456' },
-    { icon: '✉️', value: 'hola@vibramusicstudio.es' },
+    { icon: '✉️', value: 'support@vibramusicstudio.es' },
     { icon: '🕒', value: 'Lun–Vie 9–21h · Sáb–Dom 10–18h' },
   ];
 

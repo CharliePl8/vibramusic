@@ -1,6 +1,11 @@
 @use '../../../../../assets/styles/variables' as *;
 @use '../../../../../assets/styles/mixins' as *;
 
+:host {
+  display: block;
+  margin-top: $space-8;
+}
+
 .tracklist {
   &__title {
     font-size: $font-size-md;
@@ -27,7 +32,9 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  transition: border-color $transition-base, background-color $transition-base;
+  transition:
+    border-color $transition-base,
+    background-color $transition-base;
 
   &:hover {
     border-color: rgba(231, 57, 56, 0.2);
@@ -49,7 +56,9 @@
     background-color: $color-muted;
     color: $color-muted-foreground;
     font-size: $font-size-xs;
-    transition: background-color $transition-base, color $transition-base;
+    transition:
+      background-color $transition-base,
+      color $transition-base;
 
     .track--playing &,
     .track:hover & {
@@ -145,7 +154,10 @@
     border-radius: $radius-full;
     background-color: $color-muted-foreground;
     opacity: 0.25;
-    transition: height 200ms ease, background-color $transition-base, opacity $transition-base;
+    transition:
+      height 200ms ease,
+      background-color $transition-base,
+      opacity $transition-base;
 
     &--active {
       background-color: $color-primary;

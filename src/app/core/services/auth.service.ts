@@ -25,12 +25,36 @@ export class AuthService {
   readonly currentUser = signal<User | null>(null);
   readonly ready = signal(false);
   readonly isAdmin = computed(() => this.currentUser()?.role === 'admin');
+  readonly passwordRecovery = signal(false);
 
   constructor() {
-    this.client.auth.onAuthStateChange((_event, session) => {
+    this.client.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' && session?.user) {
+        this.passwordRecovery.set(true);
+      }
       void this.applySession(session?.user ?? null);
     });
     this.initPromise = this.init();
+  }
+
+  async sendPasswordReset(email: string): Promise<AuthResult> {
+    const { error } = await this.client.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (error) {
+      return { status: 'error', message: error.message };
+    }
+    return { status: 'ok' };
+  }
+
+  async updatePassword(newPassword: string): Promise<AuthResult> {
+    const { error } = await this.client.auth.updateUser({ password: newPassword });
+
+    if (error) {
+      return { status: 'error', message: error.message };
+    }
+    return { status: 'ok' };
   }
 
   async register(name: string, email: string, password: string): Promise<AuthResult> {

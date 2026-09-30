@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   private router = inject(Router);
 
   readonly user = this.auth.currentUser;
+  readonly isAdmin = this.auth.isAdmin;
   readonly bookings = signal<Booking[]>([]);
   readonly contactMessages = signal<ContactMessage[]>([]);
 

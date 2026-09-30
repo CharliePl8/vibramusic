@@ -17,6 +17,8 @@ function createMockClient() {
       getSession: vi.fn(),
       signUp: vi.fn(),
       signInWithPassword: vi.fn(),
+      resetPasswordForEmail: vi.fn(),
+      updateUser: vi.fn(),
       signOut: vi.fn(),
     },
     from: vi.fn(),
@@ -169,5 +171,55 @@ describe('AuthService', () => {
 
     expect(service.currentUser()).toBeNull();
     expect(service.isAuthenticated()).toBe(false);
+  });
+
+  it('envía el enlace de recuperación de contraseña', async () => {
+    client.auth.resetPasswordForEmail.mockResolvedValue({ data: {}, error: null });
+
+    const service = await createService();
+    const result = await service.sendPasswordReset('ana@test.com');
+
+    expect(result).toEqual({ status: 'ok' });
+    expect(client.auth.resetPasswordForEmail).toHaveBeenCalledWith('ana@test.com', {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+  });
+
+  it('devuelve error si falla el envío de recuperación', async () => {
+    client.auth.resetPasswordForEmail.mockResolvedValue({
+      data: {},
+      error: { message: 'User not found' },
+    });
+
+    const service = await createService();
+    const result = await service.sendPasswordReset('ana@test.com');
+
+    expect(result).toEqual({ status: 'error', message: 'User not found' });
+  });
+
+  it('actualiza la contraseña con la sesión de recuperación', async () => {
+    client.auth.updateUser.mockResolvedValue({ data: { user: null }, error: null });
+
+    const service = await createService();
+    const result = await service.updatePassword('nueva1234');
+
+    expect(result).toEqual({ status: 'ok' });
+    expect(client.auth.updateUser).toHaveBeenCalledWith({ password: 'nueva1234' });
+  });
+
+  it('marca passwordRecovery cuando llega el evento PASSWORD_RECOVERY', async () => {
+    const callbackRef: { fn?: (event: string, session: unknown) => void } = {};
+    client.auth.onAuthStateChange.mockImplementation((fn: (event: string) => void) => {
+      callbackRef.fn = fn;
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    });
+    client.auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
+
+    const service = await createService();
+
+    const user = authUser('u1', 'ana@test.com', 'Ana');
+    callbackRef.fn?.('PASSWORD_RECOVERY', { user });
+
+    expect(service.passwordRecovery()).toBe(true);
   });
 });

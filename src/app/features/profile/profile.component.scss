@@ -17,6 +17,28 @@
     padding: $space-7;
   }
 
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-4;
+    margin-bottom: $space-6;
+  }
+
+  &__nav-link {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+
+    &:hover {
+      color: $color-primary-hover;
+    }
+  }
+
+  &__nav-link--admin {
+    margin-left: auto;
+  }
+
   &__eyebrow {
     @include section-eyebrow;
     margin-bottom: $space-2;
