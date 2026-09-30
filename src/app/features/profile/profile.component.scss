@@ -42,10 +42,10 @@
   &__nav-link {
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-primary;
+    color: $color-white;
 
     &:hover {
-      color: $color-primary-hover;
+      color: rgba(255, 255, 255, 0.8);
     }
   }
 
@@ -70,7 +70,7 @@
     align-items: center;
     gap: $space-4;
     padding: $space-5;
-    background-color: var(--profile-card-surface);
+    background-color: $color-background;
     border-radius: $radius-2xl;
     margin-bottom: $space-6;
   }
@@ -83,12 +83,12 @@
   &__name {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: inherit;
+    color: $color-primary;
   }
 
   &__email {
     font-size: $font-size-sm;
-    color: inherit;
+    color: $color-muted-foreground;
   }
 
   &__section {
