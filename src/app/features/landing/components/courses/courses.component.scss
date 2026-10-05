@@ -2,20 +2,14 @@
 @use '../../../../../assets/styles/mixins' as *;
 
 .courses {
-  --course-card-background: #{$color-primary-dark};
-  --course-card-hover: #{$color-primary-darker};
-  --course-card-text: #{$color-white};
-  --course-card-border: rgba(255, 255, 255, 0.28);
+  --course-card-background: #{$color-surface};
+  --course-card-hover: #{$color-primary-soft};
+  --course-card-text: #{$color-foreground};
+  --course-card-border: #{$color-primary};
 
   background-color: $color-background;
   padding-block: $space-10;
   padding-inline: $space-4;
-
-  [data-theme='dark'] & {
-    --course-card-background: #{$color-card};
-    --course-card-hover: #{$color-secondary};
-    --course-card-border: rgba(255, 255, 255, 0.16);
-  }
 
   &__inner {
     max-width: $container-max-width;
@@ -118,11 +112,12 @@
 }
 
 .course-card {
-  border: 1px solid var(--course-card-border);
+  border: 2px solid var(--course-card-border);
   border-radius: $radius-2xl;
   background-color: var(--course-card-background);
   color: var(--course-card-text);
   overflow: hidden;
+  box-shadow: $shadow-sm;
 
   &__header {
     width: 100%;
@@ -140,7 +135,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--course-card-text);
+      outline: 2px solid $color-primary;
       outline-offset: -4px;
     }
   }
@@ -185,7 +180,7 @@
   &__chevron {
     flex-shrink: 0;
     font-size: $font-size-xl;
-    color: inherit;
+    color: $color-primary;
     transition: transform $transition-base;
 
     &--open {
@@ -204,6 +199,21 @@
     font-weight: $font-weight-normal;
     color: inherit;
     line-height: 1.7;
+  }
+
+  &__actions {
+    margin-top: $space-5;
+  }
+
+  &__reserve {
+    @include button-reset;
+    @include button-primary;
+    min-height: 2.75rem;
+    padding: $space-2 $space-4;
+    border-radius: $radius-xl;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    transition: background-color $transition-base;
   }
 }
 

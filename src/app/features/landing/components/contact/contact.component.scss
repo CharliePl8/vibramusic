@@ -168,11 +168,10 @@
   }
 
   &__submit {
+    @include button-primary;
     width: 100%;
     padding: $space-3;
     border-radius: $radius-xl;
-    background-color: $color-primary;
-    color: $color-white;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     display: flex;
@@ -180,14 +179,5 @@
     justify-content: center;
     gap: $space-2;
     transition: background-color $transition-base;
-
-    &:hover {
-      background-color: $color-primary-hover;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
   }
 }

@@ -29,8 +29,8 @@ export class HeaderComponent {
   readonly navItems = [
     { key: 'about', label: 'Nosotros' },
     { key: 'courses', label: 'Cursos' },
-    { key: 'masterclasses', label: 'Masterclasses' },
     { key: 'studio', label: 'Estudio' },
+    { key: 'masterclasses', label: 'Masterclasses' },
     { key: 'contact', label: 'Contacto' },
   ];
 

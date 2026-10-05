@@ -64,12 +64,7 @@
             <p class="admin__item-sub">{{ m.message }}</p>
             <p class="admin__item-student">{{ formatTimestamp(m.createdAt) }}</p>
           </div>
-          <button
-            type="button"
-            class="admin__toggle"
-            [class.admin__toggle--read]="m.read"
-            (click)="toggleRead(m)"
-          >
+          <button type="button" class="admin__toggle" (click)="toggleRead(m)">
             {{ m.read ? 'Marcar no leído' : 'Marcar leído' }}
           </button>
         </div>

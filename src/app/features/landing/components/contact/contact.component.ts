@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessagesService } from '../../../../core/services/messages.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ToastService } from '../../../../core/services/toast.service';
+import { ContactDraftService } from '../../../../core/services/contact-draft.service';
 
 export interface ContactInfo {
   icon: string;
@@ -24,6 +25,7 @@ export class ContactComponent {
   private messages = inject(MessagesService);
   private auth = inject(AuthService);
   private toast = inject(ToastService);
+  private contactDraft = inject(ContactDraftService);
 
   readonly contactInfo: ContactInfo[] = [
     { icon: '📍', value: 'Calle de la Música, 12 — Carmona (Sevilla)' },
@@ -37,6 +39,30 @@ export class ContactComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     message: new FormControl('', [Validators.required]),
   });
+
+  constructor() {
+    // Mensaje que deja el botón de reservar de un curso.
+    effect(() => {
+      const draft = this.contactDraft.draft();
+      if (draft) {
+        this.form.patchValue({ message: draft.message });
+      }
+    });
+
+    // Nombre y email de la sesión, solo si el visitante no los ha escrito.
+    // Como `currentUser` es un signal, esto también salta cuando la sesión
+    // llega de Supabase después de montar el formulario.
+    effect(() => {
+      const user = this.auth.currentUser();
+      if (!user) return;
+      const patch: { name?: string; email?: string } = {};
+      if (!this.form.controls.name.value) patch.name = user.name;
+      if (!this.form.controls.email.value) patch.email = user.email;
+      if (patch.name || patch.email) {
+        this.form.patchValue(patch);
+      }
+    });
+  }
 
   async onSubmit() {
     if (this.form.invalid) {
@@ -61,6 +87,7 @@ export class ContactComponent {
     }
 
     this.form.reset();
+    this.contactDraft.clear();
     this.sent.set(true);
     this.toast.success('Mensaje enviado. Te contactaremos pronto.');
     setTimeout(() => this.sent.set(false), 4000);

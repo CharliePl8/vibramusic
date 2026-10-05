@@ -97,39 +97,29 @@
   }
 
   &__item {
-    --admin-card-background: #{$color-primary-dark};
-    --admin-card-text: #{$color-white};
-    --admin-card-border: rgba(255, 255, 255, 0.28);
+    --admin-card-surface: #{$color-primary-soft};
+    --admin-card-text: #{$color-foreground};
 
     @include flex(space-between, center, $space-3);
     padding: $space-4;
-    background-color: var(--admin-card-background);
+    background-color: var(--admin-card-surface);
     color: var(--admin-card-text);
-    border: 1px solid var(--admin-card-border);
-    border-left: 4px solid transparent;
+    border: 1px solid $color-primary;
+    border-left: 4px solid $color-primary;
     border-radius: $radius-xl;
 
-    [data-theme='dark'] & {
-      --admin-card-background: #{$color-card};
-      --admin-card-border: rgba(255, 255, 255, 0.16);
-    }
-
     &--unread {
-      border-left-color: $color-white;
-
       .admin__item-main {
         font-weight: $font-weight-black;
       }
     }
 
     &--read {
-      --admin-card-background: rgba(0, 0, 0, 0.04);
+      --admin-card-surface: transparent;
       --admin-card-text: #{$color-foreground};
-      --admin-card-border: #{$color-border};
 
-      [data-theme='dark'] & {
-        --admin-card-background: transparent;
-      }
+      border-color: $color-border;
+      border-left-color: $color-muted-foreground;
     }
   }
 
@@ -139,8 +129,8 @@
     padding: 0.1rem $space-2;
     margin-right: $space-2;
     border-radius: $radius-full;
-    background-color: $color-white;
-    color: $color-primary-dark;
+    background-color: $color-primary-dark;
+    color: $color-white;
     font-size: $font-size-xs;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
@@ -148,8 +138,9 @@
     vertical-align: middle;
 
     &--read {
-      background-color: $color-primary-soft;
-      color: $color-foreground;
+      background-color: transparent;
+      border: 1px solid $color-muted-foreground;
+      color: $color-muted-foreground;
     }
   }
 
@@ -192,32 +183,13 @@
   &__cancel,
   &__toggle {
     @include button-reset;
+    @include button-primary;
     flex-shrink: 0;
     padding: $space-2 $space-3;
-    border-radius: $radius-lg;
-    border: 1px solid $color-white;
-    color: $color-white;
+    border-radius: $radius-xl;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    transition:
-      background-color $transition-fast,
-      color $transition-fast;
-
-    &:hover {
-      background-color: $color-white;
-      color: $color-danger;
-    }
-  }
-
-  &__toggle--read {
-    border-color: $color-muted-foreground;
-    color: $color-foreground;
-
-    &:hover {
-      background-color: $color-primary-dark;
-      border-color: $color-primary-dark;
-      color: $color-white;
-    }
+    transition: background-color $transition-fast;
   }
 
   &__empty {

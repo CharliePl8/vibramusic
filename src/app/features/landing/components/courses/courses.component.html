@@ -111,6 +111,11 @@
           [attr.aria-labelledby]="'course-title-' + course.id"
         >
           <p class="course-card__desc">{{ course.description }}</p>
+          <div class="course-card__actions">
+            <button type="button" class="course-card__reserve" (click)="reserve(course)">
+              Reservar <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

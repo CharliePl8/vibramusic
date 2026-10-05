@@ -10,8 +10,8 @@
   @include flex(center, center);
   overflow: hidden;
   border-radius: $radius-full;
-  background-color: $color-primary-dark;
-  color: $color-white;
+  background-color: var(--user-avatar-background, #{$color-primary-dark});
+  color: var(--user-avatar-text, #{$color-white});
   font-weight: $font-weight-black;
   line-height: 1;
   user-select: none;

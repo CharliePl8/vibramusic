@@ -23,14 +23,14 @@ export const COURSE_FILTER_LOGOS: Record<CourseCategory, string> = {
 };
 
 export const COURSE_LOGOS: Record<CourseCategory, string> = {
-  guitar: '/assets/images/cursos/guitarra.png',
-  piano: '/assets/images/cursos/piano.png',
-  voice: '/assets/images/cursos/canto.png',
-  drums: '/assets/images/cursos/bateria.png',
-  bass: '/assets/images/cursos/guitarra.png',
-  violin: '/assets/images/cursos/violin.png',
-  theory: '/assets/images/cursos/teoriamusical.png',
-  recording: '/assets/images/cursos/grabacion.png',
+  guitar: '/assets/images/cursos/guitarra-rojo.png',
+  piano: '/assets/images/cursos/piano-rojo.png',
+  voice: '/assets/images/cursos/canto-rojo.png',
+  drums: '/assets/images/cursos/bateria-rojo.png',
+  bass: '/assets/images/cursos/guitarra-rojo.png',
+  violin: '/assets/images/cursos/violin-rojo.png',
+  theory: '/assets/images/cursos/teoriamusical-rojo.png',
+  recording: '/assets/images/cursos/grabacion-rojo.png',
 };
 
 export const MODALITY_ES: Record<Modality, string> = {
