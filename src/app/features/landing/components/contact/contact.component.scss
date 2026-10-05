@@ -1,12 +1,19 @@
 @use '../../../../../assets/styles/variables' as *;
 @use '../../../../../assets/styles/mixins' as *;
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 .contact {
+  width: 100%;
   background-color: $color-secondary;
   padding-block: $space-10;
   padding-inline: $space-4;
 
   &__inner {
+    width: 100%;
     max-width: $container-max-width;
     margin: 0 auto;
   }
@@ -34,6 +41,7 @@
   }
 
   &__info {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: $space-5;
@@ -89,6 +97,7 @@
   }
 
   &__form {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: $space-4;

@@ -3,11 +3,19 @@
     <p class="quick__eyebrow">Accesos rápidos</p>
     <div class="quick__grid">
       <button
+        type="button"
         *ngFor="let card of cards()"
         class="quick__card quick__card--{{ card.accent }}"
         (click)="onNavigate(card.key)"
       >
-        <span class="quick__card-icon">{{ card.icon }}</span>
+        <img
+          class="quick__card-image"
+          [src]="card.imageUrl"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="quick__card-overlay" aria-hidden="true"></span>
         <h3 class="quick__card-title">{{ card.label }}</h3>
         <p class="quick__card-desc">{{ card.desc }}</p>
         <span class="quick__card-link">Acceder <span class="quick__card-arrow">›</span></span>

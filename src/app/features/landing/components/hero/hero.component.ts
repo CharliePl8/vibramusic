@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgStyle } from '@angular/common';
-import { HERO_BG_IMAGE } from '../../../../core/data/studio.data';
 
 @Component({
   selector: 'app-hero',
@@ -10,11 +9,10 @@ import { HERO_BG_IMAGE } from '../../../../core/data/studio.data';
   styleUrl: './hero.component.scss',
 })
 export class HeroComponent {
-  private readonly bgImage = HERO_BG_IMAGE;
 
-  get bgStyle() {
-    return { 'background-image': `url(${this.bgImage})` };
-  }
+get bgStyle() {
+  return { 'background-image': "url('/assets/images/Portada.png')" };
+}   
 
   onExplore() {
     const el = document.getElementsByClassName('quick')[0];

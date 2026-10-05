@@ -8,21 +8,22 @@ $colors-light: (
   'color-primary-darker': #b02828,
   'color-primary-hover': #c82d2c,
   'color-primary-soft': rgba(231, 57, 56, 0.1),
-  'color-background': #f6f5f2,
+  'color-background': #fef5da,
   'color-foreground': #1c1c1c,
-  'color-card': #f6f5f2,
-  'color-secondary': #ececea,
-  'color-muted': #edecea,
+  'color-card': #e73938,
+  'color-secondary': #fef5da,
+  'color-muted': #fef5da,
   'color-muted-foreground': #888888,
   'color-border': rgba(231, 57, 56, 0.15),
-  'color-input-background': #edecea,
+  'color-input-background': #fef5da,
   'color-dark': #111111,
-  'color-white': #ffffff,
+  'color-white': #fef5da,
   'color-black': #000000,
   'color-success': #2ecc71,
   'color-warning': #f1c40f,
   'color-danger': #c0392b,
   'color-emerald': #10b981,
+  'color-sub': #9c948a,
 );
 
 $colors-dark: (
@@ -46,6 +47,7 @@ $colors-dark: (
   'color-warning': #f5c518,
   'color-danger': #e0564a,
   'color-emerald': #2fcf96,
+  'color-sub': #9c948a,
 );
 
 @mixin emit-color-tokens($tokens) {
@@ -101,6 +103,26 @@ svg {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+app-root,
+router-outlet,
+app-home,
+app-profile,
+app-login,
+app-register,
+app-admin,
+app-not-found,
+app-footer,
+app-hero,
+app-quick-access,
+app-about,
+app-courses,
+app-masterclasses,
+app-studio,
+app-contact,
+app-audio-tracklist {
+  display: block;
 }
 
 h1,

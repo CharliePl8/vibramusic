@@ -42,4 +42,13 @@ describe('authGuard', () => {
     expect(createUrlTree).toHaveBeenCalledWith(['/login']);
     expect(result).toEqual({ commands: ['/login'] });
   });
+
+  it('no cancela la navegación si ensureReady falla', async () => {
+    ensureReady.mockRejectedValue(new Error('boom'));
+    isAuthenticated.mockReturnValue(true);
+
+    const result = await TestBed.runInInjectionContext(() => authGuard(route, state));
+
+    expect(result).toBe(true);
+  });
 });
