@@ -4,44 +4,59 @@
     <h2 class="courses__title">Cursos</h2>
 
     <div class="courses__filters">
-      <div class="courses__filter-group">
-        <p class="courses__filter-label">Instrumento</p>
+      <div class="courses__filter-group" role="group" aria-labelledby="category-filter-label">
+        <p id="category-filter-label" class="courses__filter-label">Categoría</p>
         <div class="courses__filter-chips">
           <button
+            type="button"
             class="courses__chip"
-            [class.courses__chip--active]="instrFilter() === 'all'"
-            (click)="setInstr('all')"
+            [class.courses__chip--active]="categoryFilter() === 'all'"
+            [attr.aria-pressed]="categoryFilter() === 'all'"
+            (click)="setCategory('all')"
           >
             Todos
           </button>
           <button
-            *ngFor="let instr of instruments"
+            *ngFor="let category of categories"
+            type="button"
             class="courses__chip"
-            [class.courses__chip--active]="instrFilter() === instr"
-            (click)="setInstr(instr)"
+            [class.courses__chip--active]="categoryFilter() === category"
+            [attr.aria-pressed]="categoryFilter() === category"
+            (click)="setCategory(category)"
           >
-            <span>{{ instrumentEmoji[instr] }}</span> {{ instrumentName(instr) }}
+            <img
+              class="courses__chip-logo"
+              [src]="filterLogos[category]"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>{{ categoryName(category) }}</span>
           </button>
         </div>
       </div>
 
-      <div class="courses__filter-group">
-        <p class="courses__filter-label">Modalidad</p>
+      <div class="courses__filter-group" role="group" aria-labelledby="modality-filter-label">
+        <p id="modality-filter-label" class="courses__filter-label">Modalidad</p>
         <div class="courses__filter-chips">
           <button
+            type="button"
             class="courses__chip"
             [class.courses__chip--active]="modalityFilter() === 'all'"
+            [attr.aria-pressed]="modalityFilter() === 'all'"
             (click)="setModality('all')"
           >
             Todos
           </button>
           <button
-            *ngFor="let mod of modalities"
+            *ngFor="let modality of modalities"
+            type="button"
             class="courses__chip"
-            [class.courses__chip--active]="modalityFilter() === mod"
-            (click)="setModality(mod)"
+            [class.courses__chip--active]="modalityFilter() === modality"
+            [attr.aria-pressed]="modalityFilter() === modality"
+            (click)="setModality(modality)"
           >
-            <span>{{ modalityIcons[mod] }}</span> {{ modalityName(mod) }}
+            <span aria-hidden="true">{{ modalityIcons[modality] }}</span>
+            <span>{{ modalityName(modality) }}</span>
           </button>
         </div>
       </div>
@@ -53,25 +68,54 @@
 
     <div *ngIf="filteredCourses.length > 0" class="courses__list">
       <div *ngFor="let course of filteredCourses" class="course-card">
-        <button class="course-card__header" (click)="toggleCourse(course.id)">
-          <span class="course-card__emoji">
-            {{ instrumentEmoji[course.instrument] }}
-          </span>
+        <button
+          type="button"
+          class="course-card__header"
+          [attr.aria-expanded]="expandedCourse() === course.id"
+          [attr.aria-controls]="'course-body-' + course.id"
+          (click)="toggleCourse(course.id)"
+        >
+          <img
+            class="course-card__logo"
+            [src]="courseLogos[course.category]"
+            alt=""
+            aria-hidden="true"
+          />
           <div class="course-card__info">
-            <h3 class="course-card__name">{{ course.name }}</h3>
+            <h3 [id]="'course-title-' + course.id" class="course-card__name">
+              {{ course.name }}
+            </h3>
             <div class="course-card__meta">
               <span>{{ course.teacher }}</span>
               <span>{{ course.level }}</span>
               <span class="course-card__price">{{ course.price }}€/mes</span>
-              <span>{{ modalityIcons[course.modality] }} {{ modalityName(course.modality) }}</span>
+              <span>
+                <span aria-hidden="true">{{ modalityIcons[course.modality] }}</span>
+                {{ modalityName(course.modality) }}
+              </span>
             </div>
           </div>
-          <span class="course-card__chevron" [class.course-card__chevron--open]="expandedCourse() === course.id">
+          <span
+            class="course-card__chevron"
+            [class.course-card__chevron--open]="expandedCourse() === course.id"
+            aria-hidden="true"
+          >
             ⌄
           </span>
         </button>
-        <div class="course-card__body" *ngIf="expandedCourse() === course.id">
+        <div
+          *ngIf="expandedCourse() === course.id"
+          [id]="'course-body-' + course.id"
+          class="course-card__body"
+          role="region"
+          [attr.aria-labelledby]="'course-title-' + course.id"
+        >
           <p class="course-card__desc">{{ course.description }}</p>
+          <div class="course-card__actions">
+            <button type="button" class="course-card__reserve" (click)="reserve(course)">
+              Reservar <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

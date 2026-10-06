@@ -35,10 +35,11 @@
   }
 
   &__gear-card {
-    background-color: $color-card;
-    border: 1px solid $color-border;
+    background-color: $color-surface;
+    border: 2px solid $color-primary;
     border-radius: $radius-2xl;
     padding: $space-6;
+    box-shadow: $shadow-sm;
   }
 
   &__gear-title {
@@ -113,11 +114,13 @@
   }
 
   &__booking {
-    background-color: $color-card;
-    border: 1px solid $color-border;
+    background-color: $color-surface;
+    border: 2px solid $color-primary;
     border-radius: $radius-2xl;
+    color: $color-foreground;
     padding: $space-6;
     margin-top: $space-6;
+    box-shadow: $shadow-sm;
   }
 
   &__booking-head {
@@ -128,33 +131,29 @@
   &__booking-title {
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
     margin-bottom: $space-1;
   }
 
   &__booking-desc {
     font-size: $font-size-xs;
-    font-weight: $font-weight-thin;
-    color: $color-muted-foreground;
+    font-weight: $font-weight-normal;
+    color: inherit;
     line-height: 1.6;
   }
 
   &__booking-toggle {
     @include button-reset;
+    @include button-primary;
+    min-height: 2.75rem;
     padding: $space-2 $space-4;
-    border: 1px solid $color-primary;
     border-radius: $radius-xl;
-    color: $color-primary;
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition:
-      background-color $transition-base,
-      color $transition-base;
+    transition: background-color $transition-base;
 
-    &:hover,
     &--active {
-      background-color: $color-primary;
-      color: $color-white;
+      background-color: $color-primary-hover;
     }
   }
 
@@ -184,14 +183,14 @@
   &__label {
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-foreground;
+    color: inherit;
   }
 
   &__input {
     padding: $space-3;
-    border: 1px solid $color-border;
+    border: 1px solid $color-muted-foreground;
     border-radius: $radius-lg;
-    background-color: $color-input-background;
+    background-color: $color-input-elevated;
     color: $color-foreground;
     font-size: $font-size-sm;
     transition: border-color $transition-fast;
@@ -212,22 +211,19 @@
 
   &__error {
     font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
     color: $color-danger;
   }
 
   &__submit {
     @include button-reset;
+    @include button-primary;
     align-self: flex-start;
+    min-height: 2.75rem;
     padding: $space-3 $space-6;
     border-radius: $radius-xl;
-    background-color: $color-primary;
-    color: $color-white;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     transition: background-color $transition-base;
-
-    &:hover {
-      background-color: $color-primary-hover;
-    }
   }
 }

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
+import { AuthService, displayName } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
 interface ProfileRow {
@@ -17,6 +17,8 @@ function createMockClient() {
       getSession: vi.fn(),
       signUp: vi.fn(),
       signInWithPassword: vi.fn(),
+      resetPasswordForEmail: vi.fn(),
+      updateUser: vi.fn(),
       signOut: vi.fn(),
     },
     from: vi.fn(),
@@ -169,5 +171,101 @@ describe('AuthService', () => {
 
     expect(service.currentUser()).toBeNull();
     expect(service.isAuthenticated()).toBe(false);
+  });
+
+  it('envía el enlace de recuperación de contraseña', async () => {
+    client.auth.resetPasswordForEmail.mockResolvedValue({ data: {}, error: null });
+
+    const service = await createService();
+    const result = await service.sendPasswordReset('ana@test.com');
+
+    expect(result).toEqual({ status: 'ok' });
+    expect(client.auth.resetPasswordForEmail).toHaveBeenCalledWith('ana@test.com', {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+  });
+
+  it('devuelve error si falla el envío de recuperación', async () => {
+    client.auth.resetPasswordForEmail.mockResolvedValue({
+      data: {},
+      error: { message: 'User not found' },
+    });
+
+    const service = await createService();
+    const result = await service.sendPasswordReset('ana@test.com');
+
+    expect(result).toEqual({ status: 'error', message: 'User not found' });
+  });
+
+  it('actualiza la contraseña con la sesión de recuperación', async () => {
+    client.auth.updateUser.mockResolvedValue({ data: { user: null }, error: null });
+
+    const service = await createService();
+    const result = await service.updatePassword('nueva1234');
+
+    expect(result).toEqual({ status: 'ok' });
+    expect(client.auth.updateUser).toHaveBeenCalledWith({ password: 'nueva1234' });
+  });
+
+  it('marca passwordRecovery cuando llega el evento PASSWORD_RECOVERY', async () => {
+    const callbackRef: { fn?: (event: string, session: unknown) => void } = {};
+    client.auth.onAuthStateChange.mockImplementation((fn: (event: string) => void) => {
+      callbackRef.fn = fn;
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    });
+    client.auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
+
+    const service = await createService();
+
+    const user = authUser('u1', 'ana@test.com', 'Ana');
+    callbackRef.fn?.('PASSWORD_RECOVERY', { user });
+
+    expect(service.passwordRecovery()).toBe(true);
+  });
+
+  it('usa el email como nombre cuando el perfil no trae ninguno', async () => {
+    client.auth.getSession.mockResolvedValue({
+      data: { session: { user: authUser('u1', 'juan.perez_23@test.com') }, error: null },
+    });
+    client.from.mockReturnValue(
+      mockProfileQuery({ name: '', email: 'juan.perez_23@test.com', role: 'student' }),
+    );
+
+    const service = await createService();
+
+    expect(service.currentUser()?.name).toBe('Juan Perez 23');
+  });
+
+  it('sigue restorative la sesión aunque getSession falle', async () => {
+    client.auth.getSession.mockRejectedValue(new Error('Failed to fetch'));
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    const service = TestBed.inject(AuthService);
+
+    await expect(service.ensureReady()).resolves.toBeUndefined();
+    expect(service.ready()).toBe(true);
+    expect(consoleError).toHaveBeenCalled();
+  });
+});
+
+describe('displayName', () => {
+  it('prioriza el nombre del perfil', () => {
+    expect(displayName('Ana Ruiz', 'Otro', 'ana@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('usa la metadata si el perfil está vacío', () => {
+    expect(displayName('', 'Ana Ruiz', 'ana@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('ignora nombres que solo son espacios', () => {
+    expect(displayName('   ', '   ', 'ana.ruiz@test.com')).toBe('Ana Ruiz');
+  });
+
+  it('deriva el nombre del email cuando no hay ninguno', () => {
+    expect(displayName(null, null, 'juan.perez_23@test.com')).toBe('Juan Perez 23');
+  });
+
+  it('cae a Usuario si no hay nada', () => {
+    expect(displayName(null, null, null)).toBe('Usuario');
   });
 });

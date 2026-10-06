@@ -1,0 +1,36 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.user-avatar {
+  @include flex(center, center);
+  overflow: hidden;
+  border-radius: $radius-full;
+  background-color: var(--user-avatar-background, #{$color-primary-dark});
+  color: var(--user-avatar-text, #{$color-white});
+  font-weight: $font-weight-black;
+  line-height: 1;
+  user-select: none;
+
+  &--sm {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: $font-size-xs;
+  }
+
+  &--md {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: $font-size-base;
+  }
+
+  &--lg {
+    width: 4rem;
+    height: 4rem;
+    font-size: $font-size-2xl;
+  }
+}

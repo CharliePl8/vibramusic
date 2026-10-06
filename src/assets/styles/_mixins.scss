@@ -59,6 +59,26 @@
   outline-offset: 2px;
 }
 
+// Botón de acción principal: la línea que comparten todos los botones de
+// enviar / confirmar / reservar. Mismo fondo, texto, hover y foco.
+@mixin button-primary {
+  background-color: $color-primary;
+  color: $color-white;
+
+  &:hover:not(:disabled) {
+    background-color: $color-primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    @include focus-ring($color-primary-dark);
+  }
+}
+
 // Visually hidden
 @mixin visually-hidden {
   position: absolute;

@@ -7,11 +7,12 @@ import { MessagesService } from '../../core/services/messages.service';
 import { ToastService } from '../../core/services/toast.service';
 import { Booking } from '../../core/models/booking.model';
 import { ContactMessage } from '../../core/models/message.model';
+import { UserAvatarComponent } from '../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, UserAvatarComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit {
   private router = inject(Router);
 
   readonly user = this.auth.currentUser;
+  readonly isAdmin = this.auth.isAdmin;
   readonly bookings = signal<Booking[]>([]);
   readonly contactMessages = signal<ContactMessage[]>([]);
 

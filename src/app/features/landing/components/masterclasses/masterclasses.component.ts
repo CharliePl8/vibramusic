@@ -99,4 +99,9 @@ export class MasterclassesComponent {
   styleIcon(style?: string): string {
     return style ? STYLE_ICON[style] ?? '🎶' : '';
   }
+
+  // CTA del aviso de "próximamente": lleva al formulario de contacto.
+  scrollToContact() {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }

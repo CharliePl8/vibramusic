@@ -4,11 +4,12 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
+import { UserAvatarComponent } from '../user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, UserAvatarComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -28,8 +29,8 @@ export class HeaderComponent {
   readonly navItems = [
     { key: 'about', label: 'Nosotros' },
     { key: 'courses', label: 'Cursos' },
-    { key: 'masterclasses', label: 'Masterclasses' },
     { key: 'studio', label: 'Estudio' },
+    { key: 'masterclasses', label: 'Masterclasses' },
     { key: 'contact', label: 'Contacto' },
   ];
 

@@ -2,6 +2,8 @@
 @use '../../../../../assets/styles/mixins' as *;
 
 .hero {
+  --hero-content-width: min(clamp(14rem, 28vw, 22rem), 45vh);
+
   position: relative;
   height: 100vh;
   display: flex;
@@ -65,43 +67,41 @@
   }
 
   &__title {
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: $font-weight-black;
-    color: $color-white;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin-bottom: $space-5;
+    margin: 0 auto $space-5;
+  }
 
-    &-accent {
-      color: rgba(255, 255, 255, 0.6);
-      font-style: italic;
-      font-weight: $font-weight-thin;
-    }
+  &__logo {
+    display: block;
+    width: var(--hero-content-width);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
   }
 
   &__subtitle {
-    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
-    font-weight: $font-weight-thin;
-    color: $color-white;
+    width: var(--hero-content-width);
+    max-width: 100%;
+    font-size: clamp(1rem, 1.75vw, 1.25rem);
+    font-weight: $font-weight-medium;
+    color: $color-sub;
     line-height: 1.6;
-    max-width: 40rem;
     margin: 0 auto $space-9;
   }
 
   &__cta {
+    @include button-primary;
     display: inline-flex;
     align-items: center;
     gap: $space-2;
     padding: $space-3 $space-8;
-    border-radius: $radius-full;
-    background-color: $color-primary;
-    color: $color-white;
+    border-radius: $radius-xl;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition: background-color $transition-base, gap $transition-base;
+    transition:
+      background-color $transition-base,
+      gap $transition-base;
 
     &:hover {
-      background-color: $color-primary-hover;
       gap: $space-3;
     }
 

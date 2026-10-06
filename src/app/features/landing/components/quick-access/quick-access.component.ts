@@ -1,9 +1,13 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+const COURSES_CARD_IMAGE = '/assets/images/quick-access-cursos.png';
+const MASTERCLASSES_CARD_IMAGE = '/assets/images/quick-access-masterclasses.png';
+const STUDIO_CARD_IMAGE = '/assets/images/quick-access-estudio.png';
+
 export interface QuickAccessCard {
   key: string;
-  icon: string;
+  imageUrl: string;
   label: string;
   desc: string;
   accent: 'red' | 'violet' | 'amber' | 'lime';
@@ -20,28 +24,28 @@ export class QuickAccessComponent {
   readonly cards = input<QuickAccessCard[]>([
     {
       key: 'courses',
-      icon: '🎸',
+      imageUrl: COURSES_CARD_IMAGE,
       label: 'Inscripción a Cursos',
       desc: 'Encuentra tu clase perfecta y elige tu horario.',
       accent: 'red',
     },
     {
       key: 'masterclasses',
-      icon: '🎬',
+      imageUrl: MASTERCLASSES_CARD_IMAGE,
       label: 'Masterclasses',
       desc: 'Aprende de los mejores a tu propio ritmo.',
       accent: 'violet',
     },
     {
       key: 'studio',
-      icon: '🎙️',
+      imageUrl: STUDIO_CARD_IMAGE,
       label: 'Estudio de Grabación',
       desc: 'Reserva tu sesión en nuestro estudio profesional.',
       accent: 'amber',
     },
     {
       key: 'contact',
-      icon: '📞',
+      imageUrl: COURSES_CARD_IMAGE,
       label: 'Contacto',
       desc: '¿Tienes alguna pregunta? Estamos aquí para ayudarte.',
       accent: 'lime',
