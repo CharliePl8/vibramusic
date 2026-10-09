@@ -52,7 +52,7 @@
     padding: $space-2 $space-3;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-muted-foreground;
+    color: $color-sub;
     border-radius: $radius-lg;
     transition:
       color $transition-base,
@@ -80,7 +80,7 @@
     border-radius: $radius-full;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-muted-foreground;
+    color: $color-sub;
     transition:
       color $transition-base,
       background-color $transition-base;
@@ -185,7 +185,7 @@
   padding: $space-3 $space-4;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  color: $color-muted-foreground;
+  color: $color-sub;
   border-radius: $radius-lg;
   text-align: left;
   transition:
@@ -227,7 +227,7 @@
   }
 
   &--ghost {
-    color: $color-muted-foreground;
+    color: $color-sub;
     background: none;
 
     &:hover {

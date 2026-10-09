@@ -62,11 +62,11 @@
 // Botón de acción principal: la línea que comparten todos los botones de
 // enviar / confirmar / reservar. Mismo fondo, texto, hover y foco.
 @mixin button-primary {
-  background-color: $color-primary;
+  background-color: $color-primary-dark;
   color: $color-white;
 
   &:hover:not(:disabled) {
-    background-color: $color-primary-hover;
+    background-color: $color-primary-darker;
   }
 
   &:disabled {
