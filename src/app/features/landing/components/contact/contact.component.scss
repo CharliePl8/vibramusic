@@ -65,6 +65,12 @@
     font-size: $font-size-sm;
   }
 
+  &__info-icon-img {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+  }
+
   &__info-value {
     font-size: $font-size-sm;
     color: $color-foreground;
@@ -93,7 +99,9 @@
   }
 
   &__social-icon {
-    font-size: $font-size-sm;
+    width: 1.125rem;
+    height: 1.125rem;
+    object-fit: contain;
   }
 
   &__form {

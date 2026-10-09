@@ -40,9 +40,9 @@ export const MODALITY_ES: Record<Modality, string> = {
 };
 
 export const MODALITY_ICON: Record<Modality, string> = {
-  individual: '👤',
-  group: '👥',
-  online: '💻',
+  individual: '/assets/images/modalidades/individual.png',
+  group: '/assets/images/modalidades/grupal.png',
+  online: '/assets/images/modalidades/online.png',
 };
 
 export const COURSES: Course[] = [

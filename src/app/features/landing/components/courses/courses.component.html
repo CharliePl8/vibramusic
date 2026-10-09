@@ -55,7 +55,12 @@
             [attr.aria-pressed]="modalityFilter() === modality"
             (click)="setModality(modality)"
           >
-            <span aria-hidden="true">{{ modalityIcons[modality] }}</span>
+            <img
+              class="courses__chip-logo"
+              [src]="modalityIcons[modality]"
+              alt=""
+              aria-hidden="true"
+            />
             <span>{{ modalityName(modality) }}</span>
           </button>
         </div>
@@ -90,7 +95,12 @@
               <span>{{ course.level }}</span>
               <span class="course-card__price">{{ course.price }}€/mes</span>
               <span>
-                <span aria-hidden="true">{{ modalityIcons[course.modality] }}</span>
+                <img
+                  class="course-card__modality-icon"
+                  [src]="modalityIcons[course.modality]"
+                  alt=""
+                  aria-hidden="true"
+                />
                 {{ modalityName(course.modality) }}
               </span>
             </div>

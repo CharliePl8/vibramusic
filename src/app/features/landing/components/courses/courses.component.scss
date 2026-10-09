@@ -2,7 +2,7 @@
 @use '../../../../../assets/styles/mixins' as *;
 
 .courses {
-  --course-card-background: #{$color-surface};
+  --course-card-background: #{$color-cardback};
   --course-card-hover: #{$color-primary-soft};
   --course-card-text: #{$color-foreground};
   --course-card-border: #{$color-primary};
@@ -175,6 +175,14 @@
     .course-card__price {
       font-weight: $font-weight-bold;
     }
+  }
+
+  &__modality-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    object-fit: contain;
+    vertical-align: text-bottom;
   }
 
   &__chevron {

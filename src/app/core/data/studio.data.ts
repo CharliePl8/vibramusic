@@ -56,7 +56,6 @@ export const STUDIO_DEMOS: AudioDemo[] = [
 
 export const HERO_BG_IMAGE =
   'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1600&h=900&fit=crop&auto=format';
-export const ABOUT_IMAGE =
-  'https://images.unsplash.com/photo-1571327073757-71d13ef1a25d?w=700&h=500&fit=crop&auto=format';
+export const ABOUT_IMAGE = '/assets/images/sobrenosotros.jpg';
 export const STUDIO_IMAGE =
   'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=700&h=500&fit=crop&auto=format';

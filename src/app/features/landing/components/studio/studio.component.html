@@ -1,18 +1,15 @@
 <section id="studio" class="studio">
   <div class="studio__inner">
-    <p class="studio__eyebrow">Tu música en manos expertas</p>
-    <h2 class="studio__title">Estudio de Grabación</h2>
-
     <div class="studio__grid">
-      <div class="studio__gear-card">
-        <h3 class="studio__gear-title">Equipamiento</h3>
+      <div class="studio__text">
+        <p class="studio__eyebrow">Tu música en manos expertas</p>
+        <h2 class="studio__title">Estudio de Grabación</h2>
         <p class="studio__gear-desc">
           Nuestro estudio cuenta con Neve 8078, SSL 4000, más de 100 micrófonos vintage y acústica
           diseñada por Rafael Toral. Disponible 24/7 para artistas y bandas.
         </p>
         <div class="studio__gear-list">
           <span *ngFor="let g of gear" class="studio__gear-item">
-            <span class="studio__gear-dot"></span>
             {{ g }}
           </span>
         </div>
@@ -20,10 +17,6 @@
 
       <div class="studio__media">
         <div class="studio__image" [ngStyle]="imageStyle"></div>
-        <div class="studio__image-caption">
-          <span class="studio__image-icon">🔊</span>
-          <span>Consola Neve 8078 · SSL 4000 · Pro Tools HD</span>
-        </div>
       </div>
     </div>
 

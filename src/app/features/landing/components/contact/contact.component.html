@@ -6,10 +6,21 @@
     <div class="contact__grid">
       <div class="contact__info">
         <div *ngFor="let item of contactInfo" class="contact__info-item">
-          <span class="contact__info-icon">{{ item.icon }}</span>
+          <span class="contact__info-icon">
+            <img [src]="item.icon" alt="" class="contact__info-icon-img" />
+          </span>
           <p class="contact__info-value">{{ item.value }}</p>
         </div>
         <div class="contact__social">
+          <a
+            href="https://wa.me/"
+            target="_blank"
+            rel="noopener"
+            class="contact__social-btn"
+            aria-label="WhatsApp"
+          >
+            <img src="/assets/images/iconos/redesrojas-25.png" alt="" class="contact__social-icon" />
+          </a>
           <a
             href="https://instagram.com"
             target="_blank"
@@ -17,7 +28,7 @@
             class="contact__social-btn"
             aria-label="Instagram"
           >
-            <span class="contact__social-icon">📷</span>
+            <img src="/assets/images/iconos/redesrojas-26.png" alt="" class="contact__social-icon" />
           </a>
           <a
             href="https://youtube.com"
@@ -26,7 +37,25 @@
             class="contact__social-btn"
             aria-label="YouTube"
           >
-            <span class="contact__social-icon">▶️</span>
+            <img src="/assets/images/iconos/redesrojas-27.png" alt="" class="contact__social-icon" />
+          </a>
+          <a
+            href="https://tiktok.com"
+            target="_blank"
+            rel="noopener"
+            class="contact__social-btn"
+            aria-label="TikTok"
+          >
+            <img src="/assets/images/iconos/redesrojas-28.png" alt="" class="contact__social-icon" />
+          </a>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener"
+            class="contact__social-btn"
+            aria-label="Facebook"
+          >
+            <img src="/assets/images/iconos/redesrojas-29.png" alt="" class="contact__social-icon" />
           </a>
         </div>
       </div>
