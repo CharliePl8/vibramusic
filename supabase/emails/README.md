@@ -25,6 +25,18 @@ Los emails **no se gestionan desde este repo**: se pegan en el dashboard de Supa
 
 Las plantillas usan variables de Supabase: `{{ .ConfirmationURL }}` (enlace de confirmación/reset) y `{{ .SiteURL }}` (enlace del pie). El CTA principal y el enlace de texto apuntan a `{{ .ConfirmationURL }}`, que ya incluye la redirección configurada en la app (`/login` para el registro y `/reset-password` para la recuperación).
 
+### Imágenes (logotipo)
+
+Los correos **no pueden referenciar ficheros locales ni rutas relativas**: el cliente de correo no tiene acceso al disco ni a la web de desarrollo. Cualquier imagen debe ser una **URL absoluta pública** que resuelva en internet. El logotipo se sirve desde los assets desplegados:
+
+```html
+<img src="https://vibramusicstudio.es/assets/images/Logos-01-email.png" alt="Vibra Music Studio" width="120" height="150" style="display:block;margin:16px auto 0;border:0;">
+```
+
+`Logos-01-email.png` es una versión optimizada (360×456, ~25 KB) del logotipo original (`Logos-01.png`, 1936×2452, 90 KB) para mostrarla a 120×150. Si mueves o renombras el PNG, hay que actualizar este `src` **y** desplegar el nuevo fichero en `dev` (Cloudflare Pages) antes de que el correo lo muestre.
+
+> No usar `data:` (base64) como alternativa: Gmail, Outlook y la mayoría de clientes lo bloquean.
+
 > Nota: la app solo procesa el **enlace** (evento `PASSWORD_RECOVERY`/confirmación vía URL). No se muestran códigos OTP (`{{ .Token }}`) en estas plantillas porque la web no los consume.
 
 ## SMTP propio (remitente `hola@vibramusicstudio.es`)
