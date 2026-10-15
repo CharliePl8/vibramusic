@@ -11,7 +11,7 @@ import { NgStyle } from '@angular/common';
 export class HeroComponent {
 
 get bgStyle() {
-  return { 'background-image': "url('/assets/images/Portada.png')" };
+  return { 'background-image': "url('/assets/images/Portada.jpg')" };
 }   
 
   onExplore() {

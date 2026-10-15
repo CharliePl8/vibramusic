@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 const COURSES_CARD_IMAGE = '/assets/images/quick-access-cursos.png';
 const MASTERCLASSES_CARD_IMAGE = '/assets/images/quick-access-masterclasses.png';
-const STUDIO_CARD_IMAGE = '/assets/images/quick-access-estudio.png';
+const STUDIO_CARD_IMAGE = '/assets/images/quick-access-estudio.jpg';
+const CONTACT_CARD_IMAGE = '/assets/images/quick-access-contacto.jpg';
 
 export interface QuickAccessCard {
   key: string;
@@ -45,7 +46,7 @@ export class QuickAccessComponent {
     },
     {
       key: 'contact',
-      imageUrl: COURSES_CARD_IMAGE,
+      imageUrl: CONTACT_CARD_IMAGE,
       label: 'Contacto',
       desc: '¿Tienes alguna pregunta? Estamos aquí para ayudarte.',
       accent: 'lime',
