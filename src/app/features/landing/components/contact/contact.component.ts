@@ -28,10 +28,10 @@ export class ContactComponent {
   private contactDraft = inject(ContactDraftService);
 
   readonly contactInfo: ContactInfo[] = [
-    { icon: '/assets/images/iconos/ubi.png', value: 'Calle de la Música, 12 — Carmona (Sevilla)' },
-    { icon: '/assets/images/iconos/redesrojas-25.png', value: '+34 910 123 456' },
-    { icon: '/assets/images/iconos/correo.png', value: 'support@vibramusicstudio.es' },
-    { icon: '/assets/images/iconos/horario.png', value: 'Lun–Vie 9–21h · Sáb–Dom 10–18h' },
+    { icon: '/assets/images/iconos/ubi.png', value: 'C/ Real n44' },
+    { icon: '/assets/images/iconos/redesrojas-25.png', value: '665239177' },
+    { icon: '/assets/images/iconos/correo.png', value: 'vibramusic.info@gmail.com' },
+    { icon: '/assets/images/iconos/horario.png', value: 'Lunes a viernes 10:30-14:00\nLunes a jueves 16:00-21:00' },
   ];
 
   readonly form = new FormGroup({

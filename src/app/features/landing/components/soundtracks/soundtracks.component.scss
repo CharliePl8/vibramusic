@@ -1,0 +1,117 @@
+@use '../../../../../assets/styles/variables' as *;
+@use '../../../../../assets/styles/mixins' as *;
+
+.soundtracks {
+  background-color: $color-background;
+  padding-block: $space-10;
+  padding-inline: $space-4;
+
+  &__inner {
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+
+  &__eyebrow {
+    @include section-eyebrow;
+    margin-bottom: $space-2;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-black;
+    color: $color-foreground;
+    margin-bottom: $space-4;
+  }
+
+  &__intro {
+    max-width: 44rem;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $color-muted-foreground;
+    line-height: 1.7;
+    margin-bottom: $space-8;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-5;
+
+    @media (min-width: $breakpoint-sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__actions {
+    margin-top: $space-8;
+  }
+
+  &__cta {
+    @include button-reset;
+    @include button-primary;
+    min-height: 2.75rem;
+    padding: $space-3 $space-6;
+    border-radius: $radius-xl;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    transition: background-color $transition-base;
+  }
+}
+
+.st-card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-5;
+  border: 1px solid $color-border;
+  border-radius: $radius-2xl;
+  background-color: $color-cardback;
+  color: $color-foreground;
+  text-decoration: none;
+  transition:
+    border-color $transition-base,
+    transform $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    @include focus-ring($color-primary-dark);
+  }
+
+  &__year {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-muted-foreground;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-black;
+    color: $color-foreground;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: $color-muted-foreground;
+    line-height: 1.5;
+    margin-bottom: $space-3;
+  }
+
+  &__cta {
+    margin-top: auto;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+}

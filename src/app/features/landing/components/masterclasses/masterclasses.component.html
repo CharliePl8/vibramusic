@@ -1,7 +1,7 @@
 <section id="masterclasses" class="masterclasses">
   <div class="masterclasses__inner">
     <p class="masterclasses__eyebrow">Aprende de los mejores del sector</p>
-    <h2 class="masterclasses__title">Masterclasses</h2>
+    <h2 class="masterclasses__title">Masterclases</h2>
 
     <!--
       TODO(masterclasses): el catálogo real todavía no está cerrado, así que la
@@ -21,7 +21,7 @@
           type="text"
           [value]="search()"
           (input)="onSearch($event)"
-          placeholder="Buscar masterclass…"
+          placeholder="Buscar masterclase…"
           class="masterclasses__search-input"
         />
         @if (search()) {
@@ -60,7 +60,7 @@
 
     @if (filtered.length === 0) {
       <p class="masterclasses__empty">
-        No hay masterclasses que coincidan con los filtros.
+        No hay masterclases que coincidan con los filtros.
       </p>
     } @else if (filtered.length > 0) {
       <div class="masterclasses__grid">
@@ -112,7 +112,7 @@
 
     <div class="masterclasses__soon">
       <span class="masterclasses__soon-badge">Próximamente</span>
-      <p class="masterclasses__soon-title">Masterclasses con los mejores del sector</p>
+      <p class="masterclasses__soon-title">Masterclases con los mejores del sector</p>
       <p class="masterclasses__soon-text">
         Estamos cerrando el catálogo y preparando las sesiones. Déjanos tu mensaje y te avisamos
         en cuanto abra la inscripción.

@@ -30,7 +30,8 @@ export class HeaderComponent {
     { key: 'about', label: 'Nosotros' },
     { key: 'courses', label: 'Cursos' },
     { key: 'studio', label: 'Estudio' },
-    { key: 'masterclasses', label: 'Masterclasses' },
+    { key: 'bso', label: 'BSO' },
+    { key: 'masterclasses', label: 'Masterclases' },
     { key: 'contact', label: 'Contacto' },
   ];
 
