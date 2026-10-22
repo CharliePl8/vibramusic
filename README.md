@@ -57,7 +57,7 @@ Espacio profesional con equipamiento de primer nivel:
 - Neumann U87 (×8), compresor API 2500
 - Reverb Lexicon 480L y cinta de 2" Studer A820
 
-La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos, masterclass, demos de audio del estudio, estudio y contacto), registro e inicio de sesión reales, un **perfil** con las reservas y mensajes del usuario, y un **panel de administración** para gestionar reservas y mensajes.
+La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos, masterclass, demos de audio del estudio, estudio y contacto), registro e inicio de sesión reales, **recuperación de contraseña** por email, un **perfil** con las reservas y mensajes del usuario, y un **panel de administración** para gestionar reservas y mensajes.
 
 > [!NOTE]
 > **MVP**: el backend y la autenticación son reales (Supabase), pero el **contenido es ficticio** — catálogo de cursos/precios, imágenes (Unsplash), teléfono y dirección aún son placeholders a sustituir por datos reales. Email de contacto disponible: `support@vibramusicstudio.es`.
@@ -76,7 +76,7 @@ La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos
 | [SCSS](https://sass-lang.com) | — | Estilos (variables, mixins, globales) |
 | [RxJS](https://rxjs.dev) | ~7.8.0 | Programación reactiva |
 | [Supabase](https://supabase.com) | `@supabase/supabase-js` ^2.116.0 | Backend: auth, base de datos (PostgreSQL + RLS) |
-| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (39 tests) |
+| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (65 tests) |
 | [Prettier](https://prettier.io) | ^3.8.1 | Formateo de código |
 
 **Notas de arquitectura:**
@@ -99,7 +99,7 @@ src/
 │   │   ├── models/                        # Interfaces (Course, Masterclass, Booking, Message...)
 │   │   └── services/                      # supabase, auth, booking, messages, admin, theme, toast
 │   ├── features/
-│   │   ├── authentication/                # Páginas login y registro
+│   │   ├── authentication/                # Páginas login, registro y recuperación
 │   │   ├── landing/
 │   │   │   ├── pages/home/                # Página de aterrizaje
 │   │   │   └── components/                # hero, about, courses, masterclasses, studio, contact, ...
@@ -122,13 +122,15 @@ scripts/
 | `/` | Home (landing) | — |
 | `/login` | Login | — |
 | `/registro` | Registro | — |
+| `/recuperar` | Recuperar contraseña (solicitud) | — |
+| `/reset-password` | Restablecer contraseña (nueva) | — |
 | `/perfil` | Perfil | `authGuard` |
 | `/admin` | Admin | `authGuard` + `adminGuard` |
 | `**` | NotFound | — |
 
 ### Autenticación y base de datos
 
-- **Auth real** con Supabase: registro + confirmación por email, login y cierre de sesión.
+- **Auth real** con Supabase: registro + confirmación por email, login, cierre de sesión y **recuperación de contraseña** (email de restablecimiento).
 - Sesión **persistente** (`persistSession`, `autoRefreshToken`), enlace de confirmación redirigido a `/login` (`emailRedirectTo` + `detectSessionInUrl`).
 - **Base de datos PostgreSQL** con **RLS** habilitado por tabla (`profiles`, `bookings`, `messages`).
 - Usuarios **admin** marcados en el perfil (`is_admin` via RPC `security definer`, verificado en `adminGuard`).
@@ -168,7 +170,7 @@ ng serve
 
 Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga automáticamente al modificar el código.
 
-> Para que la confirmación por email funcione, en Supabase → **Authentication → URL Configuration** el **Site URL** debe apuntar al origen de la web y los **Redirect URLs** permitir `/login`.
+> Para que la confirmación por email funcione, en Supabase → **Authentication → URL Configuration** el **Site URL** debe apuntar al origen de la web y los **Redirect URLs** permitir `/login`, `/recuperar` y `/reset-password` (o `https://vibramusicstudio.es/**`).
 
 ## Scripts disponibles
 
@@ -178,7 +180,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 | `npm run build` / `ng build` | Build de producción en `dist/` |
 | `npm run postbuild` | Genera `dist/vibramusic/browser/404.html` (fallback SPA, lo ejecuta `build`) |
 | `npm run watch` | Build en modo observación (desarrollo) |
-| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 39 tests) |
+| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 65 tests) |
 | `ng generate component <nombre>` | Generar componentes/schematics con Angular CLI |
 
 ## Despliegue en Cloudflare Pages
@@ -187,7 +189,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 - **Rama de producción:** `dev` (cada push a `dev` lanza build y deploy).
 - **Build command:** `npm run build` → salida en `dist/vibramusic/browser` (con `NODE_VERSION=22`).
 - **Fallback SPA:** el `postbuild` copia el `index.html` como `404.html`, de modo que cualquier ruta (`/perfil`, `/admin`, …) sirve la app y el enrutado Angular la resuelve.
-- **Dominio y DNS:** zona gestionada por Cloudflare; `www.vibramusicstudio.es` redirige con **301** a la raíz; email de contacto (`hola@vibramusicstudio.es`) mediante **Email Routing** gratuito.
+- **Dominio y DNS:** zona gestionada por Cloudflare; `www.vibramusicstudio.es` redirige con **301** a la raíz; email de contacto (`support@vibramusicstudio.es`) mediante **Email Routing** gratuito.
 
 ## Ramas del repositorio
 
@@ -202,4 +204,4 @@ Flujo de trabajo: `landing` → `dev` → (deploy automático); los merges los r
 
 ## Licencia
 
-[CC0 1.0 Universal](LICENSE) — dedicado al dominio público.
+Software **propietario** — © Vibra Music Studio, todos los derechos reservados. Ver [LICENSE](LICENSE).
