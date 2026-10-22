@@ -4,25 +4,15 @@
       <p class="about__eyebrow">Más que una escuela</p>
       <h2 class="about__title">Sobre Vibra</h2>
       <p class="about__desc">
-        En Vibra aprendemos música tocando canciones, formando grupos y llevando la teoría a la práctica.
-        Y cuando una idea necesita dar un paso más, la llevamos al estudio para grabarla y producirla.
-        Escuela y estudio conviven en un mismo espacio, conectando el aprendizaje musical con la experiencia
-        real de crear música.
+        En Vibra aprendemos música tocando canciones, formando grupos y llevando la
+        teoría a la práctica. Y cuando una idea necesita dar un paso más, la llevamos
+        al estudio para grabarla y producirla. Escuela y estudio conviven en un mismo
+        espacio, conectando el aprendizaje musical con la experiencia real de crear música.
       </p>
-      <div class="about__stats">
-        <div *ngFor="let stat of stats" class="about__stat">
-          <p class="about__stat-value">{{ stat.value }}</p>
-          <p class="about__stat-label">{{ stat.label }}</p>
-        </div>
-      </div>
     </div>
 
     <div class="about__media">
       <div class="about__image" [ngStyle]="imageStyle"></div>
-      <div class="about__badge">
-        <p class="about__badge-year">2015</p>
-        <p class="about__badge-label">Fundación</p>
-      </div>
     </div>
   </div>
 </section>

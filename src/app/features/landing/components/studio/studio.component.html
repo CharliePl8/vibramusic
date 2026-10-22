@@ -110,6 +110,29 @@
       </form>
     </div>
 
-    <app-audio-tracklist></app-audio-tracklist>
+    <div class="studio__booking studio__booking--mixmaster">
+      <div class="studio__booking-head">
+        <div>
+          <h3 class="studio__booking-title">Mezcla y Mastering</h3>
+          <p class="studio__booking-desc">Haz tus proyectos realidad desde cualquier parte con nosotros</p>
+        </div>
+        <div class="studio__mixmaster-actions">
+          <button
+            type="button"
+            class="studio__booking-toggle studio__booking-toggle--active"
+            (click)="requestMixingMastering('Mezcla')"
+          >
+            Mezcla
+          </button>
+          <button
+            type="button"
+            class="studio__booking-toggle studio__booking-toggle--active"
+            (click)="requestMixingMastering('Mastering')"
+          >
+            Mastering
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

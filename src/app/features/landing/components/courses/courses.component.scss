@@ -111,13 +111,13 @@
   }
 }
 
-.course-card {
+.course-group {
   border: 2px solid var(--course-card-border);
   border-radius: $radius-2xl;
   background-color: var(--course-card-background);
   color: var(--course-card-text);
-  overflow: hidden;
   box-shadow: $shadow-sm;
+  overflow: hidden;
 
   &__header {
     width: 100%;
@@ -171,18 +171,6 @@
       font-weight: $font-weight-normal;
       color: inherit;
     }
-
-    .course-card__price {
-      font-weight: $font-weight-bold;
-    }
-  }
-
-  &__modality-icon {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    object-fit: contain;
-    vertical-align: text-bottom;
   }
 
   &__chevron {
@@ -197,28 +185,76 @@
   }
 
   &__body {
-    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    padding: $space-4 $space-5 $space-5 $space-5;
     border-top: 1px solid var(--course-card-border);
   }
+}
 
-  &__desc {
-    max-width: 70ch;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-normal;
-    color: inherit;
-    line-height: 1.7;
+.course-row {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4;
+  border: 1px solid var(--course-card-border);
+  border-radius: $radius-xl;
+  background-color: $color-background;
+  color: var(--course-card-text);
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: var(--course-card-hover);
   }
 
-  &__actions {
-    margin-top: $space-5;
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__modality-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  &__modality-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__modality-name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: inherit;
+  }
+
+  &__duration {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  &__price {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    flex-shrink: 0;
   }
 
   &__reserve {
     @include button-reset;
     @include button-primary;
-    min-height: 2.75rem;
-    padding: $space-2 $space-4;
-    border-radius: $radius-xl;
+    flex-shrink: 0;
+    min-height: 2.5rem;
+    padding: $space-1 $space-3;
+    border-radius: $radius-lg;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     transition: background-color $transition-base;
@@ -230,7 +266,7 @@
     padding-inline: $space-3;
   }
 
-  .course-card {
+  .course-group {
     &__header {
       gap: $space-3;
       padding: $space-4;
@@ -239,6 +275,24 @@
     &__logo {
       width: 2.25rem;
       height: 2.25rem;
+    }
+
+    &__body {
+      padding: $space-3 $space-4 $space-4 $space-4;
+    }
+  }
+
+  .course-row {
+    gap: $space-2;
+    padding: $space-3;
+    flex-wrap: wrap;
+
+    &__left {
+      flex: 1 1 100%;
+    }
+
+    &__price {
+      margin-left: auto;
     }
   }
 }

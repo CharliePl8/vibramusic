@@ -36,7 +36,7 @@ export const MASTERCLASSES: Masterclass[] = [
     title: 'Producción Musical desde Cero',
     instructor: 'Alex Beats',
     description:
-      'DAW, samples, síntesis, mezcla y mastering. Crea tu primera canción completa en este masterclass práctico e intensivo de producción electrónica.',
+      'DAW, samples, síntesis, mezcla y mastering. Crea tu primera canción completa en esta masterclase práctica e intensiva de producción electrónica.',
     price: 49,
     image:
       'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=340&fit=crop&auto=format',

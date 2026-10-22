@@ -1,4 +1,4 @@
-export const STUDIO_SERVICES = ['Grabación', 'Mezcla', 'Mastering', 'Ensayos'] as const;
+export const STUDIO_SERVICES = ['Grabación', 'Ensayos'] as const;
 
 export type StudioService = (typeof STUDIO_SERVICES)[number];
 
