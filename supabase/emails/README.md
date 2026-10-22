@@ -39,9 +39,9 @@ Los correos **no pueden referenciar ficheros locales ni rutas relativas**: el cl
 
 > Nota: la app solo procesa el **enlace** (evento `PASSWORD_RECOVERY`/confirmación vía URL). No se muestran códigos OTP (`{{ .Token }}`) en estas plantillas porque la web no los consume.
 
-## SMTP propio (remitente `hola@vibramusicstudio.es`)
+## SMTP propio (remitente `support@vibramusicstudio.es`)
 
-Los emails saldrán de `Vibra Music <hola@vibramusicstudio.es>` una vez configurado un SMTP propio. Con el SMTP compartido de Supabase salen de `no-reply@zlxwrfqrmjvjfjgpjahf.supabase.co` y tienen límites de reenvío.
+Los emails saldrán de `Vibra Music <support@vibramusicstudio.es>` una vez configurado un SMTP propio. Con el SMTP compartido de Supabase salen de `no-reply@zlxwrfqrmjvjfjgpjahf.supabase.co` y tienen límites de reenvío.
 
 ### 1. Resend
 
@@ -74,7 +74,7 @@ Esperar a que Resend marque el dominio como validado antes de seguir.
 | Port           | `465` (SSL)                   |
 | Username       | `resend`                      |
 | Password       | API Key de Resend             |
-| Sender email   | `hola@vibramusicstudio.es`    |
+| Sender email   | `support@vibramusicstudio.es`    |
 | Sender name    | `Vibra Music`                 |
 
 Guardar y enviar un email de prueba. A partir de aquí el límite de envío es la cuota de Resend (gratis ~3000/mes), no el del SMTP compartido.
@@ -89,7 +89,7 @@ Guardar y enviar un email de prueba. A partir de aquí el límite de envío es l
 4. Esperar a que Resend marque el dominio **Verified**.
 5. En Supabase → tu proyecto → **Integrations** (sección "Works With") → **Resend → Connect**: login en Resend, elegir el proyecto y el dominio verificado; Resend crea la API key y rellena el SMTP de Supabase automáticamente.
 6. Añadir sender name `Vibra Music` y **Configure SMTP Integration**.
-7. Comprobar en **Supabase → Auth → SMTP Settings** que está activado con `smtp.resend.com:465` y sender `hola@vibramusicstudio.es`.
+7. Comprobar en **Supabase → Auth → SMTP Settings** que está activado con `smtp.resend.com:465` y sender `support@vibramusicstudio.es`.
 
 Con el SMTP activado, **Auth → Emails** ya deja editar el asunto y el cuerpo de las plantillas.
 
@@ -120,5 +120,5 @@ Invoke-RestMethod -Method Patch `
 
 - [ ] Alta de cuenta nueva → llega el email de confirmación (revisar **spam** y render en móvil) → link funciona → login.
 - [ ] Recuperar contraseña → llega el email de reset → link lleva a `/reset-password` → nueva contraseña → login.
-- [ ] El remitente aparece como **Vibra Music <hola@vibramusicstudio.es>**.
+- [ ] El remitente aparece como **Vibra Music <support@vibramusicstudio.es>**.
 - [ ] En Gmail, la vista se muestra dentro de la pestaña "Actualizaciones" (el botón facilita el reconocimiento).
