@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memoria del PMV — Vibra Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #e73938;
+    --primary-dark: #c02e2d;
+    --bg: #f6f5f2;
+    --ink: #1c1c1c;
+    --muted: #6b665e;
+    --border: #e0ddd6;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: 'Afacad Flux', Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    font-size: 11.5pt;
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; background: var(--card); }
+
+  h1, h2, h3 { font-family: 'Afacad Flux', Arial, sans-serif; line-height: 1.15; }
+  h1 { font-size: 30pt; font-weight: 900; margin: 0 0 4px; letter-spacing: -0.5px; }
+  h2 {
+    font-size: 17pt; font-weight: 700; color: var(--primary);
+    margin: 34px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--primary);
+  }
+  h3 { font-size: 13pt; font-weight: 700; margin: 22px 0 8px; }
+  p { margin: 0 0 10px; }
+  a { color: var(--primary-dark); text-decoration: none; }
+  code {
+    font-family: Consolas, 'Courier New', monospace; font-size: 0.9em;
+    background: #f1efea; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px;
+  }
+  ul { margin: 0 0 10px; padding-left: 20px; }
+  li { margin: 3px 0; }
+
+  /* Portada */
+  .cover {
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 92vh; text-align: left; border-left: 10px solid var(--primary);
+    padding-left: 34px;
+  }
+  .cover .kicker { text-transform: uppercase; letter-spacing: 3px; font-weight: 600; color: var(--primary); font-size: 11pt; }
+  .cover .subtitle { font-size: 14pt; color: var(--muted); margin-top: 6px; }
+  .cover .url { margin-top: 26px; font-size: 12pt; }
+  .cover .meta { margin-top: 40px; font-size: 10.5pt; color: var(--muted); }
+  .cover .meta strong { color: var(--ink); }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 10.5pt; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; border: 1px solid var(--border); }
+  th { background: var(--primary); color: #fff; font-weight: 600; }
+  tbody tr:nth-child(even) { background: #faf9f6; }
+
+  pre.diagram {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 9pt; line-height: 1.25; background: #fbfaf7;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; overflow: auto; white-space: pre;
+  }
+  pre.tree {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 9pt; line-height: 1.4; background: #fbfaf7;
+    border: 1px solid var(--border); border-radius: 8px; padding: 16px; white-space: pre;
+  }
+  blockquote.note {
+    margin: 12px 0; padding: 10px 14px; background: #fef5da;
+    border-left: 4px solid var(--primary); border-radius: 0 6px 6px 0;
+    font-size: 10.5pt;
+  }
+  .toc { columns: 2; font-size: 11pt; }
+  .toc a { color: var(--ink); }
+
+  /* Impresión */
+  @page { size: A4; margin: 16mm 14mm; }
+  @media print {
+    body { background: #fff; font-size: 10.5pt; }
+    .page { max-width: none; padding: 0; }
+    .cover { min-height: auto; height: 96vh; page-break-after: always; }
+    h2 { page-break-after: avoid; }
+    h3 { page-break-after: avoid; }
+    table, pre, blockquote.note { page-break-inside: avoid; }
+    a { color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- Portada -->
+  <section class="cover">
+    <span class="kicker">Memoria del Producto Mínimo Viable</span>
+    <h1>Vibra Music</h1>
+    <p class="subtitle">Web de la academia musical — Carmona (Sevilla)</p>
+    <p class="url">Producción: <strong>https://vibramusicstudio.es</strong></p>
+    <p class="meta">
+      <strong>Cliente:</strong> Vibra Music Studio<br>
+      <strong>Entrega:</strong> Vibra Music Studio<br>
+      <strong>Versión:</strong> 1.0.0 &nbsp;·&nbsp; <strong>Fecha:</strong> 2026
+    </p>
+  </section>
+
+  <!-- Índice -->
+  <h2 id="indice">Índice</h2>
+  <div class="toc">
+    <p><a href="#s1">1. Resumen ejecutivo</a></p>
+    <p><a href="#s2">2. Objetivo y alcance</a></p>
+    <p><a href="#s3">3. Funcionalidades</a></p>
+    <p><a href="#s4">4. Stack tecnológico</a></p>
+    <p><a href="#s5">5. Arquitectura</a></p>
+    <p><a href="#s6">6. Modelo de datos</a></p>
+    <p><a href="#s7">7. Autenticación y correo</a></p>
+    <p><a href="#s8">8. Sistema de diseño</a></p>
+    <p><a href="#s9">9. Despliegue e infraestructura</a></p>
+    <p><a href="#s10">10. Manual de uso</a></p>
+    <p><a href="#s11">11. Estado y limitaciones</a></p>
+    <p><a href="#s12">12. Roadmap</a></p>
+    <p><a href="#s13">13. Anexos</a></p>
+  </div>
+
+  <h2 id="s1">1. Resumen ejecutivo</h2>
+  <p>Vibra Music es una academia de música en Carmona (Sevilla) que ofrece clases
+  particulares y grupales, masterclasses y reserva de estudio de grabación. Este
+  proyecto entrega la <strong>primera versión funcional (PMV)</strong> de su web: una landing
+  pública con toda la información y canales de contacto, más un <strong>backend real</strong>
+  (registro, login, recuperación de contraseña, reservas de estudio y mensajería)
+  y un <strong>panel de administración</strong>.</p>
+  <p>El objetivo del PMV es validar el flujo completo de negocio —visitante → reserva
+  o mensaje → gestión por el centro— sobre una base técnica sólida, desplegada en
+  producción y lista para recibir contenido definitivo.</p>
+
+  <h2 id="s2">2. Objetivo y alcance</h2>
+  <h3>Objetivo</h3>
+  <p>Disponer de una web propia, profesional y funcional que centralice la
+  información de la academia y permita gestionar reservas y consultas sin
+  depender de herramientas de terceros.</p>
+  <h3>Incluido en el PMV</h3>
+  <ul>
+    <li>Landing pública con secciones: portada (hero), accesos rápidos, sobre
+      nosotros, cursos, estudio de grabación, masterclasses y contacto.</li>
+    <li>Registro e inicio de sesión reales con confirmación por email.</li>
+    <li>Recuperación de contraseña por email.</li>
+    <li>Perfil de usuario con sus reservas y mensajes.</li>
+    <li>Reserva de franjas del estudio (compartidas entre usuarios).</li>
+    <li>Formulario de contacto (accesible también sin cuenta).</li>
+    <li>Panel de administración para gestionar reservas y mensajes.</li>
+    <li>Dominio propio, HTTPS y correo de contacto.</li>
+  </ul>
+  <h3>Fuera de alcance (fases posteriores)</h3>
+  <ul>
+    <li>Pasarela de pago / cobro online.</li>
+    <li>Contenido real definitivo (catálogo, precios e imágenes finales).</li>
+    <li>Panel de administración ampliado (edición de cursos, usuarios, informes).</li>
+    <li>Emails transaccionales más allá de la autenticación.</li>
+  </ul>
+
+  <h2 id="s3">3. Funcionalidades</h2>
+  <h3>3.1 Zona pública (visitante)</h3>
+  <table>
+    <thead><tr><th>Función</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Landing</td><td>Secciones informativas con navegación por anclas y scroll suave</td></tr>
+      <tr><td>Cursos</td><td>Catálogo filtrable por categoría, con modalidad y precio</td></tr>
+      <tr><td>Estudio</td><td>Equipamiento, demos de audio y <strong>reserva de franjas</strong></td></tr>
+      <tr><td>Masterclasses</td><td>Oferta de formaciones intensivas</td></tr>
+      <tr><td>Contacto</td><td>Formulario (nombre, email, mensaje) + datos y redes sociales</td></tr>
+      <tr><td>Tema</td><td>Selector claro/oscuro</td></tr>
+    </tbody>
+  </table>
+  <h3>3.2 Usuario registrado</h3>
+  <table>
+    <thead><tr><th>Función</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Registro</td><td>Alta con confirmación por email</td></tr>
+      <tr><td>Login / logout</td><td>Sesión persistente con refresco automático</td></tr>
+      <tr><td>Recuperar contraseña</td><td>Envío de email y establecimiento de nueva contraseña</td></tr>
+      <tr><td>Perfil</td><td>Datos de la cuenta, historial de reservas y mensajes</td></tr>
+      <tr><td>Reservar estudio</td><td>Elección de fecha y franja; se impide doble reserva</td></tr>
+    </tbody>
+  </table>
+  <h3>3.3 Administrador</h3>
+  <table>
+    <thead><tr><th>Función</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Acceso</td><td>Ruta <code>/admin</code>, protegida por <code>authGuard</code> + <code>adminGuard</code></td></tr>
+      <tr><td>Reservas</td><td>Listado de todas las reservas; cancelación</td></tr>
+      <tr><td>Mensajes</td><td>Listado de todos los mensajes de contacto</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s4">4. Stack tecnológico</h2>
+  <table>
+    <thead><tr><th>Tecnología</th><th>Versión</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td>Angular</td><td>^20.3.30</td><td>Framework principal (standalone + lazy loading)</td></tr>
+      <tr><td>Angular CLI / <code>@angular/build</code></td><td>^20.3.35</td><td>Build y tooling</td></tr>
+      <tr><td>TypeScript</td><td>~5.8.0</td><td>Lenguaje</td></tr>
+      <tr><td>SCSS</td><td>—</td><td>Estilos (variables, mixins, globales)</td></tr>
+      <tr><td>RxJS</td><td>~7.8.0</td><td>Reactividad</td></tr>
+      <tr><td>Supabase (<code>@supabase/supabase-js</code>)</td><td>^2.116.0</td><td>Auth + PostgreSQL (RLS)</td></tr>
+      <tr><td>Vitest</td><td>^3.2.7</td><td>Tests unitarios (65 tests)</td></tr>
+      <tr><td>Prettier</td><td>^3.8.1</td><td>Formateo</td></tr>
+      <tr><td>Cloudflare Pages</td><td>—</td><td>Hosting y despliegue continuo</td></tr>
+      <tr><td>Resend (SMTP)</td><td>—</td><td>Envío de emails de autenticación</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Notas de arquitectura</strong></p>
+  <ul>
+    <li><strong>Standalone components</strong> sin NgModules; <strong>carga perezosa</strong> en todas las rutas.</li>
+    <li><strong>Change detection zoneless</strong> (<code>provideZonelessChangeDetection()</code>) con <strong>signals</strong>.</li>
+    <li><strong>Backend real</strong> en Supabase mediante un cliente compartido y servicios
+      especializados (<code>auth</code>, <code>booking</code>, <code>messages</code>, <code>admin</code>).</li>
+  </ul>
+
+  <h2 id="s5">5. Arquitectura</h2>
+  <pre class="diagram">                          ┌──────────────────────────────┐
+                          │        Navegador             │
+                          │   Angular 20 (SPA, zoneless) │
+                          └──────────────┬───────────────┘
+                                         │ HTTPS
+                 ┌───────────────────────┴───────────────────────┐
+                 │                                               │
+        ┌────────▼─────────┐                          ┌──────────▼──────────┐
+        │ Cloudflare Pages │                          │      Supabase       │
+        │  (hosting + CDN) │                          │  Auth  ·  Postgres  │
+        │  SPA fallback    │                          │  RLS · RPC · Trigger│
+        └──────────────────┘                          └──────────┬──────────┘
+                                                                 │ SMTP
+                                                       ┌─────────▼──────────┐
+                                                       │       Resend       │
+                                                       │ (emails de auth)   │
+                                                       └────────────────────┘</pre>
+
+  <p><strong>Estructura del proyecto</strong></p>
+  <pre class="tree">src/
+├── app/
+│   ├── app.ts / app.html / app.scss       # Componente raíz
+│   ├── app.config.ts                      # Providers (zoneless, router, supabase)
+│   ├── app.routes.ts                      # Rutas (lazy)
+│   ├── core/
+│   │   ├── data/                          # Datos de cursos, masterclasses, estudio
+│   │   ├── guards/                        # auth.guard.ts, admin.guard.ts
+│   │   ├── models/                        # Interfaces (Course, Booking, Message...)
+│   │   └── services/                      # supabase, auth, booking, messages, admin, theme, toast
+│   ├── features/
+│   │   ├── authentication/                # login, registro, recuperar, reset-password
+│   │   ├── landing/                       # home + componentes de sección
+│   │   ├── admin/                         # panel de administración
+│   │   ├── profile/                       # perfil (protegido)
+│   │   └── not-found/                     # 404
+│   └── shared/components/                 # button, card, header, footer, toast, avatar, spinner
+├── assets/styles/                         # _variables.scss, _mixins.scss, _global.scss
+└── environments/                          # Configuración Supabase (prod / dev)
+supabase/
+├── schema.sql                             # Esquema completo (idempotente)
+└── emails/                                # Plantillas HTML de los emails de auth
+scripts/
+└── postbuild.mjs                          # Genera 404.html (fallback SPA)</pre>
+
+  <h2 id="s6">6. Modelo de datos</h2>
+  <p>Base de datos <strong>PostgreSQL</strong> en Supabase con <strong>Row Level Security (RLS)</strong>
+  activado en todas las tablas. El esquema completo e idempotente está en
+  <code>supabase/schema.sql</code>.</p>
+
+  <h3>6.1 Tablas</h3>
+  <table>
+    <thead><tr><th>Tabla</th><th>Campos principales</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td><code>profiles</code></td><td><code>id</code>, <code>name</code>, <code>email</code>, <code>role</code>, <code>created_at</code></td><td>Una fila por usuario; el rol decide quién es admin</td></tr>
+      <tr><td><code>bookings</code></td><td><code>id</code>, <code>user_id</code>, <code>date</code>, <code>slot</code>, <code>service</code>, <code>notes</code>, <code>created_at</code></td><td>Reservas del estudio; restricción única <code>(date, slot)</code></td></tr>
+      <tr><td><code>messages</code></td><td><code>id</code>, <code>user_id</code>, <code>name</code>, <code>email</code>, <code>message</code>, <code>read</code>, <code>created_at</code></td><td>Mensajes del formulario de contacto</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 Seguridad (RLS)</h3>
+  <table>
+    <thead><tr><th>Tabla</th><th>Operación</th><th>Regla</th></tr></thead>
+    <tbody>
+      <tr><td><code>profiles</code></td><td>select</td><td>El propio usuario o un admin</td></tr>
+      <tr><td><code>profiles</code></td><td>update</td><td>Solo el propio usuario</td></tr>
+      <tr><td><code>bookings</code></td><td>select</td><td>El propio usuario o un admin</td></tr>
+      <tr><td><code>bookings</code></td><td>insert</td><td>Solo en nombre propio</td></tr>
+      <tr><td><code>bookings</code></td><td>delete</td><td>El propio usuario o un admin</td></tr>
+      <tr><td><code>messages</code></td><td>insert</td><td>Cualquiera (incluso sin cuenta)</td></tr>
+      <tr><td><code>messages</code></td><td>select</td><td>El propio usuario (por <code>user_id</code> o email) o un admin</td></tr>
+      <tr><td><code>messages</code></td><td>update</td><td>Solo admin</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.3 Funciones y disparadores</h3>
+  <table>
+    <thead><tr><th>Objeto</th><th>Tipo</th><th>Función</th></tr></thead>
+    <tbody>
+      <tr><td><code>is_admin()</code></td><td>Función <code>security definer</code></td><td>Comprueba si el usuario actual es admin (evita recursión en RLS)</td></tr>
+      <tr><td><code>handle_new_user()</code></td><td>Trigger <code>after insert on auth.users</code></td><td>Crea el <code>profile</code> automáticamente al registrarse</td></tr>
+      <tr><td><code>get_booked_slots(date)</code></td><td>Función <code>security definer</code></td><td>Devuelve <strong>solo</strong> las franjas ocupadas de una fecha, sin datos personales</td></tr>
+    </tbody>
+  </table>
+  <blockquote class="note">Las funciones <code>security definer</code> permiten operaciones controladas que el
+  RLS impediría (por ejemplo, conocer la disponibilidad sin exponer reservas ajenas).</blockquote>
+
+  <h2 id="s7">7. Autenticación y correo</h2>
+  <ul>
+    <li><strong>Auth real</strong> con Supabase: registro con <strong>confirmación por email</strong>, login,
+      cierre de sesión y <strong>recuperación de contraseña</strong>.</li>
+    <li>Sesión <strong>persistente</strong> (<code>persistSession</code>, <code>autoRefreshToken</code>); los enlaces de
+      confirmación y de reset se resuelven en la app (<code>detectSessionInUrl</code>).</li>
+    <li><strong>Redirecciones configuradas:</strong> confirmación → <code>/login</code>; reset → <code>/reset-password</code>.</li>
+    <li><strong>Emails con identidad de marca</strong> (plantillas HTML versionadas en
+      <code>supabase/emails/</code>), enviados mediante <strong>SMTP propio con Resend</strong> desde
+      <code>Vibra Music &lt;support@vibramusicstudio.es&gt;</code>.</li>
+    <li><strong>Correo de contacto</strong> (<code>support@vibramusicstudio.es</code>) recibido por
+      <strong>Cloudflare Email Routing</strong> (gratuito).</li>
+  </ul>
+
+  <h3>Configuración en Supabase (Auth → URL Configuration)</h3>
+  <table>
+    <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>Site URL</td><td><code>https://vibramusicstudio.es</code></td></tr>
+      <tr><td>Redirect URLs</td><td><code>https://vibramusicstudio.es/**</code> (cubre <code>/login</code> y <code>/reset-password</code>)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Configuración SMTP (Auth → SMTP Settings)</h3>
+  <table>
+    <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>Host</td><td><code>smtp.resend.com</code></td></tr>
+      <tr><td>Puerto</td><td><code>465</code> (SSL)</td></tr>
+      <tr><td>Usuario</td><td><code>resend</code></td></tr>
+      <tr><td>Contraseña</td><td>API Key de Resend</td></tr>
+      <tr><td>Remitente</td><td><code>support@vibramusicstudio.es</code></td></tr>
+      <tr><td>Nombre remitente</td><td><code>Vibra Music</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s8">8. Sistema de diseño</h2>
+  <ul>
+    <li><strong>Fuente:</strong> Afacad Flux (con fallback Arial/Helvetica).</li>
+    <li><strong>Color primario:</strong> rojo <code>#e73938</code>. <strong>Fondo:</strong> blanco cálido <code>#f6f5f2</code>.</li>
+    <li>Tema <strong>claro/oscuro</strong> seleccionable, con tokens centralizados
+      (<code>_variables.scss</code>, <code>_mixins.scss</code>, <code>_global.scss</code>).</li>
+    <li><strong>Responsive</strong> con breakpoints 576 / 768 / 992 / 1200 px; contenedor máx. 1024 px.</li>
+    <li>Estilos <strong>100% SCSS propios</strong>, sin frameworks CSS externos.</li>
+  </ul>
+
+  <h2 id="s9">9. Despliegue e infraestructura</h2>
+  <table>
+    <thead><tr><th>Elemento</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td>Hosting</td><td>Cloudflare Pages (Git integrado, SSL automático)</td></tr>
+      <tr><td>Rama de producción</td><td><code>dev</code> (cada push lanza build y deploy)</td></tr>
+      <tr><td>Build</td><td><code>npm run build</code> → <code>dist/vibramusic/browser</code> (<code>NODE_VERSION=22</code>)</td></tr>
+      <tr><td>Fallback SPA</td><td><code>postbuild</code> copia <code>index.html</code> como <code>404.html</code></td></tr>
+      <tr><td>Dominio</td><td><code>vibramusicstudio.es</code> (apex); <code>www</code> → <strong>301</strong> a la raíz</td></tr>
+      <tr><td>DNS</td><td>Zona gestionada por Cloudflare</td></tr>
+      <tr><td>Correo entrante</td><td>Email Routing para <code>support@vibramusicstudio.es</code></td></tr>
+      <tr><td>Límite</td><td>Cloudflare Pages admite <strong>máx. 25 MiB por fichero</strong> (imágenes optimizadas)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Rutas de la aplicación</h3>
+  <table>
+    <thead><tr><th>Ruta</th><th>Página</th><th>Guard</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td>Landing (home)</td><td>—</td></tr>
+      <tr><td><code>/login</code></td><td>Login</td><td>—</td></tr>
+      <tr><td><code>/registro</code></td><td>Registro</td><td>—</td></tr>
+      <tr><td><code>/recuperar</code></td><td>Solicitar recuperación de contraseña</td><td>—</td></tr>
+      <tr><td><code>/reset-password</code></td><td>Establecer nueva contraseña</td><td>—</td></tr>
+      <tr><td><code>/perfil</code></td><td>Perfil del usuario</td><td><code>authGuard</code></td></tr>
+      <tr><td><code>/admin</code></td><td>Panel de administración</td><td><code>authGuard</code> + <code>adminGuard</code></td></tr>
+      <tr><td><code>**</code></td><td>Página 404</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s10">10. Manual de uso</h2>
+  <h3>10.1 Usuario</h3>
+  <ol>
+    <li><strong>Crear cuenta:</strong> <code>/registro</code> → rellenar nombre, email y contraseña →
+      recibir email de confirmación → confirmar → iniciar sesión en <code>/login</code>.</li>
+    <li><strong>Iniciar sesión:</strong> <code>/login</code>. La sesión se mantiene al volver a la web.</li>
+    <li><strong>Recuperar contraseña:</strong> <code>/recuperar</code> → introducir email → abrir el enlace
+      del correo → definir la nueva contraseña en <code>/reset-password</code>.</li>
+    <li><strong>Reservar el estudio:</strong> en la sección <em>Estudio</em>, elegir fecha y franja libre →
+      confirmar. Las franjas ocupadas aparecen bloqueadas.</li>
+    <li><strong>Enviar consulta:</strong> sección <em>Contacto</em> → rellenar y enviar (no requiere cuenta).</li>
+    <li><strong>Perfil:</strong> <code>/perfil</code> muestra los datos de la cuenta y el historial de
+      reservas y mensajes.</li>
+  </ol>
+  <h3>10.2 Administrador</h3>
+  <ol>
+    <li>El rol admin se asigna en la base de datos:
+      <code>update public.profiles set role = 'admin' where email = '...';</code></li>
+    <li><strong>Panel:</strong> <code>/admin</code> (solo usable con rol admin).</li>
+    <li><strong>Reservas:</strong> listado completo; permite cancelar reservas.</li>
+    <li><strong>Mensajes:</strong> listado de todas las consultas de contacto.</li>
+  </ol>
+
+  <h2 id="s11">11. Estado del PMV, limitaciones y contenido pendiente</h2>
+  <ul>
+    <li><strong>Backend y autenticación:</strong> reales y funcionales (Supabase).</li>
+    <li><strong>Tests:</strong> 65 tests unitarios en verde (Vitest).</li>
+    <li><strong>Contenido pendiente de datos definitivos:</strong> catálogo de cursos y precios,
+      imágenes y datos de contacto deben validarse o sustituirse por la información
+      real del cliente antes del lanzamiento.</li>
+    <li><strong>Sin pasarela de pago</strong>: las reservas/inscripciones no generan cobro.</li>
+    <li><strong>Imágenes</strong>: las definitivas deben respetar el límite de 25 MiB/fichero de
+      Cloudflare Pages (usar JPEG/WebP optimizados).</li>
+  </ul>
+
+  <h2 id="s12">12. Roadmap / siguientes pasos</h2>
+  <ol>
+    <li>Reemplazar contenido placeholder por el contenido final del cliente.</li>
+    <li>Optimizar y subir las imágenes definitivas.</li>
+    <li>Ampliar el panel de administración (gestión de cursos, usuarios, métricas).</li>
+    <li>Valorar pasarela de pago para inscripciones.</li>
+    <li>Analítica de uso y mejora continua de SEO/accesibilidad.</li>
+  </ol>
+
+  <h2 id="s13">13. Anexos</h2>
+  <ul>
+    <li><strong>Repositorio:</strong> https://github.com/CharliePl8/vibramusic</li>
+    <li><strong>Producción:</strong> https://vibramusicstudio.es</li>
+    <li><strong>Esquema de datos:</strong> <code>supabase/schema.sql</code></li>
+    <li><strong>Plantillas de email:</strong> <code>supabase/emails/</code></li>
+    <li><strong>Licencia:</strong> propietaria — © Vibra Music Studio (ver <code>LICENSE</code>).</li>
+  </ul>
+
+</main>
+</body>
+</html>
