@@ -7,6 +7,7 @@ import { AboutComponent } from '../../components/about/about.component';
 import { CoursesComponent } from '../../components/courses/courses.component';
 import { MasterclassesComponent } from '../../components/masterclasses/masterclasses.component';
 import { StudioComponent } from '../../components/studio/studio.component';
+import { SoundtracksComponent } from '../../components/soundtracks/soundtracks.component';
 import { ContactComponent } from '../../components/contact/contact.component';
 
 @Component({
@@ -19,6 +20,7 @@ import { ContactComponent } from '../../components/contact/contact.component';
     CoursesComponent,
     MasterclassesComponent,
     StudioComponent,
+    SoundtracksComponent,
     ContactComponent,
   ],
   templateUrl: './home.component.html',
@@ -42,6 +44,7 @@ export class HomeComponent implements OnInit {
     const targets: Record<string, string> = {
       studio: 'studio',
       booking: 'studio',
+      bso: 'bso',
       contact: 'contact',
     };
     const id = targets[hash];

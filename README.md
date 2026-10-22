@@ -1,6 +1,6 @@
 # 🎵 Vibra Music
 
-**MVP** de la web de la academia musical **Vibra Music**, situada en **Carmona (Sevilla)**. Ofrece clases particulares, masterclass de varios instrumentos y reservas de estudios de grabación.
+**MVP** de la web de la academia musical **Vibra Music**, situada en **Carmona (Sevilla)**. Ofrece clases particulares, masterclase de varios instrumentos y reservas de estudios de grabación.
 
 Desplegada en producción: **https://vibramusicstudio.es**
 
@@ -25,22 +25,40 @@ Desplegada en producción: **https://vibramusicstudio.es**
 
 Vibra Music es una academia de música en Carmona (Sevilla) que ofrece:
 
-### 🎸 Clases particulares
-Cursos personalizados de instrumento en tres modalidades:
+### 🎸 Clases
+Cursos de instrumento en tres modalidades: **Individual** (45 min/semana), **Grupal** (1h) y **Ensamble** (1h grupal y 45 min individual).
 
-| Curso | Instrumento | Modalidad | Profesor/a | Precio |
-|---|---|---|---|---|
-| Guitarra Clásica | Guitarra | Individual | Carlos Romero | 120 €/mes |
-| Piano Jazz | Piano | Individual | María Fernández | 130 €/mes |
-| Canto Pop / Rock | Canto | Individual | Laura Santos | 110 €/mes |
-| Batería | Batería | Grupal | Diego Martínez | 80 €/mes |
-| Bajo Eléctrico | Bajo | Online | Andrés López | 95 €/mes |
-| Violín Clásico | Violín | Individual | Elena Castillo | 125 €/mes |
+| Curso | Instrumento | Modalidad | Precio |
+|---|---|---|---|
+| Guitarra flamenca/eléctrica | Guitarra | Individual | 50 €/mes |
+| Guitarra flamenca/eléctrica | Guitarra | Grupal | 38 €/mes |
+| Guitarra flamenca/eléctrica | Guitarra | Ensamble | 70 €/mes |
+| Piano | Piano | Individual | 50 €/mes |
+| Piano | Piano | Grupal | 38 €/mes |
+| Piano | Piano | Ensamble | 70 €/mes |
+| Canto | Canto | Individual | 50 €/mes |
+| Canto | Canto | Grupal | 38 €/mes |
+| Canto | Canto | Ensamble | 70 €/mes |
+| Coro moderno | Canto | Grupal | 28 €/semana |
+| Batería y micro percusión | Batería | Individual | 50 €/mes |
+| Batería y micro percusión | Batería | Grupal | 38 €/mes |
+| Batería y micro percusión | Batería | Ensamble | 70 €/mes |
+| Bajo eléctrico | Bajo | Individual | 50 €/mes |
+| Bajo eléctrico | Bajo | Grupal | 38 €/mes |
+| Bajo eléctrico | Bajo | Ensamble | 70 €/mes |
+| Violín | Violín | Individual | 50 €/mes |
+| Violín | Violín | Grupal | 38 €/mes |
+| Violín | Violín | Ensamble | 70 €/mes |
+| Viento madera y metal | Viento | Individual | 50 €/mes |
+| Viento madera y metal | Viento | Grupal | 38 €/mes |
+| Viento madera y metal | Viento | Ensamble | 70 €/mes |
+| Teoría musical/armonía moderna | Teoría Musical | Grupal | 32 €/semana |
+| Producción musical | Producción | Grupal | 55 €/semana |
 
-### 🎤 Masterclass
+### 🎤 Masterclase
 Formaciones intensivas de especialización:
 
-| Masterclass | Instructor/a | Precio | Duración |
+| Masterclase | Instructor/a | Precio | Duración |
 |---|---|---|---|
 | Improvisación en Jazz | John Morales | 29 € | 4h 30min |
 | Técnica Vocal Avanzada | Sarah Connor | 39 € | 3h 15min |
@@ -52,10 +70,14 @@ Formaciones intensivas de especialización:
 ### 🎛️ Estudio de grabación
 Espacio profesional con equipamiento de primer nivel:
 
-- Consola Neve 8078 y SSL 4000 E/G
-- Pro Tools HD y más de 100 micrófonos vintage
-- Neumann U87 (×8), compresor API 2500
-- Reverb Lexicon 480L y cinta de 2" Studer A820
+- Micrófonos: Rode NT1 Signature y Behringer C-2
+- Interfaz de audio: PreSonus Studio 24c
+- Monitorización: M-Audio BX5 y auriculares Audio-Technica
+- Producción musical: Logic Pro e instrumentos virtuales
+- Almacenamiento: SSD de 2 TB
+
+### 🎬 Bandas Sonoras Originales
+Composición y producción de bandas sonoras originales para cine, series, videojuegos y proyectos audiovisuales, con enlaces a Spotify.
 
 La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos, masterclass, demos de audio del estudio, estudio y contacto), registro e inicio de sesión reales, **recuperación de contraseña** por email, un **perfil** con las reservas y mensajes del usuario, y un **panel de administración** para gestionar reservas y mensajes.
 
@@ -94,7 +116,7 @@ src/
 │   ├── app.config.ts                      # Providers (zoneless, router, http, supabase)
 │   ├── app.routes.ts                      # Definición de rutas (lazy)
 │   ├── core/
-│   │   ├── data/                          # Datos ficticios de cursos, masterclass y estudio
+│   │   ├── data/                          # Datos ficticios de cursos, masterclase y estudio
 │   │   ├── guards/                        # auth.guard.ts, admin.guard.ts
 │   │   ├── models/                        # Interfaces (Course, Masterclass, Booking, Message...)
 │   │   └── services/                      # supabase, auth, booking, messages, admin, theme, toast
@@ -102,7 +124,7 @@ src/
 │   │   ├── authentication/                # Páginas login, registro y recuperación
 │   │   ├── landing/
 │   │   │   ├── pages/home/                # Página de aterrizaje
-│   │   │   └── components/                # hero, about, courses, masterclasses, studio, contact, ...
+│   │   │   └── components/                # hero, about, courses, masterclases, studio, contact, ...
 │   │   ├── admin/                         # Panel de administración
 │   │   ├── profile/                       # Perfil (protegido por guard)
 │   │   └── not-found/                     # Página 404

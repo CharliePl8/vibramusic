@@ -41,13 +41,13 @@
     font-weight: $font-weight-normal;
     color: $color-muted-foreground;
     line-height: 1.7;
-    margin-bottom: $space-8;
+    margin-bottom: $space-6;
   }
 
   &__gear-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: $space-3;
+    grid-template-columns: 1fr;
+    gap: $space-2;
     align-items: stretch;
   }
 
@@ -60,8 +60,8 @@
     background-color: $color-cardback;
     border: 1px solid $color-border;
     border-radius: $radius-xl;
-    padding: $space-3 $space-4;
-    min-height: 2.5rem;
+    padding: $space-2 $space-4;
+    min-height: 2.25rem;
   }
 
   &__media {
@@ -86,6 +86,10 @@
     padding: $space-6;
     margin-top: $space-6;
     box-shadow: $shadow-sm;
+
+    &--mixmaster {
+      background-color: $color-cardback;
+    }
   }
 
   &__booking-head {
@@ -190,5 +194,12 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     transition: background-color $transition-base;
+  }
+
+  &__mixmaster-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+    margin-top: 0;
   }
 }

@@ -4,7 +4,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { STUDIO_GEAR, STUDIO_IMAGE } from '../../../../core/data/studio.data';
-import { AudioTracklistComponent } from '../audio-tracklist/audio-tracklist.component';
 import {
   STUDIO_SERVICES,
   STUDIO_SLOTS,
@@ -14,11 +13,12 @@ import {
 import { BookingService } from '../../../../core/services/booking.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { ContactDraftService } from '../../../../core/services/contact-draft.service';
 
 @Component({
   selector: 'app-studio',
   standalone: true,
-  imports: [CommonModule, AudioTracklistComponent, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.scss',
 })
@@ -45,6 +45,7 @@ export class StudioComponent implements OnInit {
   private toast = inject(ToastService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private readonly contactDraft = inject(ContactDraftService);
 
   ngOnInit() {
     const handler = () => {
@@ -128,6 +129,18 @@ export class StudioComponent implements OnInit {
 
   isSlotAvailable(slot: string): boolean {
     return !this.takenSlots().includes(slot as StudioSlot);
+  }
+
+  requestMixingMastering(type: 'Mezcla' | 'Mastering') {
+    this.contactDraft.setMessage(
+      [
+        `Hola, me interesa el servicio de ${type.toLowerCase()}.`,
+        'Quisiera que me contactéis para hablar sobre mi proyecto, disponibilidad y presupuesto.',
+        '',
+        'Muchas gracias.',
+      ].join('\n'),
+    );
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   hasError(controlName: 'date' | 'slot' | 'service'): boolean {

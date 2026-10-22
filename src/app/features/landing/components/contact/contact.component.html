@@ -9,11 +9,42 @@
           <span class="contact__info-icon">
             <img [src]="item.icon" alt="" class="contact__info-icon-img" />
           </span>
-          <p class="contact__info-value">{{ item.value }}</p>
+          <ng-container [ngSwitch]="item.icon">
+            <a
+              *ngSwitchCase="'/assets/images/iconos/ubi.png'"
+              href="https://maps.app.goo.gl/7QpTr7k4yJPqqDLG7"
+              target="_blank"
+              rel="noopener"
+              class="contact__info-value"
+            >
+              {{ item.value }}
+            </a>
+            <a
+              *ngSwitchCase="'/assets/images/iconos/redesrojas-25.png'"
+              href="tel:{{ item.value }}"
+              class="contact__info-value"
+            >
+              {{ item.value }}
+            </a>
+            <a
+              *ngSwitchCase="'/assets/images/iconos/correo.png'"
+              href="mailto:{{ item.value }}"
+              class="contact__info-value"
+            >
+              {{ item.value }}
+            </a>
+            <p
+              *ngSwitchDefault
+              class="contact__info-value"
+              style="white-space: pre-line"
+            >
+              {{ item.value }}
+            </p>
+          </ng-container>
         </div>
         <div class="contact__social">
           <a
-            href="https://wa.me/"
+            href="https://wa.me/34665239177"
             target="_blank"
             rel="noopener"
             class="contact__social-btn"
@@ -22,25 +53,7 @@
             <img src="/assets/images/iconos/redesrojas-25.png" alt="" class="contact__social-icon" />
           </a>
           <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener"
-            class="contact__social-btn"
-            aria-label="Instagram"
-          >
-            <img src="/assets/images/iconos/redesrojas-29.png" alt="" class="contact__social-icon" />
-          </a>
-          <a
-            href="https://youtube.com"
-            target="_blank"
-            rel="noopener"
-            class="contact__social-btn"
-            aria-label="YouTube"
-          >
-            <img src="/assets/images/iconos/redesrojas-24.png" alt="" class="contact__social-icon" />
-          </a>
-          <a
-            href="https://tiktok.com"
+            href="https://www.tiktok.com/@vibra.music.studi?_r=1&_t=ZN-9AgmAaB2pF8"
             target="_blank"
             rel="noopener"
             class="contact__social-btn"
@@ -49,11 +62,11 @@
             <img src="/assets/images/iconos/redesrojas-26.png" alt="" class="contact__social-icon" />
           </a>
           <a
-            href="https://facebook.com"
+            href="https://www.instagram.com/vibramusicstudio?xtok=cDh3eTRxcHd2cHFt&utm_source=qr"
             target="_blank"
             rel="noopener"
             class="contact__social-btn"
-            aria-label="Facebook"
+            aria-label="Instagram"
           >
             <img src="/assets/images/iconos/redesrojas-27.png" alt="" class="contact__social-icon" />
           </a>
