@@ -55,62 +55,75 @@
             [attr.aria-pressed]="modalityFilter() === modality"
             (click)="setModality(modality)"
           >
-            <span aria-hidden="true">{{ modalityIcons[modality] }}</span>
+            <img
+              class="courses__chip-logo"
+              [src]="modalityIcons[modality]"
+              alt=""
+              aria-hidden="true"
+            />
             <span>{{ modalityName(modality) }}</span>
           </button>
         </div>
       </div>
     </div>
 
-    <p *ngIf="filteredCourses.length === 0" class="courses__empty">
-      No hay cursos con el filtro seleccionado.
-    </p>
+    <p *ngIf="!hasAnyResults()" class="courses__empty">No hay cursos con el filtro seleccionado.</p>
 
-    <div *ngIf="filteredCourses.length > 0" class="courses__list">
-      <div *ngFor="let course of filteredCourses" class="course-card">
+    <div *ngIf="hasAnyResults()" class="courses__list">
+      <div *ngFor="let group of filteredGroups" class="course-group">
         <button
           type="button"
-          class="course-card__header"
-          [attr.aria-expanded]="expandedCourse() === course.id"
-          [attr.aria-controls]="'course-body-' + course.id"
-          (click)="toggleCourse(course.id)"
+          class="course-group__header"
+          [attr.aria-expanded]="isCategoryExpanded(group.category)"
+          [attr.aria-controls]="'group-body-' + group.category"
+          (click)="toggleCategory(group.category)"
         >
-          <img
-            class="course-card__logo"
-            [src]="courseLogos[course.category]"
-            alt=""
-            aria-hidden="true"
-          />
-          <div class="course-card__info">
-            <h3 [id]="'course-title-' + course.id" class="course-card__name">
-              {{ course.name }}
-            </h3>
-            <div class="course-card__meta">
-              <span>{{ course.teacher }}</span>
-              <span>{{ course.level }}</span>
-              <span class="course-card__price">{{ course.price }}€/mes</span>
-              <span>
-                <span aria-hidden="true">{{ modalityIcons[course.modality] }}</span>
-                {{ modalityName(course.modality) }}
-              </span>
+          <img class="course-group__logo" [src]="group.logo" alt="" aria-hidden="true" />
+          <div class="course-group__info">
+            <h3 class="course-group__name">{{ group.name }}</h3>
+            <div class="course-group__meta">
+              <span
+                >{{ group.courses.length }} modalidad{{
+                  group.courses.length > 1 ? 'es' : ''
+                }}</span
+              >
             </div>
           </div>
           <span
-            class="course-card__chevron"
-            [class.course-card__chevron--open]="expandedCourse() === course.id"
+            class="course-group__chevron"
+            [class.course-group__chevron--open]="isCategoryExpanded(group.category)"
             aria-hidden="true"
           >
             ⌄
           </span>
         </button>
+
         <div
-          *ngIf="expandedCourse() === course.id"
-          [id]="'course-body-' + course.id"
-          class="course-card__body"
+          *ngIf="isCategoryExpanded(group.category)"
+          [id]="'group-body-' + group.category"
+          class="course-group__body"
           role="region"
-          [attr.aria-labelledby]="'course-title-' + course.id"
         >
-          <p class="course-card__desc">{{ course.description }}</p>
+          <div *ngFor="let course of group.courses" class="course-row">
+            <div class="course-row__left">
+              <img
+                class="course-row__modality-icon"
+                [src]="modalityIcons[course.modality]"
+                alt=""
+                aria-hidden="true"
+              />
+              <div class="course-row__modality-info">
+                <span class="course-row__modality-name">{{ modalityName(course.modality) }}</span>
+                <span class="course-row__duration">{{ modalityDuration(course.modality) }}</span>
+              </div>
+            </div>
+            <span class="course-row__price">
+              {{ course.price }}€/{{ priceUnitName(course.priceUnit) }}
+            </span>
+            <button type="button" class="course-row__reserve" (click)="reserve(course)">
+              Reservar <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

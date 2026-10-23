@@ -1,0 +1,34 @@
+<section id="bso" class="soundtracks">
+  <div class="soundtracks__inner">
+    <p class="soundtracks__eyebrow">PON MÚSICA A TUS PROYECTOS</p>
+    <h2 class="soundtracks__title">Bandas Sonoras Originales</h2>
+    <p class="soundtracks__intro">
+      En Vibra también componemos y producimos bandas sonoras originales. De la primera idea al
+      máster final, ponemos música a cine, series, videojuegos y proyectos audiovisuales.
+    </p>
+
+    <div class="soundtracks__grid">
+      <div *ngFor="let track of soundtracks; let i = index" class="soundtracks__track">
+        <div *ngIf="track.embedUrl" [innerHTML]="spotifyEmbeds[i]"></div>
+        <a
+          *ngIf="!track.embedUrl"
+          class="st-card"
+          [href]="track.spotifyUrl"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="st-card__year">{{ track.year }}</span>
+          <h3 class="st-card__title">{{ track.title }}</h3>
+          <p class="st-card__subtitle">{{ track.subtitle }}</p>
+          <span class="st-card__cta"> Escuchar en Spotify <span aria-hidden="true">↗</span> </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="soundtracks__actions">
+      <button type="button" class="soundtracks__cta" (click)="contactAboutBso()">
+        Cuéntanos tu proyecto <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+</section>

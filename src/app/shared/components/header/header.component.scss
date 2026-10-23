@@ -52,7 +52,7 @@
     padding: $space-2 $space-3;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-muted-foreground;
+    color: $color-sub;
     border-radius: $radius-lg;
     transition:
       color $transition-base,
@@ -80,7 +80,7 @@
     border-radius: $radius-full;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-muted-foreground;
+    color: $color-sub;
     transition:
       color $transition-base,
       background-color $transition-base;
@@ -91,41 +91,18 @@
     }
 
     &--active {
-      color: $color-white;
-      background-color: $color-primary;
-
-      &:hover {
-        background-color: $color-primary-hover;
-      }
+      @include button-primary;
+      transition: background-color $transition-base;
     }
   }
 
   &__auth-btn {
+    @include button-primary;
     padding: $space-2 $space-3;
-    border-radius: $radius-full;
-    border: 1px solid $color-primary;
-    color: $color-primary;
+    border-radius: $radius-xl;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    transition:
-      background-color $transition-base,
-      color $transition-base,
-      border-color $transition-base;
-
-    &:hover {
-      background-color: $color-primary;
-      color: $color-white;
-    }
-
-    &--active {
-      background-color: $color-primary;
-      color: $color-white;
-
-      &:hover {
-        background-color: $color-primary-hover;
-        border-color: $color-primary-hover;
-      }
-    }
+    transition: background-color $transition-base;
   }
 
   &__user {
@@ -208,7 +185,7 @@
   padding: $space-3 $space-4;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  color: $color-muted-foreground;
+  color: $color-sub;
   border-radius: $radius-lg;
   text-align: left;
   transition:
@@ -233,7 +210,7 @@
 .sticky-nav__mobile-btn {
   display: block;
   padding: $space-2 $space-4;
-  border-radius: $radius-lg;
+  border-radius: $radius-xl;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   color: $color-white;
@@ -244,25 +221,13 @@
     background-color: rgba(255, 255, 255, 0.08);
   }
 
-  &--accent {
-    background-color: $color-primary;
-
-    &:hover {
-      background-color: $color-primary-hover;
-    }
-  }
-
+  &--accent,
   &--active {
-    background-color: $color-primary;
-    color: $color-white;
-
-    &:hover {
-      background-color: $color-primary-hover;
-    }
+    @include button-primary;
   }
 
   &--ghost {
-    color: $color-muted-foreground;
+    color: $color-sub;
     background: none;
 
     &:hover {
@@ -289,7 +254,7 @@
 
   &__btn {
     padding: $space-2 $space-4;
-    border-radius: $radius-full;
+    border-radius: $radius-xl;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     color: $color-white;
@@ -299,22 +264,9 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    &--accent {
-      background-color: $color-primary;
-      color: $color-white;
-
-      &:hover {
-        background-color: $color-primary-hover;
-      }
-    }
-
+    &--accent,
     &--active {
-      background-color: $color-primary;
-      color: $color-white;
-
-      &:hover {
-        background-color: $color-primary-hover;
-      }
+      @include button-primary;
     }
   }
 
