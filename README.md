@@ -1,6 +1,6 @@
 # 🎵 Vibra Music
 
-**MVP** de la web de la academia musical **Vibra Music**, situada en **Carmona (Sevilla)**. Ofrece clases particulares, masterclass de varios instrumentos y reservas de estudios de grabación.
+**MVP** de la web de la academia musical **Vibra Music**, situada en **Carmona (Sevilla)**. Ofrece clases particulares, masterclase de varios instrumentos y reservas de estudios de grabación.
 
 Desplegada en producción: **https://vibramusicstudio.es**
 
@@ -25,22 +25,40 @@ Desplegada en producción: **https://vibramusicstudio.es**
 
 Vibra Music es una academia de música en Carmona (Sevilla) que ofrece:
 
-### 🎸 Clases particulares
-Cursos personalizados de instrumento en tres modalidades:
+### 🎸 Clases
+Cursos de instrumento en tres modalidades: **Individual** (45 min/semana), **Grupal** (1h) y **Ensamble** (1h grupal y 45 min individual).
 
-| Curso | Instrumento | Modalidad | Profesor/a | Precio |
-|---|---|---|---|---|
-| Guitarra Clásica | Guitarra | Individual | Carlos Romero | 120 €/mes |
-| Piano Jazz | Piano | Individual | María Fernández | 130 €/mes |
-| Canto Pop / Rock | Canto | Individual | Laura Santos | 110 €/mes |
-| Batería | Batería | Grupal | Diego Martínez | 80 €/mes |
-| Bajo Eléctrico | Bajo | Online | Andrés López | 95 €/mes |
-| Violín Clásico | Violín | Individual | Elena Castillo | 125 €/mes |
+| Curso | Instrumento | Modalidad | Precio |
+|---|---|---|---|
+| Guitarra flamenca/eléctrica | Guitarra | Individual | 50 €/mes |
+| Guitarra flamenca/eléctrica | Guitarra | Grupal | 38 €/mes |
+| Guitarra flamenca/eléctrica | Guitarra | Ensamble | 70 €/mes |
+| Piano | Piano | Individual | 50 €/mes |
+| Piano | Piano | Grupal | 38 €/mes |
+| Piano | Piano | Ensamble | 70 €/mes |
+| Canto | Canto | Individual | 50 €/mes |
+| Canto | Canto | Grupal | 38 €/mes |
+| Canto | Canto | Ensamble | 70 €/mes |
+| Coro moderno | Canto | Grupal | 28 €/semana |
+| Batería y micro percusión | Batería | Individual | 50 €/mes |
+| Batería y micro percusión | Batería | Grupal | 38 €/mes |
+| Batería y micro percusión | Batería | Ensamble | 70 €/mes |
+| Bajo eléctrico | Bajo | Individual | 50 €/mes |
+| Bajo eléctrico | Bajo | Grupal | 38 €/mes |
+| Bajo eléctrico | Bajo | Ensamble | 70 €/mes |
+| Violín | Violín | Individual | 50 €/mes |
+| Violín | Violín | Grupal | 38 €/mes |
+| Violín | Violín | Ensamble | 70 €/mes |
+| Viento madera y metal | Viento | Individual | 50 €/mes |
+| Viento madera y metal | Viento | Grupal | 38 €/mes |
+| Viento madera y metal | Viento | Ensamble | 70 €/mes |
+| Teoría musical/armonía moderna | Teoría Musical | Grupal | 32 €/semana |
+| Producción musical | Producción | Grupal | 55 €/semana |
 
-### 🎤 Masterclass
+### 🎤 Masterclase
 Formaciones intensivas de especialización:
 
-| Masterclass | Instructor/a | Precio | Duración |
+| Masterclase | Instructor/a | Precio | Duración |
 |---|---|---|---|
 | Improvisación en Jazz | John Morales | 29 € | 4h 30min |
 | Técnica Vocal Avanzada | Sarah Connor | 39 € | 3h 15min |
@@ -52,12 +70,16 @@ Formaciones intensivas de especialización:
 ### 🎛️ Estudio de grabación
 Espacio profesional con equipamiento de primer nivel:
 
-- Consola Neve 8078 y SSL 4000 E/G
-- Pro Tools HD y más de 100 micrófonos vintage
-- Neumann U87 (×8), compresor API 2500
-- Reverb Lexicon 480L y cinta de 2" Studer A820
+- Micrófonos: Rode NT1 Signature y Behringer C-2
+- Interfaz de audio: PreSonus Studio 24c
+- Monitorización: M-Audio BX5 y auriculares Audio-Technica
+- Producción musical: Logic Pro e instrumentos virtuales
+- Almacenamiento: SSD de 2 TB
 
-La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos, masterclass, demos de audio del estudio, estudio y contacto), registro e inicio de sesión reales, un **perfil** con las reservas y mensajes del usuario, y un **panel de administración** para gestionar reservas y mensajes.
+### 🎬 Bandas Sonoras Originales
+Composición y producción de bandas sonoras originales para cine, series, videojuegos y proyectos audiovisuales, con enlaces a Spotify.
+
+La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos, masterclass, demos de audio del estudio, estudio y contacto), registro e inicio de sesión reales, **recuperación de contraseña** por email, un **perfil** con las reservas y mensajes del usuario, y un **panel de administración** para gestionar reservas y mensajes.
 
 > [!NOTE]
 > **MVP**: el backend y la autenticación son reales (Supabase), pero el **contenido es ficticio** — catálogo de cursos/precios, imágenes (Unsplash), teléfono y dirección aún son placeholders a sustituir por datos reales. Email de contacto disponible: `support@vibramusicstudio.es`.
@@ -76,7 +98,7 @@ La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos
 | [SCSS](https://sass-lang.com) | — | Estilos (variables, mixins, globales) |
 | [RxJS](https://rxjs.dev) | ~7.8.0 | Programación reactiva |
 | [Supabase](https://supabase.com) | `@supabase/supabase-js` ^2.116.0 | Backend: auth, base de datos (PostgreSQL + RLS) |
-| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (39 tests) |
+| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (65 tests) |
 | [Prettier](https://prettier.io) | ^3.8.1 | Formateo de código |
 
 **Notas de arquitectura:**
@@ -94,15 +116,15 @@ src/
 │   ├── app.config.ts                      # Providers (zoneless, router, http, supabase)
 │   ├── app.routes.ts                      # Definición de rutas (lazy)
 │   ├── core/
-│   │   ├── data/                          # Datos ficticios de cursos, masterclass y estudio
+│   │   ├── data/                          # Datos ficticios de cursos, masterclase y estudio
 │   │   ├── guards/                        # auth.guard.ts, admin.guard.ts
 │   │   ├── models/                        # Interfaces (Course, Masterclass, Booking, Message...)
 │   │   └── services/                      # supabase, auth, booking, messages, admin, theme, toast
 │   ├── features/
-│   │   ├── authentication/                # Páginas login y registro
+│   │   ├── authentication/                # Páginas login, registro y recuperación
 │   │   ├── landing/
 │   │   │   ├── pages/home/                # Página de aterrizaje
-│   │   │   └── components/                # hero, about, courses, masterclasses, studio, contact, ...
+│   │   │   └── components/                # hero, about, courses, masterclases, studio, contact, ...
 │   │   ├── admin/                         # Panel de administración
 │   │   ├── profile/                       # Perfil (protegido por guard)
 │   │   └── not-found/                     # Página 404
@@ -122,13 +144,15 @@ scripts/
 | `/` | Home (landing) | — |
 | `/login` | Login | — |
 | `/registro` | Registro | — |
+| `/recuperar` | Recuperar contraseña (solicitud) | — |
+| `/reset-password` | Restablecer contraseña (nueva) | — |
 | `/perfil` | Perfil | `authGuard` |
 | `/admin` | Admin | `authGuard` + `adminGuard` |
 | `**` | NotFound | — |
 
 ### Autenticación y base de datos
 
-- **Auth real** con Supabase: registro + confirmación por email, login y cierre de sesión.
+- **Auth real** con Supabase: registro + confirmación por email, login, cierre de sesión y **recuperación de contraseña** (email de restablecimiento).
 - Sesión **persistente** (`persistSession`, `autoRefreshToken`), enlace de confirmación redirigido a `/login` (`emailRedirectTo` + `detectSessionInUrl`).
 - **Base de datos PostgreSQL** con **RLS** habilitado por tabla (`profiles`, `bookings`, `messages`).
 - Usuarios **admin** marcados en el perfil (`is_admin` via RPC `security definer`, verificado en `adminGuard`).
@@ -168,7 +192,7 @@ ng serve
 
 Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga automáticamente al modificar el código.
 
-> Para que la confirmación por email funcione, en Supabase → **Authentication → URL Configuration** el **Site URL** debe apuntar al origen de la web y los **Redirect URLs** permitir `/login`.
+> Para que la confirmación por email funcione, en Supabase → **Authentication → URL Configuration** el **Site URL** debe apuntar al origen de la web y los **Redirect URLs** permitir `/login`, `/recuperar` y `/reset-password` (o `https://vibramusicstudio.es/**`).
 
 ## Scripts disponibles
 
@@ -178,7 +202,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 | `npm run build` / `ng build` | Build de producción en `dist/` |
 | `npm run postbuild` | Genera `dist/vibramusic/browser/404.html` (fallback SPA, lo ejecuta `build`) |
 | `npm run watch` | Build en modo observación (desarrollo) |
-| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 39 tests) |
+| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 65 tests) |
 | `ng generate component <nombre>` | Generar componentes/schematics con Angular CLI |
 
 ## Despliegue en Cloudflare Pages
@@ -187,7 +211,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 - **Rama de producción:** `dev` (cada push a `dev` lanza build y deploy).
 - **Build command:** `npm run build` → salida en `dist/vibramusic/browser` (con `NODE_VERSION=22`).
 - **Fallback SPA:** el `postbuild` copia el `index.html` como `404.html`, de modo que cualquier ruta (`/perfil`, `/admin`, …) sirve la app y el enrutado Angular la resuelve.
-- **Dominio y DNS:** zona gestionada por Cloudflare; `www.vibramusicstudio.es` redirige con **301** a la raíz; email de contacto (`hola@vibramusicstudio.es`) mediante **Email Routing** gratuito.
+- **Dominio y DNS:** zona gestionada por Cloudflare; `www.vibramusicstudio.es` redirige con **301** a la raíz; email de contacto (`support@vibramusicstudio.es`) mediante **Email Routing** gratuito.
 
 ## Ramas del repositorio
 
@@ -202,4 +226,4 @@ Flujo de trabajo: `landing` → `dev` → (deploy automático); los merges los r
 
 ## Licencia
 
-[CC0 1.0 Universal](LICENSE) — dedicado al dominio público.
+Software **propietario** — © Vibra Music Studio, todos los derechos reservados. Ver [LICENSE](LICENSE).

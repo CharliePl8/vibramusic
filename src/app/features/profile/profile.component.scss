@@ -11,24 +11,19 @@
   background-color: $color-background;
 
   &__card {
-    --profile-card-background: #{$color-primary-dark};
-    --profile-card-text: #{$color-white};
-    --profile-card-border: rgba(255, 255, 255, 0.28);
-    --profile-card-surface: rgba(0, 0, 0, 0.16);
+    --profile-card-background: #{$color-surface};
+    --profile-card-text: #{$color-foreground};
+    --profile-card-border: #{$color-primary};
+    --profile-card-surface: #{$color-primary-soft};
 
     width: 100%;
     max-width: 32rem;
     background-color: var(--profile-card-background);
-    border: 1px solid var(--profile-card-border);
+    border: 2px solid var(--profile-card-border);
     border-radius: $radius-2xl;
     color: var(--profile-card-text);
     padding: $space-7;
-
-    [data-theme='dark'] & {
-      --profile-card-background: #{$color-card};
-      --profile-card-border: rgba(255, 255, 255, 0.16);
-      --profile-card-surface: rgba(255, 255, 255, 0.06);
-    }
+    box-shadow: $shadow-md;
   }
 
   &__nav {
@@ -42,10 +37,10 @@
   &__nav-link {
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-white;
+    color: $color-primary;
 
     &:hover {
-      color: rgba(255, 255, 255, 0.8);
+      color: $color-primary-hover;
     }
   }
 
@@ -54,7 +49,7 @@
   }
 
   &__eyebrow {
-    @include section-eyebrow($color-white);
+    @include section-eyebrow($color-primary);
     margin-bottom: $space-2;
   }
 
@@ -66,11 +61,14 @@
   }
 
   &__info {
+    --user-avatar-background: #{$color-background};
+    --user-avatar-text: #{$color-primary};
+
     display: flex;
     align-items: center;
     gap: $space-4;
     padding: $space-5;
-    background-color: $color-background;
+    background-color: $color-primary;
     border-radius: $radius-2xl;
     margin-bottom: $space-6;
   }
@@ -83,12 +81,12 @@
   &__name {
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-primary;
+    color: $color-white;
   }
 
   &__email {
     font-size: $font-size-sm;
-    color: $color-muted-foreground;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   &__section {
@@ -139,21 +137,13 @@
 
   &__booking-cancel {
     @include button-reset;
+    @include button-primary;
     flex-shrink: 0;
     padding: $space-2 $space-3;
-    border: 1px solid $color-white;
-    border-radius: $radius-lg;
-    color: $color-white;
+    border-radius: $radius-xl;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    transition:
-      background-color $transition-fast,
-      color $transition-fast;
-
-    &:hover {
-      background-color: $color-white;
-      color: $color-danger;
-    }
+    transition: background-color $transition-fast;
   }
 
   &__empty {
@@ -167,12 +157,12 @@
   &__goto {
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-white;
+    color: $color-primary;
     text-decoration: underline;
     text-underline-offset: 0.2em;
 
     &:hover {
-      color: $color-white;
+      color: $color-primary-hover;
       text-decoration-thickness: 2px;
     }
   }
@@ -187,7 +177,7 @@
     padding: $space-4;
     background-color: var(--profile-card-surface);
     border-radius: $radius-xl;
-    border-left: 4px solid $color-white;
+    border-left: 4px solid $color-primary;
   }
 
   &__message-text {
@@ -203,21 +193,12 @@
   }
 
   &__logout {
+    @include button-primary;
     width: 100%;
     padding: $space-3;
     border-radius: $radius-xl;
-    background-color: transparent;
-    color: $color-white;
-    border: 1px solid $color-white;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition:
-      background-color $transition-base,
-      color $transition-base;
-
-    &:hover {
-      background-color: $color-white;
-      color: $color-danger;
-    }
+    transition: background-color $transition-base;
   }
 }

@@ -89,19 +89,19 @@
   }
 
   &__cta {
+    @include button-primary;
     display: inline-flex;
     align-items: center;
     gap: $space-2;
     padding: $space-3 $space-8;
-    border-radius: $radius-full;
-    background-color: $color-primary;
-    color: $color-white;
+    border-radius: $radius-xl;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    transition: background-color $transition-base, gap $transition-base;
+    transition:
+      background-color $transition-base,
+      gap $transition-base;
 
     &:hover {
-      background-color: $color-primary-hover;
       gap: $space-3;
     }
 
