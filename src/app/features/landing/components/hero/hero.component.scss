@@ -144,6 +144,11 @@
   }
 }
 
+:host-context([data-theme='dark']) .hero__bg {
+  opacity: 0.35;
+  mix-blend-mode: normal;
+}
+
 @keyframes pulse {
   0%,
   100% {

@@ -53,8 +53,8 @@ export const MODALITY_ICON: Record<Modality, string> = {
 
 export const MODALITY_DURATION: Record<Modality, string> = {
   individual: '45 min/semana',
-  group: '1h',
-  ensemble: '1h grupal y 45 min individual',
+  group: '1h/semana',
+  ensemble: '1h grupal/semana y 45 min individual/semana',
 };
 
 const LEVEL = 'Todos los niveles';

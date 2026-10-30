@@ -7,7 +7,7 @@ export const SOUNDTRACKS: Soundtrack[] = [
     subtitle: 'Banda sonora original',
     year: '2025',
     spotifyUrl: 'https://open.spotify.com/intl-es/track/1NMtq7fhqEnTkgZpl5zs03',
-    embedUrl: 'https://open.spotify.com/embed/track/1NMtq7fhqEnTkgZpl5zs03',
+    spotifyUri: 'spotify:track:1NMtq7fhqEnTkgZpl5zs03',
   },
   {
     id: 'bso2',
@@ -15,6 +15,6 @@ export const SOUNDTRACKS: Soundtrack[] = [
     subtitle: 'Banda sonora original',
     year: '2025',
     spotifyUrl: 'https://open.spotify.com/intl-es/track/2H4tL3Bxa57TNySwH6Vr7C',
-    embedUrl: 'https://open.spotify.com/embed/track/2H4tL3Bxa57TNySwH6Vr7C',
+    spotifyUri: 'spotify:track:2H4tL3Bxa57TNySwH6Vr7C',
   },
 ];
