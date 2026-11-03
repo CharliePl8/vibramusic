@@ -48,6 +48,12 @@
     width: 100%;
   }
 
+  &__embed {
+    width: 100%;
+    overflow: hidden;
+    border-radius: $radius-lg;
+  }
+
   &__actions {
     margin-top: $space-8;
   }

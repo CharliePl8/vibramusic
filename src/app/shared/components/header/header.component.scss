@@ -26,6 +26,7 @@
     align-items: center;
     justify-content: space-between;
     padding-block: $space-3;
+    padding-top: calc(#{$space-3} + env(safe-area-inset-top, 0px));
     gap: $space-4;
   }
 
@@ -239,8 +240,8 @@
 
 .floating-auth {
   position: fixed;
-  top: $space-4;
-  right: $space-4;
+  top: calc(#{$space-4} + env(safe-area-inset-top, 0px));
+  right: calc(#{$space-4} + env(safe-area-inset-right, 0px));
   z-index: $z-index-fixed;
   display: flex;
   align-items: center;
