@@ -31,23 +31,46 @@ describe('AdminComponent', () => {
   let component: AdminComponent;
   const bookings = vi.fn();
   const messages = vi.fn();
+  const unreadMessages = vi.fn();
   const cancelBooking = vi.fn();
   const setMessageRead = vi.fn();
+  const deleteMessage = vi.fn();
   const success = vi.fn();
   const error = vi.fn();
+  const confirm = vi.fn(() => true);
 
   beforeEach(async () => {
     bookings.mockReset();
     messages.mockReset();
+    unreadMessages.mockReset();
     cancelBooking.mockReset();
     setMessageRead.mockReset();
+    deleteMessage.mockReset();
     success.mockReset();
     error.mockReset();
+    confirm.mockReset();
+    confirm.mockReturnValue(true);
+
+    bookings.mockResolvedValue({ rows: [], total: 0 });
+    messages.mockResolvedValue({ rows: [], total: 0 });
+    unreadMessages.mockResolvedValue(0);
+
+    vi.stubGlobal('confirm', confirm);
 
     await TestBed.configureTestingModule({
       imports: [AdminComponent],
       providers: [
-        { provide: AdminService, useValue: { bookings, messages, cancelBooking, setMessageRead } },
+        {
+          provide: AdminService,
+          useValue: {
+            bookings,
+            messages,
+            unreadMessages,
+            cancelBooking,
+            setMessageRead,
+            deleteMessage,
+          },
+        },
         { provide: ToastService, useValue: { success, error } },
         {
           provide: Router,
@@ -66,13 +89,18 @@ describe('AdminComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('cancela una reserva y la quita de la lista', async () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('cancela una reserva y recarga la lista', async () => {
     cancelBooking.mockResolvedValue(true);
-    component.bookings.set([booking as never]);
+    bookings.mockResolvedValue({ rows: [], total: 0 });
 
     await component.cancelBooking('b1');
 
     expect(cancelBooking).toHaveBeenCalledWith('b1');
+    expect(bookings).toHaveBeenCalled();
     expect(component.bookings()).toEqual([]);
     expect(success).toHaveBeenCalled();
   });
@@ -89,6 +117,7 @@ describe('AdminComponent', () => {
 
   it('marca un mensaje como leído y actualiza el contador', async () => {
     setMessageRead.mockResolvedValue(true);
+    unreadMessages.mockResolvedValue(0);
     component.messages.set([message as never]);
 
     await component.toggleRead(message as never);
@@ -101,13 +130,9 @@ describe('AdminComponent', () => {
   it('distingue visualmente los mensajes leídos de los no leídos', async () => {
     const read = { ...message, read: true };
     const unread = { ...message, id: 'm2', read: false };
-    bookings.mockResolvedValue([]);
-    messages.mockResolvedValue([read, unread]);
     component.tab.set('messages');
 
     fixture.detectChanges();
-    await fixture.whenStable();
-
     component.loading.set(false);
     component.messages.set([read, unread]);
     fixture.detectChanges();
@@ -120,5 +145,43 @@ describe('AdminComponent', () => {
     expect(second.classList).toContain('admin__item--unread');
     expect(first.querySelector('.admin__status')?.textContent?.trim()).toBe('Leído');
     expect(second.querySelector('.admin__status')?.textContent?.trim()).toBe('Nuevo');
+  });
+
+  it('elimina un mensaje y recarga la lista', async () => {
+    deleteMessage.mockResolvedValue(true);
+    messages.mockResolvedValue({ rows: [], total: 0 });
+    unreadMessages.mockResolvedValue(0);
+    component.messages.set([message as never]);
+
+    await component.deleteMessage(message as never);
+
+    expect(deleteMessage).toHaveBeenCalledWith('m1');
+    expect(component.messages()).toEqual([]);
+    expect(success).toHaveBeenCalled();
+  });
+
+  it('no elimina si se cancela la confirmación', async () => {
+    confirm.mockReturnValue(false);
+    component.messages.set([message as never]);
+
+    await component.deleteMessage(message as never);
+
+    expect(deleteMessage).not.toHaveBeenCalled();
+  });
+
+  it('avanza a la página siguiente de reservas', async () => {
+    bookings.mockResolvedValue({ rows: [], total: 25 });
+    component.bookingTotal.set(25);
+
+    await component.nextBookings();
+
+    expect(component.bookingPage()).toBe(1);
+    expect(bookings).toHaveBeenCalledWith(1, component.pageSize);
+  });
+
+  it('no retrocede por debajo de la primera página', async () => {
+    await component.prevBookings();
+
+    expect(component.bookingPage()).toBe(0);
   });
 });

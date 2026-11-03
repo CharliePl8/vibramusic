@@ -14,7 +14,7 @@
               *ngSwitchCase="'/assets/images/iconos/ubi.png'"
               href="https://maps.app.goo.gl/7QpTr7k4yJPqqDLG7"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               class="contact__info-value"
             >
               {{ item.value }}
@@ -46,7 +46,7 @@
           <a
             href="https://wa.me/34665239177"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="contact__social-btn"
             aria-label="WhatsApp"
           >
@@ -55,7 +55,7 @@
           <a
             href="https://www.tiktok.com/@vibra.music.studi?_r=1&_t=ZN-9AgmAaB2pF8"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="contact__social-btn"
             aria-label="TikTok"
           >
@@ -64,7 +64,7 @@
           <a
             href="https://www.instagram.com/vibramusicstudio?xtok=cDh3eTRxcHd2cHFt&utm_source=qr"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="contact__social-btn"
             aria-label="Instagram"
           >
@@ -79,6 +79,7 @@
           <input
             id="contact-name"
             type="text"
+            maxlength="120"
             formControlName="name"
             class="contact__input"
             [class.contact__input--error]="hasError('name')"
@@ -91,6 +92,7 @@
           <input
             id="contact-email"
             type="email"
+            maxlength="254"
             formControlName="email"
             class="contact__input"
             [class.contact__input--error]="hasError('email')"
@@ -103,6 +105,7 @@
           <textarea
             id="contact-msg"
             rows="4"
+            maxlength="5000"
             formControlName="message"
             class="contact__input contact__input--textarea"
             [class.contact__input--error]="hasError('message')"

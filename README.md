@@ -98,7 +98,7 @@ La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos
 | [SCSS](https://sass-lang.com) | — | Estilos (variables, mixins, globales) |
 | [RxJS](https://rxjs.dev) | ~7.8.0 | Programación reactiva |
 | [Supabase](https://supabase.com) | `@supabase/supabase-js` ^2.116.0 | Backend: auth, base de datos (PostgreSQL + RLS) |
-| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (65 tests) |
+| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (77 tests) |
 | [Prettier](https://prettier.io) | ^3.8.1 | Formateo de código |
 
 **Notas de arquitectura:**
@@ -155,6 +155,8 @@ scripts/
 - **Auth real** con Supabase: registro + confirmación por email, login, cierre de sesión y **recuperación de contraseña** (email de restablecimiento).
 - Sesión **persistente** (`persistSession`, `autoRefreshToken`), enlace de confirmación redirigido a `/login` (`emailRedirectTo` + `detectSessionInUrl`).
 - **Base de datos PostgreSQL** con **RLS** habilitado por tabla (`profiles`, `bookings`, `messages`).
+- **Privilegios mínimos**: cada usuario solo puede actualizar su `name`; `role` y `email` quedan fuera de su alcance. Las inserciones de mensajes se validan en servidor (autoría, longitudes y formato de email) y las reservas rechazan fechas pasadas.
+- **Cabeceras de seguridad** en `public/_headers` para Cloudflare Pages (CSP, HSTS, anti-clickjacking, `Permissions-Policy`). Los `source maps` están desactivados en producción.
 - Usuarios **admin** marcados en el perfil (`is_admin` via RPC `security definer`, verificado en `adminGuard`).
 - **Reservas compartidas** del estudio: franjas `(date, slot)` con restricción única (conflicto = código `23505`); la lectura de franjas ocupadas usa la RPC `get_booked_slots` (RLS impide leer reservas ajenas).
 - El esquema completo (idempotente) está en `supabase/schema.sql`.
@@ -202,7 +204,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 | `npm run build` / `ng build` | Build de producción en `dist/` |
 | `npm run postbuild` | Genera `dist/vibramusic/browser/404.html` (fallback SPA, lo ejecuta `build`) |
 | `npm run watch` | Build en modo observación (desarrollo) |
-| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 65 tests) |
+| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 78 tests) |
 | `ng generate component <nombre>` | Generar componentes/schematics con Angular CLI |
 
 ## Despliegue en Cloudflare Pages
