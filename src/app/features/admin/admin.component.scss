@@ -180,6 +180,13 @@
     color: inherit;
   }
 
+  &__actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+
   &__cancel,
   &__toggle {
     @include button-reset;
@@ -190,6 +197,56 @@
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     transition: background-color $transition-fast;
+  }
+
+  &__delete {
+    @include button-reset;
+    flex-shrink: 0;
+    padding: $space-2 $space-3;
+    border: 1px solid $color-danger;
+    border-radius: $radius-xl;
+    background-color: transparent;
+    color: $color-danger;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: $color-danger;
+      color: $color-white;
+    }
+  }
+
+  &__pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-4;
+    margin-bottom: $space-6;
+    font-size: $font-size-sm;
+    color: $color-foreground;
+  }
+
+  &__pager-btn {
+    @include button-reset;
+    padding: $space-2 $space-3;
+    border: 1px solid $color-primary;
+    border-radius: $radius-xl;
+    color: $color-primary-dark;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    transition: background-color $transition-fast;
+
+    &:hover:not(:disabled) {
+      background-color: $color-primary-soft;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   }
 
   &__empty {

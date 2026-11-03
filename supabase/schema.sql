@@ -143,6 +143,16 @@ create policy "messages_update_admin"
   using (public.is_admin())
   with check (public.is_admin());
 
+-- El autor (por usuario o por email) puede borrar sus mensajes; el admin, todos.
+drop policy if exists "messages_delete_own_or_admin" on public.messages;
+create policy "messages_delete_own_or_admin"
+  on public.messages for delete
+  using (
+    user_id = auth.uid()
+    or lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+    or public.is_admin()
+  );
+
 -- ----------------------------------------------------------------------------
 -- 5) PERMISOS
 --    RLS filtra las filas; los GRANT permiten a los roles llegar a la tabla.
@@ -152,6 +162,13 @@ grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on public.profiles to authenticated;
 grant select, insert, delete on public.bookings to authenticated;
 grant select, insert, update on public.messages to anon, authenticated;
+-- Solo los usuarios autenticados pueden borrar (los anónimos no tienen identidad).
+grant delete on public.messages to authenticated;
+
+-- Índices para los filtros y la paginación del panel.
+create index if not exists bookings_date_idx on public.bookings (date);
+create index if not exists messages_created_at_idx on public.messages (created_at desc);
+create index if not exists messages_read_idx on public.messages (read) where read = false;
 
 -- ----------------------------------------------------------------------------
 -- 6) DISPONIBILIDAD DEL ESTUDIO

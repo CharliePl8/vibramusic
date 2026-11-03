@@ -4,10 +4,23 @@ import { Booking } from '../models/booking.model';
 import { ContactMessage } from '../models/message.model';
 import { BookingRow, mapBookingRow } from './booking.service';
 import { MessageRow, mapMessageRow } from './messages.service';
+import { todayIso } from '../utils/date';
+
+export const ADMIN_PAGE_SIZE = 5;
 
 export interface AdminBooking extends Booking {
   studentName: string;
   studentEmail: string;
+}
+
+export interface PagedAdminBookings {
+  rows: AdminBooking[];
+  total: number;
+}
+
+export interface PagedMessages {
+  rows: ContactMessage[];
+  total: number;
 }
 
 interface ProfileRow {
@@ -20,47 +33,77 @@ interface ProfileRow {
 export class AdminService {
   private readonly client = inject(SupabaseService).client;
 
-  async bookings(): Promise<AdminBooking[]> {
-    const { data, error } = await this.client
-      .from('bookings')
-      .select('*')
-      .order('date', { ascending: true })
-      .order('slot', { ascending: true });
+  async bookings(page = 0, pageSize = ADMIN_PAGE_SIZE): Promise<PagedAdminBookings> {
+    const from = page * pageSize;
+    const to = from + pageSize - 1;
 
-    if (error) {
-      console.error('No se pudieron cargar las reservas:', error.message);
-      return [];
+    const { data, error, count } = await this.client
+      .from('bookings')
+      .select('*', { count: 'exact' })
+      .gte('date', todayIso())
+      .order('date', { ascending: true })
+      .order('slot', { ascending: true })
+      .range(from, to);
+
+    if (error || !data) {
+      return { rows: [], total: 0 };
     }
 
     const rows = data as BookingRow[];
     const profiles = await this.profilesByIds([...new Set(rows.map((r) => r.user_id))]);
 
-    return rows.map((row) => {
-      const booking = mapBookingRow(row);
-      const profile = profiles[row.user_id];
-      return {
-        ...booking,
-        studentName: profile?.name || '—',
-        studentEmail: profile?.email || '—',
-      };
-    });
+    return {
+      rows: rows.map((row) => {
+        const booking = mapBookingRow(row);
+        const profile = profiles[row.user_id];
+        return {
+          ...booking,
+          studentName: profile?.name || '—',
+          studentEmail: profile?.email || '—',
+        };
+      }),
+      total: count ?? rows.length,
+    };
   }
 
-  async messages(): Promise<ContactMessage[]> {
-    const { data, error } = await this.client
+  async messages(page = 0, pageSize = ADMIN_PAGE_SIZE): Promise<PagedMessages> {
+    const from = page * pageSize;
+    const to = from + pageSize - 1;
+
+    const { data, error, count } = await this.client
       .from('messages')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (error || !data) {
+      return { rows: [], total: 0 };
+    }
+
+    const rows = data as MessageRow[];
+    return { rows: rows.map((row) => mapMessageRow(row)), total: count ?? rows.length };
+  }
+
+  async unreadMessages(): Promise<number> {
+    const { count, error } = await this.client
+      .from('messages')
+      .select('id', { count: 'exact', head: true })
+      .eq('read', false);
 
     if (error) {
-      console.error('No se pudieron cargar los mensajes:', error.message);
-      return [];
+      console.error('No se pudo contar los mensajes sin leer:', error.message);
+      return 0;
     }
-    return (data as MessageRow[]).map((row) => mapMessageRow(row));
+    return count ?? 0;
   }
 
   async cancelBooking(id: string): Promise<boolean> {
     const { error } = await this.client.from('bookings').delete().eq('id', id);
+    return !error;
+  }
+
+  async deleteMessage(id: string): Promise<boolean> {
+    const { error } = await this.client.from('messages').delete().eq('id', id);
     return !error;
   }
 

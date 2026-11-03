@@ -95,7 +95,7 @@ depender de herramientas de terceros.
 | SCSS | — | Estilos (variables, mixins, globales) |
 | RxJS | ~7.8.0 | Reactividad |
 | Supabase (`@supabase/supabase-js`) | ^2.116.0 | Auth + PostgreSQL (RLS) |
-| Vitest | ^3.2.7 | Tests unitarios (65 tests) |
+| Vitest | ^3.2.7 | Tests unitarios (77 tests) |
 | Prettier | ^3.8.1 | Formateo |
 | Cloudflare Pages | — | Hosting y despliegue continuo |
 | Resend (SMTP) | — | Envío de emails de autenticación |
@@ -297,7 +297,7 @@ activado en todas las tablas. El esquema completo e idempotente está en
 ## 11. Estado del PMV, limitaciones y contenido pendiente
 
 - **Backend y autenticación:** reales y funcionales (Supabase).
-- **Tests:** 65 tests unitarios en verde (Vitest).
+- **Tests:** 77 tests unitarios en verde (Vitest).
 - **Contenido pendiente de datos definitivos:** catálogo de cursos y precios,
   imágenes, datos de contacto (dirección/teléfono/horario) deben validarse y/o
   sustituirse por la información real del cliente antes del lanzamiento.

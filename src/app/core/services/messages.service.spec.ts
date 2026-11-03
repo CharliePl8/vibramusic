@@ -15,6 +15,7 @@ function makeQuery(result: QueryResult): any {
     or: () => query,
     order: () => query,
     insert: () => query,
+    delete: () => query,
     then: (onFulfilled: (value: QueryResult) => unknown) =>
       Promise.resolve(result).then(onFulfilled),
   };
@@ -64,6 +65,18 @@ describe('MessagesService', () => {
     client.from.mockReturnValue(makeQuery({ data: null, error: { message: 'boom' } }));
 
     expect(await service.userMessages('ana@example.com')).toEqual([]);
+  });
+
+  it('elimina un mensaje', async () => {
+    client.from.mockReturnValue(makeQuery({ data: null, error: null }));
+
+    expect(await service.delete('m1')).toBe(true);
+  });
+
+  it('informa si el borrado falla', async () => {
+    client.from.mockReturnValue(makeQuery({ data: null, error: { message: 'boom' } }));
+
+    expect(await service.delete('m1')).toBe(false);
   });
 
   it('crea un mensaje', async () => {

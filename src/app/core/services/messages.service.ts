@@ -71,6 +71,15 @@ export class MessagesService {
     return true;
   }
 
+  async delete(id: string): Promise<boolean> {
+    const { error } = await this.client.from('messages').delete().eq('id', id);
+    if (error) {
+      console.error('No se pudo eliminar el mensaje:', error.message);
+      return false;
+    }
+    return true;
+  }
+
   async create(input: NewContactMessage): Promise<boolean> {
     const { error } = await this.client.from('messages').insert({
       user_id: input.userId ?? null,

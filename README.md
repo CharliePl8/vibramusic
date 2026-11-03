@@ -98,7 +98,7 @@ La web incluye una landing con todas las secciones (hero, sobre nosotros, cursos
 | [SCSS](https://sass-lang.com) | — | Estilos (variables, mixins, globales) |
 | [RxJS](https://rxjs.dev) | ~7.8.0 | Programación reactiva |
 | [Supabase](https://supabase.com) | `@supabase/supabase-js` ^2.116.0 | Backend: auth, base de datos (PostgreSQL + RLS) |
-| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (65 tests) |
+| [Vitest](https://vitest.dev) | ^3.2.7 | Test runner (77 tests) |
 | [Prettier](https://prettier.io) | ^3.8.1 | Formateo de código |
 
 **Notas de arquitectura:**
@@ -202,7 +202,7 @@ Abre [http://localhost:4200/](http://localhost:4200/). La aplicación se recarga
 | `npm run build` / `ng build` | Build de producción en `dist/` |
 | `npm run postbuild` | Genera `dist/vibramusic/browser/404.html` (fallback SPA, lo ejecuta `build`) |
 | `npm run watch` | Build en modo observación (desarrollo) |
-| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 65 tests) |
+| `npm test` / `ng test` | Ejecutar tests unitarios (Vitest, 77 tests) |
 | `ng generate component <nombre>` | Generar componentes/schematics con Angular CLI |
 
 ## Despliegue en Cloudflare Pages

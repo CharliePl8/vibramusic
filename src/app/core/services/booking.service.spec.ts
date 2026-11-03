@@ -14,6 +14,7 @@ function makeQuery(result: QueryResult): any {
   const query: any = {
     select: () => query,
     eq: () => query,
+    gte: () => query,
     order: () => query,
     insert: () => query,
     delete: () => query,
@@ -75,6 +76,21 @@ describe('BookingService', () => {
     client.from.mockReturnValue(makeQuery({ data: null, error: { message: 'boom' } }));
 
     expect(await service.userBookings('u1')).toEqual([]);
+  });
+
+  it('filtra las reservas anteriores a hoy', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2026, 9, 1, 10, 0, 0));
+
+    const query = makeQuery({ data: [], error: null });
+    const gte = vi.fn(() => query);
+    query.gte = gte;
+    client.from.mockReturnValue(query);
+
+    await service.userBookings('u1');
+
+    expect(gte).toHaveBeenCalledWith('date', '2026-10-01');
+    vi.useRealTimers();
   });
 
   it('consulta las franjas ocupadas de una fecha', async () => {
