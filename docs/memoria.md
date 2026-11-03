@@ -95,7 +95,7 @@ depender de herramientas de terceros.
 | SCSS | — | Estilos (variables, mixins, globales) |
 | RxJS | ~7.8.0 | Reactividad |
 | Supabase (`@supabase/supabase-js`) | ^2.116.0 | Auth + PostgreSQL (RLS) |
-| Vitest | ^3.2.7 | Tests unitarios (77 tests) |
+| Vitest | ^3.2.7 | Tests unitarios (78 tests) |
 | Prettier | ^3.8.1 | Formateo |
 | Cloudflare Pages | — | Hosting y despliegue continuo |
 | Resend (SMTP) | — | Envío de emails de autenticación |
@@ -180,13 +180,14 @@ activado en todas las tablas. El esquema completo e idempotente está en
 | Tabla | Política | Regla |
 |---|---|---|
 | `profiles` | select | El propio usuario o un admin |
-| `profiles` | update | Solo el propio usuario |
+| `profiles` | update | Solo su `name` (privilegios de columna: no puede tocar `role` ni `email`) |
 | `bookings` | select | El propio usuario o un admin |
-| `bookings` | insert | Solo en nombre propio |
+| `bookings` | insert | Solo en nombre propio, con fecha futura y textos acotados |
 | `bookings` | delete | El propio usuario o un admin |
-| `messages` | insert | Cualquiera (incluso sin cuenta) |
+| `messages` | insert | Cualquiera (incluso sin cuenta), pero con `read=false`, autoría propia o anónima y límites de longitud/email |
 | `messages` | select | El propio usuario (por `user_id` o por email) o un admin |
-| `messages` | update | Solo admin |
+| `messages` | update | Solo admin, y únicamente la columna `read` |
+| `messages` | delete | El autor (por `user_id` o email) o un admin |
 
 ### 6.3 Funciones y disparadores
 
@@ -194,10 +195,24 @@ activado en todas las tablas. El esquema completo e idempotente está en
 |---|---|---|
 | `is_admin()` | Función `security definer` | Comprueba si el usuario actual es admin (evita recursión en RLS) |
 | `handle_new_user()` | Trigger `after insert on auth.users` | Crea el `profile` automáticamente al registrarse |
+| `normalize_message()` | Trigger `before insert on messages` | Recorta/normaliza el mensaje, fuerza `read=false` y `created_at=now()` y valida la autoría |
+| `validate_booking()` | Trigger `before insert on bookings` | Rechaza fechas pasadas y textos desmedidos aunque se llame a la API directamente |
 | `get_booked_slots(date)` | Función `security definer` | Devuelve **solo** las franjas ocupadas de una fecha, sin datos personales |
 
 > Las funciones `security definer` permiten operaciones controladas que el RLS
 > impediría (por ejemplo, conocer disponibilidad sin exponer reservas ajenas).
+
+### 6.4 Endurecimiento HTTP
+
+- Cabeceras de seguridad en `public/_headers` para Cloudflare Pages: **CSP**,
+  **HSTS**, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` y
+  `Permissions-Policy`.
+- La CSP solo permite scripts propios y la API de Spotify; estilos propios,
+  inline de Angular y Google Fonts; conexiones a Supabase (HTTPS/WSS) e imágenes
+  de Unsplash.
+- El script de tema se sirve como fichero externo (`public/theme-init.js`) para
+  no necesitar `unsafe-inline` en `script-src`.
+- Los `source maps` quedan desactivados en producción.
 
 ---
 
@@ -297,7 +312,7 @@ activado en todas las tablas. El esquema completo e idempotente está en
 ## 11. Estado del PMV, limitaciones y contenido pendiente
 
 - **Backend y autenticación:** reales y funcionales (Supabase).
-- **Tests:** 77 tests unitarios en verde (Vitest).
+- **Tests:** 78 tests unitarios en verde (Vitest).
 - **Contenido pendiente de datos definitivos:** catálogo de cursos y precios,
   imágenes, datos de contacto (dirección/teléfono/horario) deben validarse y/o
   sustituirse por la información real del cliente antes del lanzamiento.

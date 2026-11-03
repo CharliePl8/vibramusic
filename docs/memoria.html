@@ -208,7 +208,7 @@
       <tr><td>SCSS</td><td>—</td><td>Estilos (variables, mixins, globales)</td></tr>
       <tr><td>RxJS</td><td>~7.8.0</td><td>Reactividad</td></tr>
       <tr><td>Supabase (<code>@supabase/supabase-js</code>)</td><td>^2.116.0</td><td>Auth + PostgreSQL (RLS)</td></tr>
-      <tr><td>Vitest</td><td>^3.2.7</td><td>Tests unitarios (77 tests)</td></tr>
+      <tr><td>Vitest</td><td>^3.2.7</td><td>Tests unitarios (78 tests)</td></tr>
       <tr><td>Prettier</td><td>^3.8.1</td><td>Formateo</td></tr>
       <tr><td>Cloudflare Pages</td><td>—</td><td>Hosting y despliegue continuo</td></tr>
       <tr><td>Resend (SMTP)</td><td>—</td><td>Envío de emails de autenticación</td></tr>
@@ -287,13 +287,14 @@ scripts/
     <thead><tr><th>Tabla</th><th>Operación</th><th>Regla</th></tr></thead>
     <tbody>
       <tr><td><code>profiles</code></td><td>select</td><td>El propio usuario o un admin</td></tr>
-      <tr><td><code>profiles</code></td><td>update</td><td>Solo el propio usuario</td></tr>
+      <tr><td><code>profiles</code></td><td>update</td><td>Solo su <code>name</code> (privilegios de columna: no puede tocar <code>role</code> ni <code>email</code>)</td></tr>
       <tr><td><code>bookings</code></td><td>select</td><td>El propio usuario o un admin</td></tr>
-      <tr><td><code>bookings</code></td><td>insert</td><td>Solo en nombre propio</td></tr>
+      <tr><td><code>bookings</code></td><td>insert</td><td>Solo en nombre propio, con fecha futura y textos acotados</td></tr>
       <tr><td><code>bookings</code></td><td>delete</td><td>El propio usuario o un admin</td></tr>
-      <tr><td><code>messages</code></td><td>insert</td><td>Cualquiera (incluso sin cuenta)</td></tr>
+      <tr><td><code>messages</code></td><td>insert</td><td>Cualquiera (incluso sin cuenta), pero con <code>read=false</code>, autoría propia o anónima y límites de longitud/email</td></tr>
       <tr><td><code>messages</code></td><td>select</td><td>El propio usuario (por <code>user_id</code> o email) o un admin</td></tr>
-      <tr><td><code>messages</code></td><td>update</td><td>Solo admin</td></tr>
+      <tr><td><code>messages</code></td><td>update</td><td>Solo admin, y únicamente la columna <code>read</code></td></tr>
+      <tr><td><code>messages</code></td><td>delete</td><td>El autor (por <code>user_id</code> o email) o un admin</td></tr>
     </tbody>
   </table>
 
@@ -303,11 +304,25 @@ scripts/
     <tbody>
       <tr><td><code>is_admin()</code></td><td>Función <code>security definer</code></td><td>Comprueba si el usuario actual es admin (evita recursión en RLS)</td></tr>
       <tr><td><code>handle_new_user()</code></td><td>Trigger <code>after insert on auth.users</code></td><td>Crea el <code>profile</code> automáticamente al registrarse</td></tr>
+      <tr><td><code>normalize_message()</code></td><td>Trigger <code>before insert on messages</code></td><td>Recorta/normaliza el mensaje, fuerza <code>read=false</code> y <code>created_at=now()</code> y valida la autoría</td></tr>
+      <tr><td><code>validate_booking()</code></td><td>Trigger <code>before insert on bookings</code></td><td>Rechaza fechas pasadas y textos desmedidos aunque se llame a la API directamente</td></tr>
       <tr><td><code>get_booked_slots(date)</code></td><td>Función <code>security definer</code></td><td>Devuelve <strong>solo</strong> las franjas ocupadas de una fecha, sin datos personales</td></tr>
     </tbody>
   </table>
   <blockquote class="note">Las funciones <code>security definer</code> permiten operaciones controladas que el
   RLS impediría (por ejemplo, conocer la disponibilidad sin exponer reservas ajenas).</blockquote>
+
+  <h3>6.4 Endurecimiento HTTP</h3>
+  <ul>
+    <li>Cabeceras de seguridad en <code>public/_headers</code> para Cloudflare Pages: <strong>CSP</strong>,
+      <strong>HSTS</strong>, <code>X-Frame-Options</code>, <code>X-Content-Type-Options</code>,
+      <code>Referrer-Policy</code> y <code>Permissions-Policy</code>.</li>
+    <li>La CSP solo permite scripts propios y la API de Spotify; estilos propios, inline de
+      Angular y Google Fonts; conexiones a Supabase (HTTPS/WSS) e imágenes de Unsplash.</li>
+    <li>El script de tema se sirve como fichero externo (<code>public/theme-init.js</code>) para
+      no necesitar <code>unsafe-inline</code> en <code>script-src</code>.</li>
+    <li>Los <code>source maps</code> quedan desactivados en producción.</li>
+  </ul>
 
   <h2 id="s7">7. Autenticación y correo</h2>
   <ul>
@@ -411,7 +426,7 @@ scripts/
   <h2 id="s11">11. Estado del PMV, limitaciones y contenido pendiente</h2>
   <ul>
     <li><strong>Backend y autenticación:</strong> reales y funcionales (Supabase).</li>
-    <li><strong>Tests:</strong> 77 tests unitarios en verde (Vitest).</li>
+    <li><strong>Tests:</strong> 78 tests unitarios en verde (Vitest).</li>
     <li><strong>Contenido pendiente de datos definitivos:</strong> catálogo de cursos y precios,
       imágenes y datos de contacto deben validarse o sustituirse por la información
       real del cliente antes del lanzamiento.</li>
