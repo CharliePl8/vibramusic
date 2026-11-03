@@ -3,15 +3,17 @@
     <p class="soundtracks__eyebrow">PON MÚSICA A TUS PROYECTOS</p>
     <h2 class="soundtracks__title">Bandas Sonoras Originales</h2>
     <p class="soundtracks__intro">
-      En Vibra también componemos y producimos bandas sonoras originales. De la primera idea al
-      máster final, ponemos música a cine, series, videojuegos y proyectos audiovisuales.
+      En Vibra también componemos bandas sonoras originales. De la primera idea al máster final,
+      ponemos música a cine, series, videojuegos y proyectos audiovisuales.
     </p>
 
     <div class="soundtracks__grid">
-      <div *ngFor="let track of soundtracks; let i = index" class="soundtracks__track">
-        <div *ngIf="track.embedUrl" [innerHTML]="spotifyEmbeds[i]"></div>
+      <div *ngFor="let track of soundtracks" class="soundtracks__track">
+        <div *ngIf="!spotifyFailed()" class="soundtracks__embed">
+          <div #spotifyEmbed></div>
+        </div>
         <a
-          *ngIf="!track.embedUrl"
+          *ngIf="spotifyFailed()"
           class="st-card"
           [href]="track.spotifyUrl"
           target="_blank"

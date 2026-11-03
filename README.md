@@ -26,7 +26,7 @@ Desplegada en producción: **https://vibramusicstudio.es**
 Vibra Music es una academia de música en Carmona (Sevilla) que ofrece:
 
 ### 🎸 Clases
-Cursos de instrumento en tres modalidades: **Individual** (45 min/semana), **Grupal** (1h) y **Ensamble** (1h grupal y 45 min individual).
+Cursos de instrumento en tres modalidades: **Individual** (45 min/semana), **Grupal** (1h/semana) y **Ensamble** (1h grupal/semana y 45 min individual/semana).
 
 | Curso | Instrumento | Modalidad | Precio |
 |---|---|---|---|

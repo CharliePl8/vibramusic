@@ -4,10 +4,12 @@
 @mixin container {
   max-width: $container-max-width;
   margin: 0 auto;
-  padding-inline: $container-padding;
+  padding-inline: calc(#{$container-padding} + env(safe-area-inset-left, 0px))
+    calc(#{$container-padding} + env(safe-area-inset-right, 0px));
 
   @media (min-width: $breakpoint-md) {
-    padding-inline: $space-6;
+    padding-inline: calc(#{$space-6} + env(safe-area-inset-left, 0px))
+      calc(#{$space-6} + env(safe-area-inset-right, 0px));
   }
 }
 

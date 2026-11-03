@@ -1,11 +1,18 @@
 @use '../../../../assets/styles/variables' as *;
 @use '../../../../assets/styles/mixins' as *;
 
+:host {
+  display: block;
+  background-color: $color-black;
+}
+
 .footer {
   background-color: $color-black;
   border-top: 1px solid $color-border;
   padding-block: $space-8;
-  padding-inline: $space-4;
+  padding-bottom: calc(#{$space-8} + env(safe-area-inset-bottom, 0px));
+  padding-inline: calc(#{$space-4} + env(safe-area-inset-left, 0px))
+    calc(#{$space-4} + env(safe-area-inset-right, 0px));
 
   &__inner {
     max-width: $container-max-width;

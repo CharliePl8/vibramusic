@@ -4,5 +4,5 @@ export interface Soundtrack {
   subtitle: string;
   year: string;
   spotifyUrl: string;
-  embedUrl?: string;
+  spotifyUri: string;
 }
