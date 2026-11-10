@@ -22,7 +22,7 @@
       <h2 class="profile__section-title">Mis reservas</h2>
 
       <div class="profile__bookings">
-        <div *ngFor="let b of bookings()" class="profile__booking">
+        <div *ngFor="let b of pagedBookings()" class="profile__booking">
           <div class="profile__booking-info">
             <p class="profile__booking-main">
               <span class="profile__booking-date">{{ formatDate(b.date) }}</span>
@@ -42,9 +42,29 @@
         </div>
 
         <ng-container *ngIf="bookings().length === 0">
-          <p class="profile__empty">Aún no tienes reservas del estudio.</p>
+          <p class="profile__empty">No tienes reservas próximas.</p>
           <a [routerLink]="['/']" fragment="booking" class="profile__goto">Reservar ahora →</a>
         </ng-container>
+      </div>
+
+      <div *ngIf="bookingPageCount() > 1" class="profile__pager">
+        <button
+          type="button"
+          class="profile__pager-btn"
+          (click)="prevBookings()"
+          [disabled]="!hasPrevBookings()"
+        >
+          ← Anterior
+        </button>
+        <span>Página {{ bookingPage() + 1 }} de {{ bookingPageCount() }}</span>
+        <button
+          type="button"
+          class="profile__pager-btn"
+          (click)="nextBookings()"
+          [disabled]="!hasNextBookings()"
+        >
+          Siguiente →
+        </button>
       </div>
     </div>
 
@@ -52,8 +72,18 @@
       <h2 class="profile__section-title">Mis mensajes</h2>
 
       <div class="profile__messages">
-        <div *ngFor="let m of contactMessages()" class="profile__message">
-          <p class="profile__message-text">{{ m.message }}</p>
+        <div *ngFor="let m of pagedMessages()" class="profile__message">
+          <div class="profile__message-head">
+            <p class="profile__message-text">{{ m.message }}</p>
+            <button
+              type="button"
+              class="profile__message-delete"
+              (click)="deleteMessage(m)"
+              aria-label="Eliminar mensaje"
+            >
+              Eliminar
+            </button>
+          </div>
           <p class="profile__message-meta">{{ formatTimestamp(m.createdAt) }}</p>
         </div>
 
@@ -61,6 +91,26 @@
           <p class="profile__empty">Todavía no has enviado ningún mensaje de contacto.</p>
           <a [routerLink]="['/']" fragment="contact" class="profile__goto">Ir al contacto →</a>
         </ng-container>
+      </div>
+
+      <div *ngIf="messagePageCount() > 1" class="profile__pager">
+        <button
+          type="button"
+          class="profile__pager-btn"
+          (click)="prevMessages()"
+          [disabled]="!hasPrevMessages()"
+        >
+          ← Anterior
+        </button>
+        <span>Página {{ messagePage() + 1 }} de {{ messagePageCount() }}</span>
+        <button
+          type="button"
+          class="profile__pager-btn"
+          (click)="nextMessages()"
+          [disabled]="!hasNextMessages()"
+        >
+          Siguiente →
+        </button>
       </div>
     </div>
 

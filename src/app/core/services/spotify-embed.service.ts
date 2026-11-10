@@ -43,6 +43,8 @@ declare global {
 
 @Injectable({ providedIn: 'root' })
 export class SpotifyEmbedService {
+  private static readonly LOAD_TIMEOUT_MS = 10000;
+
   private apiPromise?: Promise<SpotifyIframeApi>;
 
   loadApi(): Promise<SpotifyIframeApi> {
@@ -56,7 +58,13 @@ export class SpotifyEmbedService {
         return;
       }
 
+      const timeout = window.setTimeout(() => {
+        this.apiPromise = undefined;
+        reject(new Error('La API de Spotify no respondió a tiempo.'));
+      }, SpotifyEmbedService.LOAD_TIMEOUT_MS);
+
       window.onSpotifyIframeApiReady = (api) => {
+        window.clearTimeout(timeout);
         window.spotifyIframeApi = api;
         resolve(api);
       };
@@ -64,7 +72,11 @@ export class SpotifyEmbedService {
       const script = document.createElement('script');
       script.src = 'https://open.spotify.com/embed/iframe-api/v1';
       script.async = true;
-      script.onerror = () => reject(new Error('No se pudo cargar la API de Spotify.'));
+      script.onerror = () => {
+        window.clearTimeout(timeout);
+        this.apiPromise = undefined;
+        reject(new Error('No se pudo cargar la API de Spotify.'));
+      };
       document.head.appendChild(script);
     });
 

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Booking, StudioService, StudioSlot } from '../models/booking.model';
+import { todayIso } from '../utils/date';
 
 export interface BookingRow {
   id: string;
@@ -35,6 +36,7 @@ export class BookingService {
       .from('bookings')
       .select('*')
       .eq('user_id', userId)
+      .gte('date', todayIso())
       .order('date', { ascending: true })
       .order('slot', { ascending: true });
 

@@ -15,6 +15,7 @@ function makeQuery(result: QueryResult): any {
     or: () => query,
     order: () => query,
     insert: () => query,
+    delete: () => query,
     then: (onFulfilled: (value: QueryResult) => unknown) =>
       Promise.resolve(result).then(onFulfilled),
   };
@@ -64,6 +65,35 @@ describe('MessagesService', () => {
     client.from.mockReturnValue(makeQuery({ data: null, error: { message: 'boom' } }));
 
     expect(await service.userMessages('ana@example.com')).toEqual([]);
+  });
+
+  it('consulta por email escapando comodines y por user_id sin usar .or()', async () => {
+    const query = makeQuery({ data: [row], error: null });
+    const ilike = vi.fn(() => query);
+    const eq = vi.fn(() => query);
+    const or = vi.fn(() => query);
+    query.ilike = ilike;
+    query.eq = eq;
+    query.or = or;
+    client.from.mockReturnValue(query);
+
+    await service.userMessages('ana%_@example.com', 'u1');
+
+    expect(or).not.toHaveBeenCalled();
+    expect(ilike).toHaveBeenCalledWith('email', 'ana\\%\\_@example.com');
+    expect(eq).toHaveBeenCalledWith('user_id', 'u1');
+  });
+
+  it('elimina un mensaje', async () => {
+    client.from.mockReturnValue(makeQuery({ data: null, error: null }));
+
+    expect(await service.delete('m1')).toBe(true);
+  });
+
+  it('informa si el borrado falla', async () => {
+    client.from.mockReturnValue(makeQuery({ data: null, error: { message: 'boom' } }));
+
+    expect(await service.delete('m1')).toBe(false);
   });
 
   it('crea un mensaje', async () => {

@@ -3,7 +3,7 @@ import { Soundtrack } from '../models/soundtrack.model';
 export const SOUNDTRACKS: Soundtrack[] = [
   {
     id: 'bso1',
-    title: 'Spotless',
+    title: 'El valle',
     subtitle: 'Banda sonora original',
     year: '2025',
     spotifyUrl: 'https://open.spotify.com/intl-es/track/1NMtq7fhqEnTkgZpl5zs03',
@@ -11,7 +11,7 @@ export const SOUNDTRACKS: Soundtrack[] = [
   },
   {
     id: 'bso2',
-    title: 'Agua Corriente',
+    title: 'Eneas',
     subtitle: 'Banda sonora original',
     year: '2025',
     spotifyUrl: 'https://open.spotify.com/intl-es/track/2H4tL3Bxa57TNySwH6Vr7C',
